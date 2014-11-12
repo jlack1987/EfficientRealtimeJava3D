@@ -1,0 +1,9 @@
+
+public class Vector3dTest {
+
+	@Tests
+	private void testVector3dConstructor()
+	{
+		
+	}
+}

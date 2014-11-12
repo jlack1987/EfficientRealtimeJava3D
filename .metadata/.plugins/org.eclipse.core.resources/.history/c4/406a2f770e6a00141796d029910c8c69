@@ -1,0 +1,11 @@
+import org.junit.Test;
+
+
+public class Vector3dTest {
+
+	@Test
+	private void testVector3dConstructor()
+	{
+		
+	}
+}
