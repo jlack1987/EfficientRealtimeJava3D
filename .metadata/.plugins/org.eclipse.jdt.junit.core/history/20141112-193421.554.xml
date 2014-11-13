@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Vector3dTest" project="JavaMatrixLibrary" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="Vector3dTest" time="0.001">
+    <testcase name="testVector3dEmptyConstructor" classname="Vector3dTest" time="0.001"/>
+  </testsuite>
+</testrun>

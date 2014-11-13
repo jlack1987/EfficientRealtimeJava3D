@@ -1,0 +1,32 @@
+import static org.junit.Assert.*;
+
+import java.util.Random;
+
+import org.junit.Test;
+
+public class Vector3dTest {
+
+	Random random = new Random();
+	int nTests = 10;
+	
+	@Test
+	public void testVector3dEmptyConstructor()
+	{
+		Vector3d vector = new Vector3d();
+		
+		assertEquals(vector.x, 0.0, 1e-12);
+		assertEquals(vector.y, 0.0, 1e-12);
+		assertEquals(vector.z, 0.0, 1e-12);
+	}
+	
+	@Test
+	public void testVector3dConstructor()
+	{
+		for(int i = 0; i<nTests; i++)
+		{
+			double x = random.nextDouble();
+			double y = random.nextDouble();
+			double z = random.nextDouble();
+		}
+	}
+}
