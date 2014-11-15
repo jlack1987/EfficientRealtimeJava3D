@@ -58,4 +58,25 @@ public class Vector3dTest {
 			assertEquals(z1+z2,vector1.z,1e-12);
 		}
 	}
+	@Test
+	public void testVectorDot()
+	{
+		for(int i=0; i<nTests; i++)
+		{
+			double x1 = random.nextDouble();
+			double x2 = random.nextDouble();
+			double y1 = random.nextDouble();
+			double y2 = random.nextDouble();
+			double z1 = random.nextDouble();
+			double z2 = random.nextDouble();
+			
+			Vector3d vector1 = new Vector3d(x1,y1,z1);
+			Vector3d vector2 = new Vector3d(x2,y2,z2);
+			
+			double dotproduct = vector1.dot(vector2);
+			
+			assertEquals(x1*x2+y1*y2+z1*z2,dotproduct,1e-12);
+			
+		}
+	}
 }

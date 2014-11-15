@@ -33,4 +33,9 @@ public class Vector3d
 		this.y = this.y + vector.y;
 		this.z = this.z + vector.z;
 	}
+	
+	public double dot(Vector3d vector)
+	{
+		return this.x*vector.x+this.y*vector.y+this.z*vector.z;
+	}
 }
