@@ -63,4 +63,17 @@ public class Matrix3d
 		this.m21 -= matrix.m21;
 		this.m22 -= matrix.m22;
 	}
+	
+	public void scale(double scale)
+	{
+		this.m00 *= scale;
+		this.m01 *= scale;
+		this.m02 *= scale;
+		this.m10 *= scale;
+		this.m11 *= scale;
+		this.m12 *= scale;
+		this.m20 *= scale;
+		this.m21 *= scale;
+		this.m22 *= scale;
+	}
 }

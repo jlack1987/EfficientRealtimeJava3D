@@ -272,6 +272,40 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
+	public void testScale()
+	{
+		Matrix3d matrix = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			double scale = random.nextDouble();
+			
+			double t00 = matrix.m00*scale;
+			double t01 = matrix.m01*scale;
+			double t02 = matrix.m02*scale;
+			double t10 = matrix.m10*scale;
+			double t11 = matrix.m11*scale;
+			double t12 = matrix.m12*scale;
+			double t20 = matrix.m20*scale;
+			double t21 = matrix.m21*scale;
+			double t22 = matrix.m22*scale;
+			
+			matrix.scale(scale);
+		
+			assertEquals(t00,matrix.m00,1e-10);
+			assertEquals(t01,matrix.m01,1e-10);
+			assertEquals(t02,matrix.m02,1e-10);
+			assertEquals(t10,matrix.m10,1e-10);
+			assertEquals(t11,matrix.m11,1e-10);
+			assertEquals(t12,matrix.m12,1e-10);
+			assertEquals(t20,matrix.m20,1e-10);
+			assertEquals(t21,matrix.m21,1e-10);
+			assertEquals(t22,matrix.m22,1e-10);
+		}
+	}
+	
 	public void randomizeMatrix(Random random, Matrix3d matrix)
 	{
 		matrix.m00 = random.nextDouble();
