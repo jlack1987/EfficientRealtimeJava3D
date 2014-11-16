@@ -68,14 +68,17 @@ public class Vector3d
 
 	public void cross(Vector3d vector, Vector3d vectorToPack)
 	{
-		if (this == vector || this == vectorToPack)
+		if (this == vector || this == vectorToPack || vector == vectorToPack)
 		{
-			double tempx = this.x;
-			double tempy = this.y;
-			double tempz = this.z;
-			vectorToPack.x = tempy * vector.z - tempz * vector.y;
-			vectorToPack.y = tempz * vector.x - tempx * vector.z;
-			vectorToPack.z = tempx * vector.y - tempy * vector.x;
+			double tempx1 = this.x;
+			double tempy1 = this.y;
+			double tempz1 = this.z;
+			double tempx2 = vector.x;
+			double tempy2 = vector.y;
+			double tempz2 = vector.z;
+			vectorToPack.x = tempy1 * tempz2 - tempz1 * tempy2;
+			vectorToPack.y = tempz1 * tempx2 - tempx1 * tempz2;
+			vectorToPack.z = tempx1 * tempy2 - tempy1 * tempx2;
 		} else
 		{
 			vectorToPack.x = this.y * vector.z - this.z * vector.y;
