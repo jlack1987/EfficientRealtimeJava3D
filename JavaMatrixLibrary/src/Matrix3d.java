@@ -24,4 +24,17 @@ public class Matrix3d
 		this.m21 = matrix.m21;
 		this.m22 = matrix.m22;
 	}
+	
+	public void setToZero()
+	{
+		this.m00 = this.m01 = this.m02 = 0;
+		this.m10 = this.m11 = this.m12 = 0;
+		this.m20 = this.m21 = this.m22 = 0;
+	}
+	
+	public void setToIdentity()
+	{
+		this.m00 = this.m11 = this.m22 = 1;
+		this.m10 = this.m20 = this.m21 = this.m12 = this.m01 = this.m02 = 0;
+	}
 }
