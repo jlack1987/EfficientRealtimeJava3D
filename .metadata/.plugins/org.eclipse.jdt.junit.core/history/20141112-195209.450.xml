@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="Vector3dTest" project="JavaMatrixLibrary" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="Vector3dTest" time="0.0">
-    <testcase name="testVectorAdd" classname="Vector3dTest" time="0.0"/>
-    <testcase name="testVector3dEmptyConstructor" classname="Vector3dTest" time="0.0"/>
-    <testcase name="testVector3dConstructor" classname="Vector3dTest" time="0.0"/>
-  </testsuite>
-</testrun>
