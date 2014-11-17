@@ -73,6 +73,52 @@ public class Matrix3dTest
 	}
 	
 	@Test
+	public void testSet()
+	{
+		Matrix3d matrix = new Matrix3d();
+		double[] array = new double[9];
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeDoubleArray(random, array);
+			matrix.set(array);
+			
+			assertEquals(matrix.m00, array[0],1e-10);
+			assertEquals(matrix.m01, array[1],1e-10);
+			assertEquals(matrix.m02, array[2],1e-10);
+			assertEquals(matrix.m10, array[3],1e-10);
+			assertEquals(matrix.m11, array[4],1e-10);
+			assertEquals(matrix.m12, array[5],1e-10);
+			assertEquals(matrix.m20, array[6],1e-10);
+			assertEquals(matrix.m21, array[7],1e-10);
+			assertEquals(matrix.m22, array[8],1e-10);
+		}
+	}
+	
+	@Test
+	public void testSet2()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			matrix2.set(matrix);
+			
+			assertEquals(matrix.m00, matrix2.m00,1e-10);
+			assertEquals(matrix.m01, matrix2.m01,1e-10);
+			assertEquals(matrix.m02, matrix2.m02,1e-10);
+			assertEquals(matrix.m10, matrix2.m10,1e-10);
+			assertEquals(matrix.m11, matrix2.m11,1e-10);
+			assertEquals(matrix.m12, matrix2.m12,1e-10);
+			assertEquals(matrix.m20, matrix2.m20,1e-10);
+			assertEquals(matrix.m21, matrix2.m21,1e-10);
+			assertEquals(matrix.m22, matrix2.m22,1e-10);
+		}
+	}
+	
+	@Test
 	public void testSetToIdentity()
 	{
 		for(int i = 0; i<nTests; i++)
@@ -392,33 +438,25 @@ public class Matrix3dTest
 	public void testScale()
 	{
 		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
 		
 		for(int i = 0; i<nTests; i++)
 		{
 			randomizeMatrix(random, matrix);
 			double scale = random.nextDouble();
-			
-			double t00 = matrix.m00*scale;
-			double t01 = matrix.m01*scale;
-			double t02 = matrix.m02*scale;
-			double t10 = matrix.m10*scale;
-			double t11 = matrix.m11*scale;
-			double t12 = matrix.m12*scale;
-			double t20 = matrix.m20*scale;
-			double t21 = matrix.m21*scale;
-			double t22 = matrix.m22*scale;
+			matrix2.set(matrix);
 			
 			matrix.scale(scale);
 		
-			assertEquals(t00,matrix.m00,1e-10);
-			assertEquals(t01,matrix.m01,1e-10);
-			assertEquals(t02,matrix.m02,1e-10);
-			assertEquals(t10,matrix.m10,1e-10);
-			assertEquals(t11,matrix.m11,1e-10);
-			assertEquals(t12,matrix.m12,1e-10);
-			assertEquals(t20,matrix.m20,1e-10);
-			assertEquals(t21,matrix.m21,1e-10);
-			assertEquals(t22,matrix.m22,1e-10);
+			assertEquals(matrix2.m00*scale,matrix.m00,1e-10);
+			assertEquals(matrix2.m01*scale,matrix.m01,1e-10);
+			assertEquals(matrix2.m02*scale,matrix.m02,1e-10);
+			assertEquals(matrix2.m10*scale,matrix.m10,1e-10);
+			assertEquals(matrix2.m11*scale,matrix.m11,1e-10);
+			assertEquals(matrix2.m12*scale,matrix.m12,1e-10);
+			assertEquals(matrix2.m20*scale,matrix.m20,1e-10);
+			assertEquals(matrix2.m21*scale,matrix.m21,1e-10);
+			assertEquals(matrix2.m22*scale,matrix.m22,1e-10);
 		}
 	}
 	
