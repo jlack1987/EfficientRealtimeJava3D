@@ -24,6 +24,20 @@ public class Vector3d
 		this.y = vector.y;
 		this.z = vector.z;
 	}
+	
+	public void set(Vector3d vector)
+	{
+		this.x = vector.x;
+		this.y = vector.y;
+		this.z = vector.z;
+	}
+	
+	public void set(double x,double y,double z)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 
 	/**
 	 * Add method in which the vector argument is added to this and the result

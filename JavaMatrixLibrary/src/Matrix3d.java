@@ -195,6 +195,60 @@ public class Matrix3d
 		}
 	}
 	
+	public void getRow(int row, Vector3d vector)
+	{
+		if(row != 1 || row != 2 || row != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+		
+		if(row == 1)
+		{
+			vector.x = this.m00;
+			vector.y = this.m01;
+			vector.z = this.m02;
+		}
+		else if(row == 2)
+		{
+			vector.x = this.m10;
+			vector.y = this.m11;
+			vector.z = this.m12;
+		}
+		else
+		{
+			vector.x = this.m20;
+			vector.y = this.m21;
+			vector.z = this.m22;
+		}
+	}
+	
+	public void getColumn(int column, Vector3d vector)
+	{
+		if(column != 1 || column != 2 || column != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+		
+		if(column == 1)
+		{
+			vector.x = this.m00;
+			vector.y = this.m10;
+			vector.z = this.m20;
+		}
+		else if(column == 2)
+		{
+			vector.x = this.m01;
+			vector.y = this.m11;
+			vector.z = this.m21;
+		}
+		else
+		{
+			vector.x = this.m02;
+			vector.y = this.m12;
+			vector.z = this.m22;
+		}
+	}
+	
 	public String toString()
 	{
 		return "[" + this.m00 + "," + this.m01 + "," + this.m02 + "\n"

@@ -500,6 +500,61 @@ public class Matrix3dTest
 		}
 	}
 	
+	public void testGetColumn()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Vector3d vector = new Vector3d();
+		Vector3d vector2 = new Vector3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			vector.set(matrix.m00,matrix.m10,matrix.m20);
+			
+			matrix.getColumn(1, vector2);
+			assertVectorEquals(vector, vector2, 1e-10);
+			
+			vector.set(matrix.m01,matrix.m11,matrix.m21);
+			matrix.getColumn(2, vector2);
+			assertVectorEquals(vector, vector2, 1e-10);
+			
+			vector.set(matrix.m02,matrix.m12,matrix.m22);
+			matrix.getColumn(3, vector2);
+			assertVectorEquals(vector, vector2, 1e-10);
+		}
+	}
+	
+	public void testGetRow()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Vector3d vector = new Vector3d();
+		Vector3d vector2 = new Vector3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			vector.set(matrix.m00,matrix.m01,matrix.m02);
+			
+			matrix.getRow(1, vector2);
+			assertVectorEquals(vector, vector2, 1e-10);
+			
+			vector.set(matrix.m10,matrix.m11,matrix.m12);
+			matrix.getRow(2, vector2);
+			assertVectorEquals(vector, vector2, 1e-10);
+			
+			vector.set(matrix.m20,matrix.m21,matrix.m22);
+			matrix.getRow(3, vector2);
+			assertVectorEquals(vector, vector2, 1e-10);
+		}
+	}
+	
+	public void assertVectorEquals(Vector3d vector1, Vector3d vector2,double epsilon)
+	{
+		assertEquals(vector1.x,vector2.x,epsilon);
+		assertEquals(vector1.y,vector2.y,epsilon);
+		assertEquals(vector1.z,vector2.z,epsilon);
+	}
+	
 	public void assertMatrixEquals(Matrix3d matrix1, Matrix3d matrix2, double epsilon)
 	{
 		assertEquals(matrix1.m00, matrix2.m00, epsilon);
