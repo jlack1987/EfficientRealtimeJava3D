@@ -460,6 +460,59 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
+	public void testTranspose()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random,matrix);
+			matrix2.set(matrix);
+			
+			matrix.transpose();
+			
+			assertEquals(matrix.m00,matrix2.m00,1e-10);
+			assertEquals(matrix.m01,matrix2.m10,1e-10);
+			assertEquals(matrix.m02,matrix2.m20,1e-10);
+			assertEquals(matrix.m11,matrix2.m11,1e-10);
+			assertEquals(matrix.m12,matrix2.m21,1e-10);
+			assertEquals(matrix.m22,matrix2.m22,1e-10);
+		}
+	}
+	
+	@Test
+	public void testTranspose2()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random,matrix);
+			matrix2.set(matrix);
+			
+			matrix.transpose(matrix);
+			matrix2.transpose();
+			
+			assertMatrixEquals(matrix,matrix2,1e-10);
+		}
+	}
+	
+	public void assertMatrixEquals(Matrix3d matrix1, Matrix3d matrix2, double epsilon)
+	{
+		assertEquals(matrix1.m00, matrix2.m00, epsilon);
+		assertEquals(matrix1.m01, matrix2.m01, epsilon);
+		assertEquals(matrix1.m02, matrix2.m02, epsilon);
+		assertEquals(matrix1.m10, matrix2.m10, epsilon);
+		assertEquals(matrix1.m11, matrix2.m11, epsilon);
+		assertEquals(matrix1.m12, matrix2.m12, epsilon);
+		assertEquals(matrix1.m20, matrix2.m20, epsilon);
+		assertEquals(matrix1.m21, matrix2.m21, epsilon);
+		assertEquals(matrix1.m22, matrix2.m22, epsilon);
+	}
+	
 	public void randomizeDoubleArray(Random random, double[] doubleArray)
 	{
 		doubleArray[0] = random.nextDouble();

@@ -167,4 +167,31 @@ public class Matrix3d
 		this.m21 = doubleArray[7];
 		this.m22 = doubleArray[8];
 	}
+	
+	public void transpose()
+	{
+		double tmp01 = this.m01;
+		double tmp02 = this.m02;
+		double tmp12 = this.m12;
+		
+		this.m01 = this.m10;
+		this.m02 = this.m20;
+		this.m12 = this.m21;
+		this.m10 = tmp01;
+		this.m20 = tmp02;
+		this.m21 = tmp12;
+	}
+	
+	public void transpose(Matrix3d matrix)
+	{
+		if(matrix == this)
+		{
+			transpose();
+		}
+		else
+		{
+			set(matrix);
+			transpose();
+		}
+	}
 }
