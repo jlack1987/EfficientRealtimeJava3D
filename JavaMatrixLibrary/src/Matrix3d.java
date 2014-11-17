@@ -194,4 +194,11 @@ public class Matrix3d
 			transpose();
 		}
 	}
+	
+	public String toString()
+	{
+		return "[" + this.m00 + "," + this.m01 + "," + this.m02 + "\n"
+				+ this.m10 + "," + this.m11 + "," + this.m12 + "\n"
+				+ this.m20 + "," + this.m21 + "," + this.m22 + "]";
+	}
 }
