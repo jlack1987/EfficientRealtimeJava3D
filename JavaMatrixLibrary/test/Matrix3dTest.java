@@ -579,6 +579,55 @@ public class Matrix3dTest
 		}
 	}
 	
+	public void testSetElemente()
+	{
+		Matrix3d matrix = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			double m00 = random.nextDouble();
+			double m01 = random.nextDouble();
+			double m02 = random.nextDouble();
+			double m10 = random.nextDouble();
+			double m11 = random.nextDouble();
+			double m12 = random.nextDouble();
+			double m20 = random.nextDouble();
+			double m21 = random.nextDouble();
+			double m22 = random.nextDouble();
+			
+			matrix.set(0,0,m00);
+			matrix.set(0,1,m01);
+			matrix.set(0,2,m02);
+			matrix.set(1,0,m10);
+			matrix.set(1,1,m11);
+			matrix.set(1,2,m12);
+			matrix.set(2,0,m20);
+			matrix.set(2,1,m21);
+			matrix.set(2,2,m22);
+			
+			assertEquals(matrix.m00,m00,1e-10);
+			assertEquals(matrix.m01,m01,1e-10);
+			assertEquals(matrix.m02,m02,1e-10);
+			assertEquals(matrix.m10,m10,1e-10);
+			assertEquals(matrix.m11,m11,1e-10);
+			assertEquals(matrix.m12,m12,1e-10);
+			assertEquals(matrix.m20,m20,1e-10);
+			assertEquals(matrix.m21,m21,1e-10);
+			assertEquals(matrix.m22,m22,1e-10);
+			
+			try
+			{
+				matrix.set(4,5,134);
+				matrix.set(-1,2,51);
+				assertTrue(false);
+			}
+			catch(Exception e)
+			{
+				assertTrue(true);
+			}
+		}
+	}
+	
 	public void assertVectorEquals(Vector3d vector1, Vector3d vector2,double epsilon)
 	{
 		assertEquals(vector1.x,vector2.x,epsilon);

@@ -209,6 +209,41 @@ public class Matrix3d
 		throw new RuntimeException("Index out of bounds.");
 	}
 	
+	public void set(int row, int col, double value)
+	{
+		switch(row)
+		{
+			case 0:
+				switch(col)
+				{
+					case 0:{this.m00 = value;break;}
+					case 1:{this.m01 = value;break;}
+					case 2:{this.m02 = value;break;}
+					default:{throw new RuntimeException("Index out of bounds.");}
+				}
+			case 1:
+				switch(col)
+				{
+					case 0:{this.m10 = value;break;}
+					case 1:{this.m11 = value;break;}
+					case 2:{this.m12 = value;break;}
+					default:{throw new RuntimeException("Index out of bounds.");}
+				}
+			case 2:
+				switch(col)
+				{
+					case 0:{this.m20 = value;break;}
+					case 1:{this.m21 = value;break;}
+					case 2:{this.m22 = value;break;}
+					default:{throw new RuntimeException("Index out of bounds.");}
+				}
+			default:
+			{
+				throw new RuntimeException("Index out of bounds.");
+			}
+		}
+	}
+	
 	public void transpose()
 	{
 		double tmp01 = this.m01;
