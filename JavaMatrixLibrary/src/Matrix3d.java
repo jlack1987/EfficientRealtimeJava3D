@@ -244,6 +244,68 @@ public class Matrix3d
 		}
 	}
 	
+	public void multiply(Matrix3d matrix)
+	{
+		double tmp00, tmp01,tmp02, tmp10, tmp11, tmp12, tmp20, tmp21, tmp22;
+
+		tmp00 = this.m00*matrix.m00 + this.m01*matrix.m10 + this.m02*matrix.m20;
+		tmp01 = this.m00*matrix.m01 + this.m01*matrix.m11 + this.m02*matrix.m21;
+		tmp02 = this.m00*matrix.m02 + this.m01*matrix.m12 + this.m02*matrix.m22;
+		
+		tmp10 = this.m10*matrix.m00 + this.m11*matrix.m10 + this.m12*matrix.m20;
+		tmp11 = this.m10*matrix.m01 + this.m11*matrix.m11 + this.m12*matrix.m21;
+		tmp12 = this.m10*matrix.m02 + this.m11*matrix.m12 + this.m12*matrix.m22;
+		
+		tmp20 = this.m20*matrix.m00 + this.m21*matrix.m10 + this.m22*matrix.m20;
+		tmp21 = this.m20*matrix.m01 + this.m21*matrix.m11 + this.m22*matrix.m21;
+		tmp22 = this.m20*matrix.m02 + this.m21*matrix.m12 + this.m22*matrix.m22;
+		
+		this.m00 = tmp00; 
+		this.m01 = tmp01; 
+		this.m02 = tmp02;
+		this.m10 = tmp10;
+		this.m11 = tmp11;
+		this.m12 = tmp12;
+		this.m20 = tmp20; 
+		this.m21 = tmp21; 
+		this.m22 = tmp22;
+	}
+	
+	public void multiply(Matrix3d matrix1, Matrix3d matrix2)
+	{
+		if(this != matrix1 && this != matrix2)
+		{
+			set(matrix1);
+			multiply(matrix2);
+		}
+		else
+		{
+			double tmp00, tmp01,tmp02, tmp10, tmp11, tmp12, tmp20, tmp21, tmp22;
+
+			tmp00 = matrix1.m00*matrix2.m00 + matrix1.m01*matrix2.m10 + matrix1.m02*matrix2.m20;
+			tmp01 = matrix1.m00*matrix2.m01 + matrix1.m01*matrix2.m11 + matrix1.m02*matrix2.m21;
+			tmp02 = matrix1.m00*matrix2.m02 + matrix1.m01*matrix2.m12 + matrix1.m02*matrix2.m22;
+			
+			tmp10 = matrix1.m10*matrix2.m00 + matrix1.m11*matrix2.m10 + matrix1.m12*matrix2.m20;
+			tmp11 = matrix1.m10*matrix2.m01 + matrix1.m11*matrix2.m11 + matrix1.m12*matrix2.m21;
+			tmp12 = matrix1.m10*matrix2.m02 + matrix1.m11*matrix2.m12 + matrix1.m12*matrix2.m22;
+			
+			tmp20 = matrix1.m20*matrix2.m00 + matrix1.m21*matrix2.m10 + matrix1.m22*matrix2.m20;
+			tmp21 = matrix1.m20*matrix2.m01 + matrix1.m21*matrix2.m11 + matrix1.m22*matrix2.m21;
+			tmp22 = matrix1.m20*matrix2.m02 + matrix1.m21*matrix2.m12 + matrix1.m22*matrix2.m22;
+			
+			this.m00 = tmp00; 
+			this.m01 = tmp01; 
+			this.m02 = tmp02;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m20 = tmp20; 
+			this.m21 = tmp21; 
+			this.m22 = tmp22;
+		}
+	}
+	
 	public void transpose()
 	{
 		double tmp01 = this.m01;
@@ -324,17 +386,7 @@ public class Matrix3d
 			vector.z = this.m22;
 		}
 	}
-	
-	public void multiply(Matrix3d matrix)
-	{
-		
-	}
-	
-	public void multiply(Matrix3d matrix1, Matrix3d matrix2)
-	{
-		
-	}
-	
+
 	public String toString()
 	{
 		return "[" + this.m00 + "," + this.m01 + "," + this.m02 + "\n"

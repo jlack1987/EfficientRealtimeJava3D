@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -9,6 +11,18 @@ public class Matrix3dTest
 {
 	Random random = new Random();
 	int nTests = 10;
+	
+	@Before()
+	public void setUp()
+	{
+		
+	}
+	
+	@After
+	public void tearDown()
+	{
+		System.gc();
+	}
 
 	@Test
 	public void testMatrix3dEmptyConstructor()
@@ -579,7 +593,7 @@ public class Matrix3dTest
 		}
 	}
 	
-	public void testSetElemente()
+	public void testSetElement()
 	{
 		Matrix3d matrix = new Matrix3d();
 		
@@ -628,14 +642,63 @@ public class Matrix3dTest
 		}
 	}
 	
-	public void assertVectorEquals(Vector3d vector1, Vector3d vector2,double epsilon)
+	public void testMatrixMultiply()
+	{
+		Matrix3d matrix1 = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix1);
+			randomizeMatrix(random, matrix2);
+			
+			Matrix3d testMatrix = doMatrixMultiply(matrix1, matrix2);
+			matrix1.multiply(matrix2);
+			assertMatrixEquals(testMatrix, matrix1, 1e-10);
+		}
+	}
+	
+	public void testMatrixMultiply2()
+	{
+		Matrix3d matrix1 = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		Matrix3d matrix3 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix1);
+			randomizeMatrix(random, matrix2);
+			
+			Matrix3d testMatrix = doMatrixMultiply(matrix1, matrix2);
+			matrix3.multiply(matrix1,matrix2);
+			assertMatrixEquals(testMatrix, matrix3, 1e-10);
+		}
+	}
+	
+	public void testMatrixMultiply3()
+	{
+		Matrix3d matrix1 = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix1);
+			randomizeMatrix(random, matrix2);
+			
+			Matrix3d testMatrix = doMatrixMultiply(matrix1, matrix1);
+			matrix1.multiply(matrix1,matrix1);
+			assertMatrixEquals(testMatrix, matrix1, 1e-10);
+		}
+	}
+	
+	private void assertVectorEquals(Vector3d vector1, Vector3d vector2,double epsilon)
 	{
 		assertEquals(vector1.x,vector2.x,epsilon);
 		assertEquals(vector1.y,vector2.y,epsilon);
 		assertEquals(vector1.z,vector2.z,epsilon);
 	}
 	
-	public void assertMatrixEquals(Matrix3d matrix1, Matrix3d matrix2, double epsilon)
+	private void assertMatrixEquals(Matrix3d matrix1, Matrix3d matrix2, double epsilon)
 	{
 		assertEquals(matrix1.m00, matrix2.m00, epsilon);
 		assertEquals(matrix1.m01, matrix2.m01, epsilon);
@@ -648,7 +711,7 @@ public class Matrix3dTest
 		assertEquals(matrix1.m22, matrix2.m22, epsilon);
 	}
 	
-	public void randomizeDoubleArray(Random random, double[] doubleArray)
+	private void randomizeDoubleArray(Random random, double[] doubleArray)
 	{
 		doubleArray[0] = random.nextDouble();
 		doubleArray[1] = random.nextDouble();
@@ -661,7 +724,7 @@ public class Matrix3dTest
 		doubleArray[8] = random.nextDouble();
 	}
 	
-	public void randomizeMatrix(Random random, Matrix3d matrix)
+	private void randomizeMatrix(Random random, Matrix3d matrix)
 	{
 		matrix.m00 = random.nextDouble();
 		matrix.m01 = random.nextDouble();
@@ -672,5 +735,24 @@ public class Matrix3dTest
 		matrix.m20 = random.nextDouble();
 		matrix.m21 = random.nextDouble();
 		matrix.m22 = random.nextDouble();
+	}
+	
+	private Matrix3d doMatrixMultiply(Matrix3d m1, Matrix3d m2)
+	{
+		Matrix3d ret = new Matrix3d();
+		
+		ret.m00 = m1.m00*m2.m00 + m1.m01*m2.m10 + m1.m02*m2.m20;
+		ret.m01 = m1.m00*m2.m01 + m1.m01*m2.m11 + m1.m02*m2.m21;
+		ret.m02 = m1.m00*m2.m02 + m1.m01*m2.m12 + m1.m02*m2.m22;
+
+		ret.m10 = m1.m10*m2.m00 + m1.m11*m2.m10 + m1.m12*m2.m20;
+		ret.m11 = m1.m10*m2.m01 + m1.m11*m2.m11 + m1.m12*m2.m21;
+		ret.m12 = m1.m10*m2.m02 + m1.m11*m2.m12 + m1.m12*m2.m22;
+
+		ret.m20 = m1.m20*m2.m00 + m1.m21*m2.m10 + m1.m22*m2.m20;
+		ret.m21 = m1.m20*m2.m01 + m1.m21*m2.m11 + m1.m22*m2.m21;
+		ret.m22 = m1.m20*m2.m02 + m1.m21*m2.m12 + m1.m22*m2.m22;
+		
+		return ret;
 	}
 }
