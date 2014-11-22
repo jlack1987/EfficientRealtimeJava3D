@@ -1,10 +1,9 @@
-
 public class Matrix3d
 {
 	double m00, m01, m02;
 	double m10, m11, m12;
 	double m20, m21, m22;
-	
+
 	private static final double EPS = 1E-16;
 
 	public Matrix3d()
@@ -371,7 +370,8 @@ public class Matrix3d
 		{
 			set(matrix1);
 			multiply(matrix2);
-		} else
+		}
+		else
 		{
 			double tmp00, tmp01, tmp02, tmp10, tmp11, tmp12, tmp20, tmp21, tmp22;
 
@@ -427,7 +427,8 @@ public class Matrix3d
 		if (matrix == this)
 		{
 			transpose();
-		} else
+		}
+		else
 		{
 			set(matrix);
 			transpose();
@@ -446,16 +447,45 @@ public class Matrix3d
 			vector.x = this.m00;
 			vector.y = this.m01;
 			vector.z = this.m02;
-		} else if (row == 2)
+		}
+		else if (row == 2)
 		{
 			vector.x = this.m10;
 			vector.y = this.m11;
 			vector.z = this.m12;
-		} else
+		}
+		else
 		{
 			vector.x = this.m20;
 			vector.y = this.m21;
 			vector.z = this.m22;
+		}
+	}
+
+	public void getRow(int row, double[] vector)
+	{
+		if (row != 1 || row != 2 || row != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+
+		if (row == 1)
+		{
+			vector[0] = this.m00;
+			vector[1] = this.m01;
+			vector[2] = this.m02;
+		}
+		else if (row == 2)
+		{
+			vector[0] = this.m10;
+			vector[1] = this.m11;
+			vector[2] = this.m12;
+		}
+		else
+		{
+			vector[0] = this.m20;
+			vector[1] = this.m21;
+			vector[2] = this.m22;
 		}
 	}
 
@@ -471,16 +501,153 @@ public class Matrix3d
 			vector.x = this.m00;
 			vector.y = this.m10;
 			vector.z = this.m20;
-		} else if (column == 2)
+		}
+		else if (column == 2)
 		{
 			vector.x = this.m01;
 			vector.y = this.m11;
 			vector.z = this.m21;
-		} else
+		}
+		else
 		{
 			vector.x = this.m02;
 			vector.y = this.m12;
 			vector.z = this.m22;
+		}
+	}
+	
+	public void getColumn(int column, double[] vector)
+	{
+		if (column != 1 || column != 2 || column != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+
+		if (column == 1)
+		{
+			vector[0] = this.m00;
+			vector[1] = this.m10;
+			vector[2] = this.m20;
+		}
+		else if (column == 2)
+		{
+			vector[0] = this.m01;
+			vector[1] = this.m11;
+			vector[2] = this.m21;
+		}
+		else
+		{
+			vector[0] = this.m02;
+			vector[1] = this.m12;
+			vector[2] = this.m22;
+		}
+	}
+	
+	public void setRow(int row, Vector3d vector)
+	{
+		if (row != 1 || row != 2 || row != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+
+		if (row == 1)
+		{
+			 this.m00 = vector.x;
+			 this.m01 = vector.y;
+			 this.m02 = vector.z;
+		}
+		else if (row == 2)
+		{
+			this.m10 = vector.x;
+			this.m11 = vector.y;
+			this.m12 = vector.z;
+		}
+		else
+		{
+			this.m20 = vector.x;
+			this.m21 = vector.y;
+			this.m22 = vector.z;
+		}
+	}
+	
+	public void setRow(int row, double[] vector)
+	{
+		if (row != 1 || row != 2 || row != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+
+		if (row == 1)
+		{
+			 this.m00 = vector[0];
+			 this.m01 = vector[1];
+			 this.m02 = vector[2];
+		}
+		else if (row == 2)
+		{
+			this.m10 = vector[0];
+			this.m11 = vector[1];
+			this.m12 = vector[2];
+		}
+		else
+		{
+			this.m20 = vector[0];
+			this.m21 = vector[1];
+			this.m22 = vector[2];
+		}
+	}
+	
+	public void setColumn(int column, Vector3d vector)
+	{
+		if (column != 1 || column != 2 || column != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+
+		if (column == 1)
+		{
+			 this.m00 = vector.x;
+			 this.m10 = vector.y;
+			 this.m20 = vector.z;
+		}
+		else if (column == 2)
+		{
+			this.m01 = vector.x;
+			this.m11 = vector.y;
+			this.m21 = vector.z;
+		}
+		else
+		{
+			this.m02 = vector.x;
+			this.m12 = vector.y;
+			this.m22 = vector.z;
+		}
+	}
+	
+	public void setColumn(int column, double[] vector)
+	{
+		if (column != 1 || column != 2 || column != 3)
+		{
+			throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+
+		if (column == 1)
+		{
+			 this.m00 = vector[0];
+			 this.m10 = vector[1];
+			 this.m20 = vector[2];
+		}
+		else if (column == 2)
+		{
+			this.m01 = vector[0];
+			this.m11 = vector[1];
+			this.m21 = vector[2];
+		}
+		else
+		{
+			this.m02 = vector[0];
+			this.m12 = vector[1];
+			this.m22 = vector[2];
 		}
 	}
 
@@ -535,7 +702,7 @@ public class Matrix3d
 	public String toString()
 	{
 		return "[" + this.m00 + "," + this.m01 + "," + this.m02 + "\n"
-				+ this.m10 + "," + this.m11 + "," + this.m12 + "\n" 
-				+ this.m20 + "," + this.m21 + "," + this.m22 + "]";
+				+ this.m10 + "," + this.m11 + "," + this.m12 + "\n" + this.m20
+				+ "," + this.m21 + "," + this.m22 + "]";
 	}
 }
