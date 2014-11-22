@@ -548,6 +548,37 @@ public class Matrix3dTest
 		}
 	}
 	
+	public void testGetElemente()
+	{
+		Matrix3d matrix = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			
+			assertEquals(matrix.m00,matrix.get(0, 0),1e-10);
+			assertEquals(matrix.m01,matrix.get(0, 1),1e-10);
+			assertEquals(matrix.m02,matrix.get(0, 2),1e-10);
+			assertEquals(matrix.m10,matrix.get(1, 0),1e-10);
+			assertEquals(matrix.m11,matrix.get(1, 1),1e-10);
+			assertEquals(matrix.m12,matrix.get(1, 2),1e-10);
+			assertEquals(matrix.m20,matrix.get(2, 0),1e-10);
+			assertEquals(matrix.m21,matrix.get(2, 1),1e-10);
+			assertEquals(matrix.m22,matrix.get(2, 2),1e-10);
+			
+			try
+			{
+				matrix.get(4,5);
+				matrix.get(-1,2);
+				assertTrue(false);
+			}
+			catch(Exception e)
+			{
+				assertTrue(true);
+			}
+		}
+	}
+	
 	public void assertVectorEquals(Vector3d vector1, Vector3d vector2,double epsilon)
 	{
 		assertEquals(vector1.x,vector2.x,epsilon);

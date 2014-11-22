@@ -168,6 +168,47 @@ public class Matrix3d
 		this.m22 = doubleArray[8];
 	}
 	
+	public double get(int row, int col)
+	{
+		switch(row)
+		{
+			case(0):
+			{
+				switch(col)
+				{
+					case(0):{return this.m00;}
+					case(1):{return this.m01;}
+					case(2):{return this.m02;}
+					default:{break;}
+				}
+				break;
+			}
+			case(1):
+			{
+				switch(col)
+				{
+					case(0):{return this.m10;}
+					case(1):{return this.m11;}
+					case(2):{return this.m12;}
+					default:{break;}
+				}
+				break;
+			}
+			case(2):
+			{
+				switch(col)
+				{
+					case(0):{return this.m20;}
+					case(1):{return this.m21;}
+					case(2):{return this.m22;}
+					default:{break;}
+				}
+				break;
+			}
+		}
+		throw new RuntimeException("Index out of bounds.");
+	}
+	
 	public void transpose()
 	{
 		double tmp01 = this.m01;
@@ -247,6 +288,16 @@ public class Matrix3d
 			vector.y = this.m12;
 			vector.z = this.m22;
 		}
+	}
+	
+	public void multiply(Matrix3d matrix)
+	{
+		
+	}
+	
+	public void multiply(Matrix3d matrix1, Matrix3d matrix2)
+	{
+		
 	}
 	
 	public String toString()
