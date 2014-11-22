@@ -691,6 +691,23 @@ public class Matrix3dTest
 		}
 	}
 	
+	public void testMatrixEquals()
+	{
+		Matrix3d matrix1 = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i=0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix1);
+			matrix2.set(matrix1);
+			
+			matrix1.equals(matrix2);
+			
+			matrix1.add(1e-7);
+			matrix1.epsilonEquals(matrix2, 1e-6);
+		}
+	}
+	
 	private void assertVectorEquals(Vector3d vector1, Vector3d vector2,double epsilon)
 	{
 		assertEquals(vector1.x,vector2.x,epsilon);
