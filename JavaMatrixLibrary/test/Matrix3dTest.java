@@ -295,6 +295,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testAdd5()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -319,6 +320,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testAdd6()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -345,6 +347,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testAdd7()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -422,6 +425,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testSubtract3()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -436,15 +440,15 @@ public class Matrix3dTest
 			
 			matrix.subtract(matrix,matrix1);
 			
-			assertEquals(matrix.m00, matrix1.m00 - matrix2.m00,1e-10);
-			assertEquals(matrix.m01, matrix1.m01 - matrix2.m01,1e-10);
-			assertEquals(matrix.m02, matrix1.m02 - matrix2.m02,1e-10);
-			assertEquals(matrix.m10, matrix1.m10 - matrix2.m10,1e-10);
-			assertEquals(matrix.m11, matrix1.m11 - matrix2.m11,1e-10);
-			assertEquals(matrix.m12, matrix1.m12 - matrix2.m12,1e-10);
-			assertEquals(matrix.m20, matrix1.m20 - matrix2.m20,1e-10);
-			assertEquals(matrix.m21, matrix1.m21 - matrix2.m21,1e-10);
-			assertEquals(matrix.m22, matrix1.m22 - matrix2.m22,1e-10);
+			assertEquals(matrix.m00, matrix2.m00 - matrix1.m00,1e-10);
+			assertEquals(matrix.m01, matrix2.m01 - matrix1.m01,1e-10);
+			assertEquals(matrix.m02, matrix2.m02 - matrix1.m02,1e-10);
+			assertEquals(matrix.m10, matrix2.m10 - matrix1.m10,1e-10);
+			assertEquals(matrix.m11, matrix2.m11 - matrix1.m11,1e-10);
+			assertEquals(matrix.m12, matrix2.m12 - matrix1.m12,1e-10);
+			assertEquals(matrix.m20, matrix2.m20 - matrix1.m20,1e-10);
+			assertEquals(matrix.m21, matrix2.m21 - matrix1.m21,1e-10);
+			assertEquals(matrix.m22, matrix2.m22 - matrix1.m22,1e-10);
 		}
 	}
 	
@@ -514,6 +518,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testGetColumn()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -538,6 +543,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testGetRow()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -562,6 +568,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testSetRow()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -589,6 +596,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testSetRow2()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -616,6 +624,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testSetColumn()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -636,13 +645,14 @@ public class Matrix3dTest
 			assertEquals(matrix.m02,vector[0],1e-10);
 			assertEquals(matrix.m10,vector[1],1e-10);
 			assertEquals(matrix.m11,vector[1],1e-10);
-			assertEquals(matrix.m21,vector[1],1e-10);
-			assertEquals(matrix.m02,vector[2],1e-10);
-			assertEquals(matrix.m12,vector[2],1e-10);
+			assertEquals(matrix.m12,vector[1],1e-10);
+			assertEquals(matrix.m20,vector[2],1e-10);
+			assertEquals(matrix.m21,vector[2],1e-10);
 			assertEquals(matrix.m22,vector[2],1e-10);
 		}
 	}
 	
+	@Test
 	public void testSetColumn2()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -654,9 +664,9 @@ public class Matrix3dTest
 			vector.x = random.nextDouble();
 			vector.y = random.nextDouble();
 			vector.z = random.nextDouble();
-			matrix.setRow(1,vector);
-			matrix.setRow(2,vector);
-			matrix.setRow(3,vector);
+			matrix.setColumn(1,vector);
+			matrix.setColumn(2,vector);
+			matrix.setColumn(3,vector);
 			
 			assertEquals(matrix.m00,vector.x,1e-10);
 			assertEquals(matrix.m01,vector.x,1e-10);
@@ -670,6 +680,46 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
+	public void testMatrixInverse()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			matrix.add(1e-8);
+			matrix2.set(matrix);
+			matrix.invert();
+			matrix.invert();
+			
+			assertMatrixEquals(matrix, matrix2, 1e-10);
+		}
+	}
+	
+	@Test
+	public void testMatrixInverse2()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		Matrix3d matrix3 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			matrix.add(1e-8);
+			matrix2.set(matrix);
+			matrix.invert();
+			matrix3.setToIdentity();
+			
+			matrix2.multiply(matrix);
+			
+			assertMatrixEquals(matrix3, matrix2, 1e-10);
+		}
+	}
+	
+	@Test
 	public void testGetElemente()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -701,6 +751,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testSetElement()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -750,6 +801,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testMatrixMultiply()
 	{
 		Matrix3d matrix1 = new Matrix3d();
@@ -766,6 +818,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testMatrixMultiply2()
 	{
 		Matrix3d matrix1 = new Matrix3d();
@@ -783,6 +836,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testMatrixMultiply3()
 	{
 		Matrix3d matrix1 = new Matrix3d();
@@ -799,6 +853,7 @@ public class Matrix3dTest
 		}
 	}
 	
+	@Test
 	public void testMatrixEquals()
 	{
 		Matrix3d matrix1 = new Matrix3d();

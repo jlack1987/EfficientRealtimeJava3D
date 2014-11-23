@@ -4,6 +4,11 @@ public class Matrix3d
 	double m10, m11, m12;
 	double m20, m21, m22;
 
+	double tmp9Array[] = new double[9];
+	int tmp3Array[] = new int[3];
+	double[] tmp9Array2 = new double[9];
+	double tmp3Array2[] = new double[3];
+
 	private static final double EPS = 1E-16;
 
 	public Matrix3d()
@@ -275,6 +280,7 @@ public class Matrix3d
 						throw new RuntimeException("Index out of bounds.");
 					}
 				}
+				break;
 			case 1:
 				switch (col)
 				{
@@ -298,6 +304,7 @@ public class Matrix3d
 						throw new RuntimeException("Index out of bounds.");
 					}
 				}
+				break;
 			case 2:
 				switch (col)
 				{
@@ -321,6 +328,7 @@ public class Matrix3d
 						throw new RuntimeException("Index out of bounds.");
 					}
 				}
+				break;
 			default:
 			{
 				throw new RuntimeException("Index out of bounds.");
@@ -437,28 +445,31 @@ public class Matrix3d
 
 	public void getRow(int row, Vector3d vector)
 	{
-		if (row != 1 || row != 2 || row != 3)
+		switch(row)
 		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
-		if (row == 1)
-		{
-			vector.x = this.m00;
-			vector.y = this.m01;
-			vector.z = this.m02;
-		}
-		else if (row == 2)
-		{
-			vector.x = this.m10;
-			vector.y = this.m11;
-			vector.z = this.m12;
-		}
-		else
-		{
-			vector.x = this.m20;
-			vector.y = this.m21;
-			vector.z = this.m22;
+			case 1:
+			{
+				vector.x = this.m00;
+				vector.y = this.m01;
+				vector.z = this.m02;
+				break;
+			}
+			case 2:
+			{
+				vector.x = this.m10;
+				vector.y = this.m11;
+				vector.z = this.m12;
+				break;
+			}
+			case 3:
+			{
+				vector.x = this.m20;
+				vector.y = this.m21;
+				vector.z = this.m22;
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 	}
 
@@ -469,185 +480,468 @@ public class Matrix3d
 			throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 
-		if (row == 1)
+		switch(row)
 		{
-			vector[0] = this.m00;
-			vector[1] = this.m01;
-			vector[2] = this.m02;
-		}
-		else if (row == 2)
-		{
-			vector[0] = this.m10;
-			vector[1] = this.m11;
-			vector[2] = this.m12;
-		}
-		else
-		{
-			vector[0] = this.m20;
-			vector[1] = this.m21;
-			vector[2] = this.m22;
+			case 1:
+			{
+				vector[0] = this.m00;
+				vector[1] = this.m01;
+				vector[2] = this.m02;
+				break;
+			}
+			case 2:
+			{
+				vector[0] = this.m10;
+				vector[1] = this.m11;
+				vector[2] = this.m12;
+				break;
+			}
+			case 3:
+			{
+				vector[0] = this.m20;
+				vector[1] = this.m21;
+				vector[2] = this.m22;
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 	}
 
 	public void getColumn(int column, Vector3d vector)
 	{
-		if (column != 1 || column != 2 || column != 3)
+		switch(column)
 		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
-		if (column == 1)
-		{
-			vector.x = this.m00;
-			vector.y = this.m10;
-			vector.z = this.m20;
-		}
-		else if (column == 2)
-		{
-			vector.x = this.m01;
-			vector.y = this.m11;
-			vector.z = this.m21;
-		}
-		else
-		{
-			vector.x = this.m02;
-			vector.y = this.m12;
-			vector.z = this.m22;
+			case 1:
+			{
+				vector.x = this.m00;
+				vector.y = this.m10;
+				vector.z = this.m20;
+				break;
+			}
+			case 2:
+			{
+				vector.x = this.m01;
+				vector.y = this.m11;
+				vector.z = this.m21;
+				break;
+			}
+			case 3:
+			{
+				vector.x = this.m02;
+				vector.y = this.m12;
+				vector.z = this.m22;
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 	}
-	
+
 	public void getColumn(int column, double[] vector)
 	{
-		if (column != 1 || column != 2 || column != 3)
-		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
-		if (column == 1)
-		{
-			vector[0] = this.m00;
-			vector[1] = this.m10;
-			vector[2] = this.m20;
-		}
-		else if (column == 2)
-		{
-			vector[0] = this.m01;
-			vector[1] = this.m11;
-			vector[2] = this.m21;
-		}
-		else
-		{
-			vector[0] = this.m02;
-			vector[1] = this.m12;
-			vector[2] = this.m22;
-		}
+		switch(column)
+			{
+				case 1:
+				{
+					vector[0] = this.m00;
+					vector[1] = this.m10;
+					vector[2] = this.m20;
+					break;
+				}
+				case 2:
+				{
+					vector[0] = this.m01;
+					vector[1] = this.m11;
+					vector[2] = this.m21;
+					break;
+				}
+				case 3:
+				{
+					vector[0] = this.m02;
+					vector[1] = this.m12;
+					vector[2] = this.m22;
+					break;
+				}
+				default:
+					throw new RuntimeException("The column must either be 1, 2, or 3.");
+			}
 	}
-	
+
 	public void setRow(int row, Vector3d vector)
 	{
-		if (row != 1 || row != 2 || row != 3)
+		switch(row)
 		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
-		if (row == 1)
-		{
-			 this.m00 = vector.x;
-			 this.m01 = vector.y;
-			 this.m02 = vector.z;
-		}
-		else if (row == 2)
-		{
-			this.m10 = vector.x;
-			this.m11 = vector.y;
-			this.m12 = vector.z;
-		}
-		else
-		{
-			this.m20 = vector.x;
-			this.m21 = vector.y;
-			this.m22 = vector.z;
+			case 1:
+			{
+				this.m00 = vector.x;
+				this.m01 = vector.y;
+				this.m02 = vector.z;
+				break;
+			}
+			case 2:
+			{
+				this.m10 = vector.x;
+				this.m11 = vector.y;
+				this.m12 = vector.z;
+				break;
+			}
+			case 3:
+			{
+				this.m20 = vector.x;
+				this.m21 = vector.y;
+				this.m22 = vector.z;
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 	}
-	
+
 	public void setRow(int row, double[] vector)
 	{
-		if (row != 1 || row != 2 || row != 3)
+		switch(row)
 		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
-		if (row == 1)
-		{
-			 this.m00 = vector[0];
-			 this.m01 = vector[1];
-			 this.m02 = vector[2];
-		}
-		else if (row == 2)
-		{
-			this.m10 = vector[0];
-			this.m11 = vector[1];
-			this.m12 = vector[2];
-		}
-		else
-		{
-			this.m20 = vector[0];
-			this.m21 = vector[1];
-			this.m22 = vector[2];
+			case 1:
+			{
+				this.m00 = vector[0];
+				this.m01 = vector[1];
+				this.m02 = vector[2];
+				break;
+			}
+			case 2:
+			{
+				this.m10 = vector[0];
+				this.m11 = vector[1];
+				this.m12 = vector[2];
+				break;
+			}
+			case 3:
+			{
+				this.m20 = vector[0];
+				this.m21 = vector[1];
+				this.m22 = vector[2];
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 	}
-	
+
 	public void setColumn(int column, Vector3d vector)
 	{
-		if (column != 1 || column != 2 || column != 3)
+		switch(column)
 		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
-		if (column == 1)
-		{
-			 this.m00 = vector.x;
-			 this.m10 = vector.y;
-			 this.m20 = vector.z;
-		}
-		else if (column == 2)
-		{
-			this.m01 = vector.x;
-			this.m11 = vector.y;
-			this.m21 = vector.z;
-		}
-		else
-		{
-			this.m02 = vector.x;
-			this.m12 = vector.y;
-			this.m22 = vector.z;
+			case 1:
+			{
+				this.m00 = vector.x;
+				this.m10 = vector.y;
+				this.m20 = vector.z;
+				break;
+			}
+			case 2:
+			{
+				this.m01 = vector.x;
+				this.m11 = vector.y;
+				this.m21 = vector.z;
+				break;
+			}
+			case 3:
+			{
+				this.m02 = vector.x;
+				this.m12 = vector.y;
+				this.m22 = vector.z;
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 	}
-	
+
 	public void setColumn(int column, double[] vector)
 	{
-		if (column != 1 || column != 2 || column != 3)
+		switch(column)
 		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
+			case 1:
+			{
+				this.m00 = vector[0];
+				this.m10 = vector[1];
+				this.m20 = vector[2];
+				break;
+			}
+			case 2:
+			{
+				this.m01 = vector[0];
+				this.m11 = vector[1];
+				this.m21 = vector[2];
+				break;
+			}
+			case 3:
+			{
+				this.m02 = vector[0];
+				this.m12 = vector[1];
+				this.m22 = vector[2];
+				break;
+			}
+			default:
+				throw new RuntimeException("The column must either be 1, 2, or 3.");
+		}
+	}
+
+	public void invert()
+	{
+		invert(this);
+	}
+
+	private final void invert(Matrix3d matrix)
+	{
+		// Use LU decomposition and backsubstitution code specifically
+		// for floating-point 3x3 matrices.
+
+		tmp9Array2[0] = matrix.m00;
+		tmp9Array2[1] = matrix.m01;
+		tmp9Array2[2] = matrix.m02;
+
+		tmp9Array2[3] = matrix.m10;
+		tmp9Array2[4] = matrix.m11;
+		tmp9Array2[5] = matrix.m12;
+
+		tmp9Array2[6] = matrix.m20;
+		tmp9Array2[7] = matrix.m21;
+		tmp9Array2[8] = matrix.m22;
+
+		// Calculate LU decomposition: Is the matrix singular?
+		if (!luDecomposition(tmp9Array2, tmp3Array))
+		{
+			throw new RuntimeException("Matrix is singular.");
 		}
 
-		if (column == 1)
+		// Perform back substitution on the identity matrix
+		for (int i = 0; i < 9; i++)
 		{
-			 this.m00 = vector[0];
-			 this.m10 = vector[1];
-			 this.m20 = vector[2];
+			tmp9Array[i] = 0.0;
 		}
-		else if (column == 2)
+
+		tmp9Array[0] = 1.0;
+		tmp9Array[4] = 1.0;
+		tmp9Array[8] = 1.0;
+		luBacksubstitution(tmp9Array2, tmp3Array, tmp9Array);
+
+		this.m00 = tmp9Array[0];
+		this.m01 = tmp9Array[1];
+		this.m02 = tmp9Array[2];
+
+		this.m10 = tmp9Array[3];
+		this.m11 = tmp9Array[4];
+		this.m12 = tmp9Array[5];
+
+		this.m20 = tmp9Array[6];
+		this.m21 = tmp9Array[7];
+		this.m22 = tmp9Array[8];
+
+	}
+
+	//
+	// Reference: Press, Flannery, Teukolsky, Vetterling,
+	// _Numerical_Recipes_in_C_, Cambridge University Press,
+	// 1988, pp 40-45.
+	//
+	private boolean luDecomposition(double[] matrix0, int[] row_perm)
+	{
+		int i, j;
+		int ptr, rs;
+		double big, temp;
+
+		ptr = 0;
+		rs = 0;
+
+		// For each row ...
+		i = 3;
+		while (i-- != 0)
 		{
-			this.m01 = vector[0];
-			this.m11 = vector[1];
-			this.m21 = vector[2];
+			big = 0.0;
+
+			j = 3;
+			while (j-- != 0)
+			{
+				temp = matrix0[ptr++];
+				temp = Math.abs(temp);
+				if (temp > big)
+				{
+					big = temp;
+				}
+			}
+
+			// Is the matrix singular?
+			if (big == 0.0)
+			{
+				return false;
+			}
+			tmp3Array2[rs++] = 1.0 / big;
 		}
-		else
+
+		int mtx;
+
+		mtx = 0;
+
+		// For all columns, execute Crout's method
+		for (j = 0; j < 3; j++)
 		{
-			this.m02 = vector[0];
-			this.m12 = vector[1];
-			this.m22 = vector[2];
+			int imax, k;
+			int target, p1, p2;
+			double sum;
+
+			// Determine elements of upper diagonal matrix U
+			for (i = 0; i < j; i++)
+			{
+				target = mtx + (3 * i) + j;
+				sum = matrix0[target];
+				k = i;
+				p1 = mtx + (3 * i);
+				p2 = mtx + j;
+				while (k-- != 0)
+				{
+					sum -= matrix0[p1] * matrix0[p2];
+					p1++;
+					p2 += 3;
+				}
+				matrix0[target] = sum;
+			}
+
+			// Search for largest pivot element and calculate
+			// intermediate elements of lower diagonal matrix L.
+			big = 0.0;
+			imax = -1;
+			for (i = j; i < 3; i++)
+			{
+				target = mtx + (3 * i) + j;
+				sum = matrix0[target];
+				k = j;
+				p1 = mtx + (3 * i);
+				p2 = mtx + j;
+				while (k-- != 0)
+				{
+					sum -= matrix0[p1] * matrix0[p2];
+					p1++;
+					p2 += 3;
+				}
+				matrix0[target] = sum;
+
+				// Is this the best pivot so far?
+				if ((temp = tmp3Array2[i] * Math.abs(sum)) >= big)
+				{
+					big = temp;
+					imax = i;
+				}
+			}
+
+			if (imax < 0)
+			{
+				throw new RuntimeException(
+						"Figure out what this exception should be.");
+				// throw new
+				// RuntimeException(VecMathI18N.getString("Matrix3d13"));
+			}
+
+			// Is a row exchange necessary?
+			if (j != imax)
+			{
+				// Yes: exchange rows
+				k = 3;
+				p1 = mtx + (3 * imax);
+				p2 = mtx + (3 * j);
+				while (k-- != 0)
+				{
+					temp = matrix0[p1];
+					matrix0[p1++] = matrix0[p2];
+					matrix0[p2++] = temp;
+				}
+
+				// Record change in scale factor
+				tmp3Array2[imax] = tmp3Array2[j];
+			}
+
+			// Record row permutation
+			row_perm[j] = imax;
+
+			// Is the matrix singular
+			if (matrix0[(mtx + (3 * j) + j)] == 0.0)
+			{
+				return false;
+			}
+
+			// Divide elements of lower diagonal matrix L by pivot
+			if (j != (3 - 1))
+			{
+				temp = 1.0 / (matrix0[(mtx + (3 * j) + j)]);
+				target = mtx + (3 * (j + 1)) + j;
+				i = 2 - j;
+				while (i-- != 0)
+				{
+					matrix0[target] *= temp;
+					target += 3;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	//
+	// Reference: Press, Flannery, Teukolsky, Vetterling,
+	// _Numerical_Recipes_in_C_, Cambridge University Press,
+	// 1988, pp 44-45.
+	//
+	private void luBacksubstitution(double[] matrix1, int[] row_perm,
+			double[] matrix2)
+	{
+
+		int i, ii, ip, j, k;
+		int rp;
+		int cv, rv;
+
+		rp = 0;
+
+		for (k = 0; k < 3; k++)
+		{
+			cv = k;
+			ii = -1;
+
+			for (i = 0; i < 3; i++)
+			{
+				double sum;
+
+				ip = row_perm[rp + i];
+				sum = matrix2[cv + 3 * ip];
+				matrix2[cv + 3 * ip] = matrix2[cv + 3 * i];
+				if (ii >= 0)
+				{
+					rv = i * 3;
+					for (j = ii; j <= i - 1; j++)
+					{
+						sum -= matrix1[rv + j] * matrix2[cv + 3 * j];
+					}
+				}
+				else if (sum != 0.0)
+				{
+					ii = i;
+				}
+				matrix2[cv + 3 * i] = sum;
+			}
+			rv = 2 * 3;
+			matrix2[cv + 3 * 2] /= matrix1[rv + 2];
+
+			rv -= 3;
+			matrix2[cv + 3 * 1] = (matrix2[cv + 3 * 1] - matrix1[rv + 2]
+					* matrix2[cv + 3 * 2])
+					/ matrix1[rv + 1];
+
+			rv -= 3;
+			matrix2[cv + 4 * 0] = (matrix2[cv + 3 * 0] - matrix1[rv + 1]
+					* matrix2[cv + 3 * 1] - matrix1[rv + 2]
+					* matrix2[cv + 3 * 2])
+					/ matrix1[rv + 0];
+
 		}
 	}
 
