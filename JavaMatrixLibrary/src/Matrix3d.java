@@ -695,9 +695,6 @@ public class Matrix3d
 
 	private final void invert(Matrix3d matrix)
 	{
-		// Use LU decomposition and backsubstitution code specifically
-		// for floating-point 3x3 matrices.
-
 		tmp9Array2[0] = matrix.m00;
 		tmp9Array2[1] = matrix.m01;
 		tmp9Array2[2] = matrix.m02;
@@ -710,7 +707,6 @@ public class Matrix3d
 		tmp9Array2[7] = matrix.m21;
 		tmp9Array2[8] = matrix.m22;
 
-		// Calculate LU decomposition: Is the matrix singular?
 		if (!luDecomposition(tmp9Array2, tmp3Array))
 		{
 			throw new RuntimeException("Matrix is singular.");
@@ -772,7 +768,6 @@ public class Matrix3d
 				}
 			}
 
-			// Is the matrix singular?
 			if (big == 0.0)
 			{
 				return false;
@@ -784,14 +779,12 @@ public class Matrix3d
 
 		mtx = 0;
 
-		// For all columns, execute Crout's method
 		for (j = 0; j < 3; j++)
 		{
 			int imax, k;
 			int target, p1, p2;
 			double sum;
 
-			// Determine elements of upper diagonal matrix U
 			for (i = 0; i < j; i++)
 			{
 				target = mtx + (3 * i) + j;
@@ -807,9 +800,7 @@ public class Matrix3d
 				}
 				matrix0[target] = sum;
 			}
-
-			// Search for largest pivot element and calculate
-			// intermediate elements of lower diagonal matrix L.
+			
 			big = 0.0;
 			imax = -1;
 			for (i = j; i < 3; i++)
@@ -827,7 +818,6 @@ public class Matrix3d
 				}
 				matrix0[target] = sum;
 
-				// Is this the best pivot so far?
 				if ((temp = tmp3Array2[i] * Math.abs(sum)) >= big)
 				{
 					big = temp;
@@ -837,16 +827,11 @@ public class Matrix3d
 
 			if (imax < 0)
 			{
-				throw new RuntimeException(
-						"Figure out what this exception should be.");
-				// throw new
-				// RuntimeException(VecMathI18N.getString("Matrix3d13"));
+				throw new RuntimeException("Value imax cannot be less than zero.");
 			}
 
-			// Is a row exchange necessary?
 			if (j != imax)
 			{
-				// Yes: exchange rows
 				k = 3;
 				p1 = mtx + (3 * imax);
 				p2 = mtx + (3 * j);
@@ -857,20 +842,16 @@ public class Matrix3d
 					matrix0[p2++] = temp;
 				}
 
-				// Record change in scale factor
 				tmp3Array2[imax] = tmp3Array2[j];
 			}
 
-			// Record row permutation
 			row_perm[j] = imax;
 
-			// Is the matrix singular
 			if (matrix0[(mtx + (3 * j) + j)] == 0.0)
 			{
 				return false;
 			}
 
-			// Divide elements of lower diagonal matrix L by pivot
 			if (j != (3 - 1))
 			{
 				temp = 1.0 / (matrix0[(mtx + (3 * j) + j)]);
