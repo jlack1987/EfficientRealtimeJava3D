@@ -174,4 +174,18 @@ public class Vector3dTest
 			assertEquals(x1 * y2 - y1 * x2, vector2.z, 1e-12);
 		}
 	}
+	
+	@Test
+	public void testVectorLength()
+	{
+		Vector3d vector = new Vector3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			vector.set(random.nextDouble()*100, random.nextDouble()*100, random.nextDouble()*100);
+			double vectorMag = Math.sqrt(vector.x*vector.x+vector.y*vector.y+vector.z*vector.z);
+			
+			assertEquals(vectorMag, vector.length(),1e-15);
+		}
+	}
 }

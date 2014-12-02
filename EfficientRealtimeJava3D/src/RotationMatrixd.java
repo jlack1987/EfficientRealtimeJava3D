@@ -1,6 +1,6 @@
-public class RotationMatrix extends Matrix3d
+public class RotationMatrixd extends Matrix3d
 {
-	public RotationMatrix()
+	public RotationMatrixd()
 	{
 		super.setToIdentity();
 	}
@@ -70,12 +70,15 @@ public class RotationMatrix extends Matrix3d
 		super.transpose();
 	}
 
-	public void invert(RotationMatrix matrix)
+	public void invert(RotationMatrixd matrix)
 	{
 		super.set(matrix);
 		super.transpose();
 	}
 
+	/**
+	 * Orthonormalize this matrix.
+	 */
 	public void normalize()
 	{
 		double xdoty = m00 * m01 + m10 * m11 + m20 * m21;

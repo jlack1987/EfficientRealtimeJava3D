@@ -102,4 +102,9 @@ public class Vector3d
 			vectorToPack.z = this.x * vector.y - this.y * vector.x;
 		}
 	}
+	
+	public double length()
+	{
+		return Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+	}
 }
