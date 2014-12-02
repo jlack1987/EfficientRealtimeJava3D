@@ -65,6 +65,7 @@ public class RotationMatrixd extends Matrix3d
 		this.m22 = 1.0;
 	}
 
+	@Override
 	public void invert()
 	{
 		super.transpose();
