@@ -1,7 +1,8 @@
 
 
-public class Vector3d
+public class Vector3d implements java.io.Serializable
 {
+	private static final long serialVersionUID = 3014418817837714975L;
 	double x;
 	double y;
 	double z;
