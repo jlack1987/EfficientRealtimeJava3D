@@ -1,3 +1,5 @@
+
+
 public class Vector3d
 {
 	double x;

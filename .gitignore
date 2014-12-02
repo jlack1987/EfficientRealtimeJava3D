@@ -2,3 +2,4 @@
 *.DS_Store
 *.project
 *.settings
+EfficientRealtimeJava3D/bin/*.class
