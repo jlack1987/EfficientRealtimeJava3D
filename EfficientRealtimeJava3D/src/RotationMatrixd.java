@@ -149,6 +149,31 @@ public class RotationMatrixd extends Matrix3d implements java.io.Serializable
 		this.m21 = 0.0;
 		this.m22 = 1.0;
 	}
+	
+	public void rotate(Vector3d vector)
+	{
+		double x,y;
+		
+		x = vector.x*m00 + vector.y*m01 + vector.z*m02;
+		y = vector.x*m10 + vector.y*m11 + vector.z*m12;
+		vector.z = vector.x*m20 + vector.y*m21 + vector.z*m22;
+		vector.x = x;
+		vector.y = y;
+	}
+	
+	public void rotate(Vector3d vectorIn, Vector3d vectorOut)
+	{
+		if(vectorIn != vectorOut)
+		{
+			vectorOut.x = vectorIn.x*m00 + vectorIn.y*m01 + vectorIn.z*m02;
+			vectorOut.y = vectorIn.x*m10 + vectorIn.y*m11 + vectorIn.z*m12;
+			vectorOut.z = vectorIn.x*m20 + vectorIn.y*m21 + vectorIn.z*m22;
+		}
+		else
+		{
+			rotate(vectorIn);
+		}
+	}
 
 	@Override
 	public void invert()

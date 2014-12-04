@@ -14,7 +14,7 @@ public class Quaterniond implements java.io.Serializable
 	{
 		set(array[0], array[1], array[2], array[3]);
 	}
-	
+
 	public Quaterniond(float[] array)
 	{
 		set(array[0], array[1], array[2], array[3]);
@@ -33,14 +33,19 @@ public class Quaterniond implements java.io.Serializable
 		this.w = w;
 		normalize();
 	}
+	
+	public void set(Quaterniond quaternion)
+	{
+		set(quaternion.x,quaternion.y,quaternion.z,quaternion.w);
+	}
 
 	public final void set(AxisAngled axisAngle)
 	{
 		double mag, tmpMag;
 
-		tmpMag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y
-				+ axisAngle.z * axisAngle.z);
-		
+		tmpMag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y
+				* axisAngle.y + axisAngle.z * axisAngle.z);
+
 		if (tmpMag < EPS)
 		{
 			w = 0.0;
@@ -106,7 +111,7 @@ public class Quaterniond implements java.io.Serializable
 		normalize();
 	}
 
-	public final void mul(Quaterniond quaternion1, Quaterniond quaternion2)
+	public final void multiply(Quaterniond quaternion1, Quaterniond quaternion2)
 	{
 		if (this != quaternion1 && this != quaternion2)
 		{
@@ -145,7 +150,7 @@ public class Quaterniond implements java.io.Serializable
 		}
 	}
 
-	public final void mul(Quaterniond quaternion)
+	public final void multiply(Quaterniond quaternion)
 	{
 		double x, y, w;
 
@@ -175,14 +180,14 @@ public class Quaterniond implements java.io.Serializable
 
 		double x, y, w;
 
-		w = quaternion.w * tmpw - quaternion.x * tmpx - quaternion.y * tmpy
-				- quaternion.z * tmpz;
-		x = quaternion.w * tmpx + tmpw * quaternion.x + quaternion.y * tmpz
-				- quaternion.z * tmpy;
-		y = quaternion.w * tmpy + tmpw * quaternion.y - quaternion.x * tmpz
-				+ quaternion.z * tmpx;
-		this.z = quaternion.w * tmpz + tmpw * quaternion.z + quaternion.x
-				* tmpy - quaternion.y * tmpx;
+		w = this.w * tmpw - this.x * tmpx - this.y * tmpy
+				- this.z * tmpz;
+		x = this.w * tmpx + tmpw * this.x + this.y * tmpz
+				- this.z * tmpy;
+		y = this.w * tmpy + tmpw * this.y - this.x * tmpz
+				+ this.z * tmpx;
+		this.z = this.w * tmpz + tmpw * this.z + this.x
+				* tmpy - this.y * tmpx;
 		this.w = w;
 		this.x = x;
 		this.y = y;
@@ -270,5 +275,10 @@ public class Quaterniond implements java.io.Serializable
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		normalize();
+	}
+	
+	public String toString()
+	{
+		return "(" + x + "," + y + "," + z + "," + w + ")";
 	}
 }

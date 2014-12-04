@@ -1,12 +1,23 @@
 import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
+
 import org.junit.Test;
 
 public class AxisAngledTest
 {
 	int nTests = 10;
 	Random random = new Random();
+	
+	public void setUp()
+	{
+		
+	}
+	
+	public void tearDown()
+	{
+		System.gc();
+	}
 	
 	@Test
 	public void testSetFromRotationMatrix()

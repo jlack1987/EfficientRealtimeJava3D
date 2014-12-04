@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-public class RotationMatrixTest
+public class RotationMatrixdTest
 {
 	Random random = new Random();
 	int nTests = 10;
