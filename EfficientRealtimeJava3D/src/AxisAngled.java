@@ -8,34 +8,22 @@ public class AxisAngled implements java.io.Serializable
 
 	public AxisAngled(double x, double y, double z, double angle)
 	{
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.angle = angle;
+		set(x,y,z,angle);
 	}
 
 	public AxisAngled(double[] array)
 	{
-		this.x = array[0];
-		this.y = array[1];
-		this.z = array[2];
-		this.angle = array[3];
+		set(array[0],array[1],array[2],array[3]);
 	}
 
 	public AxisAngled(AxisAngled axisAngle)
 	{
-		this.x = axisAngle.x;
-		this.y = axisAngle.y;
-		this.z = axisAngle.z;
-		this.angle = axisAngle.angle;
+		set(axisAngle.x,axisAngle.y,axisAngle.z,axisAngle.angle);
 	}
 
 	public AxisAngled(Vector3d axis, double angle)
 	{
-		this.x = axis.x;
-		this.y = axis.y;
-		this.z = axis.z;
-		this.angle = angle;
+		set(axis.x,axis.y,axis.z,angle);
 	}
 	
 	public AxisAngled(RotationMatrixd matrix)
@@ -50,13 +38,10 @@ public class AxisAngled implements java.io.Serializable
 
 	public AxisAngled()
 	{
-		this.x = 0.0;
-		this.y = 0.0;
-		this.z = 1.0;
-		this.angle = 0.0;
+		set(0.0,0.0,1.0,0.0);
 	}
 
-	public final void set(double x, double y, double z, double angle)
+	public void set(double x, double y, double z, double angle)
 	{
 		this.x = x;
 		this.y = y;
@@ -66,26 +51,17 @@ public class AxisAngled implements java.io.Serializable
 
 	public final void set(double[] array)
 	{
-		this.x = array[0];
-		this.y = array[1];
-		this.z = array[2];
-		this.angle = array[3];
+		set(array[0],array[1],array[2],array[3]);
 	}
 
-	public void set(AxisAngled array)
+	public void set(AxisAngled axisAngle)
 	{
-		this.x = array.x;
-		this.y = array.y;
-		this.z = array.z;
-		this.angle = array.angle;
+		set(axisAngle.x,axisAngle.y,axisAngle.z,axisAngle.angle);
 	}
 
 	public void set(Vector3d axis, double angle)
 	{
-		this.x = axis.x;
-		this.y = axis.y;
-		this.z = axis.z;
-		this.angle = angle;
+		set(axis.x,axis.y,axis.z,angle);
 	}
 
 	public void get(double[] array)
@@ -94,6 +70,26 @@ public class AxisAngled implements java.io.Serializable
 		array[1] = this.y;
 		array[2] = this.z;
 		array[3] = this.angle;
+	}
+	
+	public void get(AxisAngled axisAngle)
+	{
+		axisAngle.x = this.x;
+		axisAngle.y = this.y;
+		axisAngle.z = this.z;
+		axisAngle.angle = this.angle;
+	}
+	
+	public void getAxis(Vector3d vector)
+	{
+		vector.x = this.x;
+		vector.y = this.y;
+		vector.z = this.z;
+	}
+	
+	public double getAngle()
+	{
+		return angle;
 	}
 
 	public final void set(RotationMatrixd matrix)
