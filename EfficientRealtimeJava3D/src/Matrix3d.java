@@ -417,6 +417,112 @@ public class Matrix3d implements java.io.Serializable
 		}
 	}
 
+	public void multiplyTransposeRight(Matrix3d matrix1, Matrix3d matrix2)
+	{
+		if (this != matrix1 && this != matrix2)
+		{
+			this.m00 = matrix1.m00 * matrix2.m00 + matrix1.m01 * matrix2.m01
+					+ matrix1.m02 * matrix2.m02;
+			this.m01 = matrix1.m00 * matrix2.m10 + matrix1.m01 * matrix2.m11
+					+ matrix1.m02 * matrix2.m12;
+			this.m02 = matrix1.m00 * matrix2.m20 + matrix1.m01 * matrix2.m21
+					+ matrix1.m02 * matrix2.m22;
+			this.m10 = matrix1.m10 * matrix2.m00 + matrix1.m11 * matrix2.m01
+					+ matrix1.m12 * matrix2.m02;
+			this.m11 = matrix1.m10 * matrix2.m10 + matrix1.m11 * matrix2.m11
+					+ matrix1.m12 * matrix2.m12;
+			this.m12 = matrix1.m10 * matrix2.m20 + matrix1.m11 * matrix2.m21
+					+ matrix1.m12 * matrix2.m22;
+			this.m20 = matrix1.m20 * matrix2.m00 + matrix1.m21 * matrix2.m01
+					+ matrix1.m22 * matrix2.m02;
+			this.m21 = matrix1.m20 * matrix2.m10 + matrix1.m21 * matrix2.m11
+					+ matrix1.m22 * matrix2.m12;
+			this.m22 = matrix1.m20 * matrix2.m20 + matrix1.m21 * matrix2.m21
+					+ matrix1.m22 * matrix2.m22;
+		}
+		else
+		{
+			double tmp00, tmp01, tmp02, tmp10, tmp11, tmp12, tmp20, tmp21, tmp22;
+
+			tmp00 = matrix1.m00 * matrix2.m00 + matrix1.m01 * matrix2.m01
+					+ matrix1.m02 * matrix2.m02;
+			tmp01 = matrix1.m00 * matrix2.m10 + matrix1.m01 * matrix2.m11
+					+ matrix1.m02 * matrix2.m12;
+			tmp02 = matrix1.m00 * matrix2.m20 + matrix1.m01 * matrix2.m21
+					+ matrix1.m02 * matrix2.m22;
+			tmp10 = matrix1.m10 * matrix2.m00 + matrix1.m11 * matrix2.m01
+					+ matrix1.m12 * matrix2.m02;
+			tmp11 = matrix1.m10 * matrix2.m10 + matrix1.m11 * matrix2.m11
+					+ matrix1.m12 * matrix2.m12;
+			tmp12 = matrix1.m10 * matrix2.m20 + matrix1.m11 * matrix2.m21
+					+ matrix1.m12 * matrix2.m22;
+			tmp20 = matrix1.m20 * matrix2.m00 + matrix1.m21 * matrix2.m01
+					+ matrix1.m22 * matrix2.m02;
+			tmp21 = matrix1.m20 * matrix2.m10 + matrix1.m21 * matrix2.m11
+					+ matrix1.m22 * matrix2.m12;
+			tmp22 = matrix1.m20 * matrix2.m20 + matrix1.m21 * matrix2.m21
+					+ matrix1.m22 * matrix2.m22;
+
+			this.m00 = tmp00;
+			this.m01 = tmp01;
+			this.m02 = tmp02;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m20 = tmp20;
+			this.m21 = tmp21;
+			this.m22 = tmp22;
+		}
+	}
+
+	public void multiplyTransposeLeft(Matrix3d matrix1, Matrix3d matrix2)
+	{
+		if (this != matrix1 && this != matrix2)
+		{
+			this.m00 = matrix1.m00 * matrix2.m00 + matrix1.m10 * matrix2.m10 + matrix1.m20 * matrix2.m20;
+			this.m01 = matrix1.m00 * matrix2.m01 + matrix1.m10 * matrix2.m11 + matrix1.m20 * matrix2.m21;
+			this.m02 = matrix1.m00 * matrix2.m02 + matrix1.m10 * matrix2.m12 + matrix1.m20 * matrix2.m22;
+			this.m10 = matrix1.m01 * matrix2.m00 + matrix1.m11 * matrix2.m10 + matrix1.m21 * matrix2.m20;
+			this.m11 = matrix1.m01 * matrix2.m01 + matrix1.m11 * matrix2.m11 + matrix1.m21 * matrix2.m21;
+			this.m12 = matrix1.m01 * matrix2.m02 + matrix1.m11 * matrix2.m12 + matrix1.m21 * matrix2.m22;
+			this.m20 = matrix1.m02 * matrix2.m00 + matrix1.m12 * matrix2.m10 + matrix1.m22 * matrix2.m20;
+			this.m21 = matrix1.m02 * matrix2.m01 + matrix1.m12 * matrix2.m11 + matrix1.m22 * matrix2.m21;
+			this.m22 = matrix1.m02 * matrix2.m02 + matrix1.m12 * matrix2.m12 + matrix1.m22 * matrix2.m22;
+		}
+		else
+		{
+			double tmp00, tmp01, tmp02, tmp10, tmp11, tmp12, tmp20, tmp21, tmp22;
+
+			tmp00 = matrix1.m00 * matrix2.m00 + matrix1.m10 * matrix2.m10 + matrix1.m20 * matrix2.m20;
+			tmp01 = matrix1.m00 * matrix2.m01 + matrix1.m10 * matrix2.m11 + matrix1.m20 * matrix2.m21;
+			tmp02 = matrix1.m00 * matrix2.m02 + matrix1.m10 * matrix2.m12 + matrix1.m20 * matrix2.m22;
+
+			tmp10 = matrix1.m01 * matrix2.m00 + matrix1.m11 * matrix2.m10 + matrix1.m21 * matrix2.m20;
+			tmp11 = matrix1.m01 * matrix2.m01 + matrix1.m11 * matrix2.m11 + matrix1.m21 * matrix2.m21;
+			tmp12 = matrix1.m01 * matrix2.m02 + matrix1.m11 * matrix2.m12 + matrix1.m21 * matrix2.m22;
+
+			tmp20 = matrix1.m02 * matrix2.m00 + matrix1.m12 * matrix2.m10 + matrix1.m22 * matrix2.m20;
+			tmp21 = matrix1.m02 * matrix2.m01 + matrix1.m12 * matrix2.m11 + matrix1.m22 * matrix2.m21;
+			tmp22 = matrix1.m02 * matrix2.m02 + matrix1.m12 * matrix2.m12 + matrix1.m22 * matrix2.m22;
+
+			this.m00 = tmp00;
+			this.m01 = tmp01;
+			this.m02 = tmp02;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m20 = tmp20;
+			this.m21 = tmp21;
+			this.m22 = tmp22;
+		}
+	}
+
+	public double determinant()
+	{
+		return (m00 * m11 * m22 + m01 * m12 * m20 + m02 * m10 * m21 - m02 * m11
+				* m20 - m00 * m12 * m21 - m01 * m10 * m22);
+	}
+
 	public void transpose()
 	{
 		double tmp01 = this.m01;
@@ -446,7 +552,7 @@ public class Matrix3d implements java.io.Serializable
 
 	public void getRow(int row, Vector3d vector)
 	{
-		switch(row)
+		switch (row)
 		{
 			case 1:
 			{
@@ -470,7 +576,8 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
@@ -481,7 +588,7 @@ public class Matrix3d implements java.io.Serializable
 			throw new RuntimeException("The column must either be 1, 2, or 3.");
 		}
 
-		switch(row)
+		switch (row)
 		{
 			case 1:
 			{
@@ -505,13 +612,14 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
 	public void getColumn(int column, Vector3d vector)
 	{
-		switch(column)
+		switch (column)
 		{
 			case 1:
 			{
@@ -535,43 +643,45 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
 	public void getColumn(int column, double[] vector)
 	{
-		switch(column)
+		switch (column)
+		{
+			case 1:
 			{
-				case 1:
-				{
-					vector[0] = this.m00;
-					vector[1] = this.m10;
-					vector[2] = this.m20;
-					break;
-				}
-				case 2:
-				{
-					vector[0] = this.m01;
-					vector[1] = this.m11;
-					vector[2] = this.m21;
-					break;
-				}
-				case 3:
-				{
-					vector[0] = this.m02;
-					vector[1] = this.m12;
-					vector[2] = this.m22;
-					break;
-				}
-				default:
-					throw new RuntimeException("The column must either be 1, 2, or 3.");
+				vector[0] = this.m00;
+				vector[1] = this.m10;
+				vector[2] = this.m20;
+				break;
 			}
+			case 2:
+			{
+				vector[0] = this.m01;
+				vector[1] = this.m11;
+				vector[2] = this.m21;
+				break;
+			}
+			case 3:
+			{
+				vector[0] = this.m02;
+				vector[1] = this.m12;
+				vector[2] = this.m22;
+				break;
+			}
+			default:
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
+		}
 	}
 
 	public void setRow(int row, Vector3d vector)
 	{
-		switch(row)
+		switch (row)
 		{
 			case 1:
 			{
@@ -595,13 +705,14 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
 	public void setRow(int row, double[] vector)
 	{
-		switch(row)
+		switch (row)
 		{
 			case 1:
 			{
@@ -625,13 +736,14 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
 	public void setColumn(int column, Vector3d vector)
 	{
-		switch(column)
+		switch (column)
 		{
 			case 1:
 			{
@@ -655,13 +767,14 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
 	public void setColumn(int column, double[] vector)
 	{
-		switch(column)
+		switch (column)
 		{
 			case 1:
 			{
@@ -685,7 +798,8 @@ public class Matrix3d implements java.io.Serializable
 				break;
 			}
 			default:
-				throw new RuntimeException("The column must either be 1, 2, or 3.");
+				throw new RuntimeException(
+						"The column must either be 1, 2, or 3.");
 		}
 	}
 
@@ -737,7 +851,7 @@ public class Matrix3d implements java.io.Serializable
 		this.m22 = tmp9Array[8];
 
 	}
-	
+
 	/**
 	 * Orthonormalize this matrix.
 	 */
@@ -763,21 +877,21 @@ public class Matrix3d implements java.io.Serializable
 		m02 = m02 - (tmp * m00 + tmp1 * m01);
 		m12 = m12 - (tmp * m10 + tmp1 * m11);
 		m22 = m22 - (tmp * m20 + tmp1 * m21);
-		
-		// Compute orthogonalized vector magnitudes and normalize
-        double magX = Math.sqrt(m00 * m00 + m10 * m10 + m20 * m20);
-        double magY = Math.sqrt(m01 * m01 + m11 * m11 + m21 * m21);
-        double magZ = Math.sqrt(m02 * m02 + m12 * m12 + m22 * m22);
 
-        m00 = m00 / magX;
-        m10 = m10 / magX;
-        m20 = m20 / magX;
-        m01 = m01 / magY;
-        m11 = m11 / magY;
-        m21 = m21 / magY;
-        m02 = m02 / magZ;
-        m12 = m12 / magZ;
-        m22 = m22 / magZ;
+		// Compute orthogonalized vector magnitudes and normalize
+		double magX = Math.sqrt(m00 * m00 + m10 * m10 + m20 * m20);
+		double magY = Math.sqrt(m01 * m01 + m11 * m11 + m21 * m21);
+		double magZ = Math.sqrt(m02 * m02 + m12 * m12 + m22 * m22);
+
+		m00 = m00 / magX;
+		m10 = m10 / magX;
+		m20 = m20 / magX;
+		m01 = m01 / magY;
+		m11 = m11 / magY;
+		m21 = m21 / magY;
+		m02 = m02 / magZ;
+		m12 = m12 / magZ;
+		m22 = m22 / magZ;
 	}
 
 	//
@@ -843,7 +957,7 @@ public class Matrix3d implements java.io.Serializable
 				}
 				matrix0[target] = sum;
 			}
-			
+
 			big = 0.0;
 			imax = -1;
 			for (i = j; i < 3; i++)
@@ -870,7 +984,8 @@ public class Matrix3d implements java.io.Serializable
 
 			if (imax < 0)
 			{
-				throw new RuntimeException("Value imax cannot be less than zero.");
+				throw new RuntimeException(
+						"Value imax cannot be less than zero.");
 			}
 
 			if (j != imax)
@@ -1016,6 +1131,11 @@ public class Matrix3d implements java.io.Serializable
 
 		return true;
 	}
+	
+	protected static final boolean almostZero(double a)
+	   {
+	      return ((a < 1.0e-5) && (a > -1.0e-5));
+	   }
 
 	public String toString()
 	{

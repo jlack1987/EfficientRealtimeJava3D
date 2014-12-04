@@ -519,6 +519,29 @@ public class Matrix3dTest
 	}
 	
 	@Test
+	public void testDeterminant1()
+	{
+		Matrix3d matrix = new Matrix3d();
+		
+		assertEquals(matrix.determinant(),0.0,1e-12);
+		
+		matrix.setToIdentity();
+		assertEquals(matrix.determinant(),1.0,1e-12);
+		
+		matrix.m00 = 1;
+		matrix.m01 = 2;
+		matrix.m02 = 3;
+		matrix.m10 = 0;
+		matrix.m11 = -4;
+		matrix.m12 = 1;
+		matrix.m20 = 0;
+		matrix.m21 = 3;
+		matrix.m22 = -1;
+		
+		assertEquals(matrix.determinant(),1.0,1e-12);
+	}
+	
+	@Test
 	public void testGetColumn()
 	{
 		Matrix3d matrix = new Matrix3d();
@@ -850,6 +873,92 @@ public class Matrix3dTest
 			Matrix3d testMatrix = doMatrixMultiply(matrix1, matrix1);
 			matrix1.multiply(matrix1,matrix1);
 			assertMatrixEquals(testMatrix, matrix1, 1e-10);
+		}
+	}
+	
+	@Test
+	public void testMatrixMultiplyTransposeRight1()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			randomizeMatrix(random, matrix2);
+			
+			matrix2.transpose();
+			Matrix3d matrixCheck = doMatrixMultiply(matrix, matrix2);
+			
+			matrix2.transpose();
+			matrix.multiplyTransposeRight(matrix, matrix2);
+			
+			assertMatrixEquals(matrix, matrixCheck, 1e-10);
+		}
+	}
+	
+	@Test
+	public void testMatrixMultiplyTransposeRight2()
+	{
+		Matrix3d matrix1 = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		Matrix3d matrix3 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix1);
+			randomizeMatrix(random, matrix2);
+			
+			matrix2.transpose();
+			Matrix3d matrixCheck = doMatrixMultiply(matrix1, matrix2);
+			
+			matrix2.transpose();
+			matrix3.multiplyTransposeRight(matrix1, matrix2);
+			
+			assertMatrixEquals(matrix3, matrixCheck, 1e-10);
+		}
+	}
+	
+	@Test
+	public void testMatrixMultiplyTransposeLeft1()
+	{
+		Matrix3d matrix = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix);
+			randomizeMatrix(random, matrix2);
+			
+			matrix.transpose();
+			Matrix3d matrixCheck = doMatrixMultiply(matrix, matrix2);
+			
+			matrix.transpose();
+			matrix.multiplyTransposeLeft(matrix, matrix2);
+			
+			assertMatrixEquals(matrix, matrixCheck, 1e-10);
+		}
+	}
+	
+	@Test
+	public void testMatrixMultiplyTransposeLeft2()
+	{
+		Matrix3d matrix1 = new Matrix3d();
+		Matrix3d matrix2 = new Matrix3d();
+		Matrix3d matrix3 = new Matrix3d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			randomizeMatrix(random, matrix1);
+			randomizeMatrix(random, matrix2);
+			
+			matrix1.transpose();
+			Matrix3d matrixCheck = doMatrixMultiply(matrix1, matrix2);
+			
+			matrix1.transpose();
+			matrix3.multiplyTransposeLeft(matrix1, matrix2);
+			
+			assertMatrixEquals(matrix3, matrixCheck, 1e-10);
 		}
 	}
 	

@@ -6,6 +6,89 @@ public class RotationMatrixd extends Matrix3d implements java.io.Serializable
 	{
 		super.setToIdentity();
 	}
+	
+	public RotationMatrixd(RotationMatrixd matrix)
+	{
+		set(matrix);
+	}
+	
+	public RotationMatrixd(Quaterniond quaternion)
+	{
+		set(quaternion);
+	}
+	
+	public RotationMatrixd(AxisAngled axisAngle)
+	{
+		set(axisAngle);
+	}
+	
+	public void set(Quaterniond quaternion)
+	{
+		setRotationWithQuaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+	}
+	
+	private void setRotationWithQuaternion(double qx, double qy, double qz, double qw)
+	   {
+	      double yy2 = 2.0 * qy * qy;
+	      double zz2 = 2.0 * qz * qz;
+	      double xx2 = 2.0 * qx * qx;
+	      double xy2 = 2.0 * qx * qy;
+	      double wz2 = 2.0 * qw * qz;
+	      double xz2 = 2.0 * qx * qz;
+	      double wy2 = 2.0 * qw * qy;
+	      double yz2 = 2.0 * qy * qz;
+	      double wx2 = 2.0 * qw * qx;
+
+	      m00 = (1.0 - yy2 - zz2);
+	      m01 = (xy2 - wz2);
+	      m02 = (xz2 + wy2);
+	      m10 = (xy2 + wz2);
+	      m11 = (1.0 - xx2 - zz2);
+	      m12 = (yz2 - wx2);
+	      m20 = (xz2 - wy2);
+	      m21 = (yz2 + wx2);
+	      m22 = (1.0 - xx2 - yy2);
+	   }
+	
+	public void set(AxisAngled axisAngle)
+	{
+		setRotationWithAxisAngle(axisAngle.x,axisAngle.y,axisAngle.z,axisAngle.angle);
+	}
+	
+	private void setRotationWithAxisAngle(double axisAngleX, double axisAngleY, double axisAngleZ, double axisAngleTheta)
+	   {
+	      double mag = Math.sqrt(axisAngleX * axisAngleX + axisAngleY * axisAngleY + axisAngleZ * axisAngleZ);
+
+	      if (almostZero(mag))
+	      {
+	         setToIdentity();
+	      }
+	      else
+	      {
+	         mag = 1.0 / mag;
+	         double ax = axisAngleX * mag;
+	         double ay = axisAngleY * mag;
+	         double az = axisAngleZ * mag;
+
+	         double sinTheta = Math.sin(axisAngleTheta);
+	         double cosTheta = Math.cos(axisAngleTheta);
+	         double t = 1.0 - cosTheta;
+
+	         double xz = ax * az;
+	         double xy = ax * ay;
+	         double yz = ay * az;
+
+	         this.m00 = (t * ax * ax + cosTheta);
+	         this.m01 = (t * xy - sinTheta * az);
+	         m02 = (t * xz + sinTheta * ay);
+	         m10 = (t * xy + sinTheta * az);
+	         m11 = (t * ay * ay + cosTheta);
+	         m12 = (t * yz - sinTheta * ax);
+	         m20 = (t * xz - sinTheta * ay);
+	         m21 = (t * yz + sinTheta * ax);
+	         m22 = (t * az * az + cosTheta);
+	      }
+	   }
 
 	public final void rotX(double theta)
 	{
