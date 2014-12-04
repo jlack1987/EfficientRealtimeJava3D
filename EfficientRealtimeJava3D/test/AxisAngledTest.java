@@ -1,7 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
-
 import org.junit.Test;
 
 public class AxisAngledTest
@@ -39,6 +38,32 @@ public class AxisAngledTest
 			axisAngle2.set(matrix);
 			assertAxisAngledEquals(axisAngle1, axisAngle2, 1e-8);
 		}
+	}
+	
+	@Test
+	public void tesSetFromQuaternion1()
+	{
+		Quaterniond quaternion = new Quaterniond();
+		AxisAngled axisAngle1 = new AxisAngled();
+		AxisAngled axisAngle2 = new AxisAngled();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomAxisAngle(random, axisAngle1);
+			quaternion.set(axisAngle1);
+			axisAngle2.set(quaternion);
+			
+			assertAxisAngledEquals(axisAngle1, axisAngle2, 1e-8);
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private void assertQuaterniondEquals(Quaterniond q1, Quaterniond q2, double epsilon)
+	{
+		assertEquals(q1.x,q2.x,epsilon);
+		assertEquals(q1.y,q2.y,epsilon);
+		assertEquals(q1.z,q2.z,epsilon);
+		assertEquals(q1.w,q2.w,epsilon);
 	}
 	
 	private void assertAxisAngledEquals(AxisAngled axisAngle1, AxisAngled axisAngle2, double epsilon)
@@ -130,6 +155,23 @@ public class AxisAngledTest
 		axisAngle.z *= 1/mag;
 		
 		axisAngle.angle = random.nextDouble()*Math.PI;
+	}
+	
+	
+	@SuppressWarnings("unused")
+	private void createRandomQuaternion(Random random, Quaterniond q)
+	{
+		q.x = random.nextDouble();
+		q.y = random.nextDouble();
+		q.z = random.nextDouble();
+		q.w = random.nextDouble();
+		
+		double val = 1/(Math.sqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w));
+		
+		q.x *= val;
+		q.y *= val;
+		q.z *= val;
+		q.w *= val;
 	}
 	
   private void createRandomRotationMatrixZ(Random random, Matrix3d matrix)

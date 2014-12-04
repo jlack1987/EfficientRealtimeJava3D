@@ -14,6 +14,11 @@ public class Quaterniond implements java.io.Serializable
 	{
 		set(array[0], array[1], array[2], array[3]);
 	}
+	
+	public Quaterniond(float[] array)
+	{
+		set(array[0], array[1], array[2], array[3]);
+	}
 
 	public Quaterniond(Quaterniond quaternion)
 	{

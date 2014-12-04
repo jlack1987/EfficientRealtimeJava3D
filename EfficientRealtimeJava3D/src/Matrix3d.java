@@ -37,6 +37,25 @@ public class Matrix3d implements java.io.Serializable
 		this.m21 = doubleArray[7];
 		this.m22 = doubleArray[8];
 	}
+	
+	public Matrix3d(float[] doubleArray)
+	{
+		if (doubleArray.length != 9)
+		{
+			throw new RuntimeException(
+					"Float array must contain exactly 9 elements.");
+		}
+
+		this.m00 = doubleArray[0];
+		this.m01 = doubleArray[1];
+		this.m02 = doubleArray[2];
+		this.m10 = doubleArray[3];
+		this.m11 = doubleArray[4];
+		this.m12 = doubleArray[5];
+		this.m20 = doubleArray[6];
+		this.m21 = doubleArray[7];
+		this.m22 = doubleArray[8];
+	}
 
 	public Matrix3d(Matrix3d matrix)
 	{
