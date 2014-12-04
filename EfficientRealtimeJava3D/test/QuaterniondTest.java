@@ -163,8 +163,6 @@ public class QuaterniondTest
             rotMethod += "q";
             Vector3d vp = rotate( q, v );
             System.out.println( rotMethod + ": " + vp + " ==> " + vector3dEquals(vResult, vp, 1e-8));
-//            Vector3d vq = rotateVector( tmpQ, v );
-//            System.out.println( rotMethod + ": " + vq + " ==> " + vector3dEquals(vResult, vq, 1e-8));
 
             m.set( q );
 
