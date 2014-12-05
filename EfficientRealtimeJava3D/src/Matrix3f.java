@@ -11,7 +11,7 @@ public class Matrix3f implements java.io.Serializable
 	double[] tmp9Array2 = new double[9];
 	double tmp3Array2[] = new double[3];
 
-	private static final double EPS = 1E-16;
+	private static final double EPS = 1E-6;
 
 	public Matrix3f()
 	{
