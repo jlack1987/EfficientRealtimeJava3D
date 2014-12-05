@@ -195,6 +195,24 @@ public class Matrix3d implements java.io.Serializable
 		this.m21 = doubleArray[7];
 		this.m22 = doubleArray[8];
 	}
+	
+	public void get(Matrix3d matrix)
+	{
+		matrix.set(this);
+	}
+	
+	public void get(double[] array)
+	{
+		array[0] = m00;
+		array[1] = m01;
+		array[2] = m02;
+		array[3] = m10;
+		array[4] = m11;
+		array[5] = m12;
+		array[6] = m20;
+		array[7] = m21;
+		array[8] = m22;
+	}
 
 	public double get(int row, int col)
 	{

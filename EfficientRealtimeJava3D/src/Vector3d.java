@@ -41,6 +41,20 @@ public class Vector3d implements java.io.Serializable
 		this.y = y;
 		this.z = z;
 	}
+	
+	public void get(Vector3d vector)
+	{
+		vector.x = x;
+		vector.y = y;
+		vector.z = z;
+	}
+	
+	public void get(double[] array)
+	{
+		array[0] = x;
+		array[1] = y;
+		array[2] = z;
+	}
 
 	/**
 	 * Add method in which the vector argument is added to this and the result

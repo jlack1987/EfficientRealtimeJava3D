@@ -39,6 +39,20 @@ public class Vector3f implements java.io.Serializable
 		this.y = y;
 		this.z = z;
 	}
+	
+	public void get(Vector3f vector)
+	{
+		vector.x = x;
+		vector.y = y;
+		vector.z = z;
+	}
+	
+	public void get(float[] array)
+	{
+		array[0] = x;
+		array[1] = y;
+		array[2] = z;
+	}
 
 	/**
 	 * Add method in which the vector argument is added to this and the result
