@@ -6,20 +6,20 @@
 //
 //import java.util.Random;
 //
-//import javax.vecmath.AxisAngle4d;
-//import javax.vecmath.AxisAngle4f;
-//import javax.vecmath.Matrix3d;
-//import javax.vecmath.Matrix3f;
-//import javax.vecmath.Matrix4d;
-//import javax.vecmath.Matrix4f;
-//import javax.vecmath.Point3d;
-//import javax.vecmath.Point3f;
-//import javax.vecmath.Quat4d;
-//import javax.vecmath.Quat4f;
-//import javax.vecmath.Vector3d;
-//import javax.vecmath.Vector3f;
-//import javax.vecmath.Vector4d;
-//import javax.vecmath.Vector4f;
+////import javax.vecmath.AxisAngled;
+////import javax.vecmath.AxisAnglef;
+////import javax.vecmath.Matrix3d;
+////import javax.vecmath.Matrix3f;
+////import javax.vecmath.Matrix4d;
+////import javax.vecmath.Matrix4f;
+////import javax.vecmath.Point3d;
+////import javax.vecmath.Point3f;
+////import javax.vecmath.Quaterniond;
+////import javax.vecmath.Quaternionf;
+////import javax.vecmath.Vector3d;
+////import javax.vecmath.Vector3f;
+////import javax.vecmath.Vector4d;
+////import javax.vecmath.Vector4f;
 //
 //import org.junit.Test;
 //
@@ -33,8 +33,8 @@
 //   public void TestUseAxisAngleRepresentation()
 //   {
 //      Random random = new Random();
-//      AxisAngle4d axisAngle = new AxisAngle4d();
-//      AxisAngle4d axisAngleToCheck = new AxisAngle4d();
+//      AxisAngled axisAngle = new AxisAngled();
+//      AxisAngled axisAngleToCheck = new AxisAngled();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -94,8 +94,8 @@
 //   {
 //      Random random = new Random();
 //      Vector3d vector = new Vector3d();
-//      AxisAngle4d axisAngle = new AxisAngle4d();
-//      AxisAngle4d axisAngleToCheck = new AxisAngle4d();
+//      AxisAngled axisAngle = new AxisAngled();
+//      AxisAngled axisAngleToCheck = new AxisAngled();
 //
 //      for (int i = 0; i < nTests; i++)
 //      {
@@ -159,8 +159,8 @@
 //   public void TestUseAxisAngleRepresentation3()
 //   {
 //      Random random = new Random();
-//      AxisAngle4d axisAngle = new AxisAngle4d();
-//      AxisAngle4d axisAngleToCheck = new AxisAngle4d();
+//      AxisAngled axisAngle = new AxisAngled();
+//      AxisAngled axisAngleToCheck = new AxisAngled();
 //
 //      for (int i = 0; i < nTests; i++)
 //      {
@@ -224,8 +224,8 @@
 //   public void TestUseAxisAngleRepresentationWithFloats()
 //   {
 //      Random random = new Random();
-//      AxisAngle4f axisAngle = new AxisAngle4f();
-//      AxisAngle4f axisAngleToCheck = new AxisAngle4f();
+//      AxisAnglef axisAngle = new AxisAnglef();
+//      AxisAnglef axisAngleToCheck = new AxisAnglef();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -287,8 +287,8 @@
 //   public void TestUseAxisAngleRepresentationWithFloats2()
 //   {
 //      Random random = new Random();
-//      AxisAngle4f axisAngle = new AxisAngle4f();
-//      AxisAngle4f axisAngleToCheck = new AxisAngle4f();
+//      AxisAnglef axisAngle = new AxisAnglef();
+//      AxisAnglef axisAngleToCheck = new AxisAnglef();
 //      Vector3f vector = new Vector3f();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -375,8 +375,8 @@
 //   public void TestUseAxisAngleRepresentationWithFloats3()
 //   {
 //      Random random = new Random();
-//      AxisAngle4f axisAngle = new AxisAngle4f();
-//      AxisAngle4f axisAngleToCheck = new AxisAngle4f();
+//      AxisAnglef axisAngle = new AxisAnglef();
+//      AxisAnglef axisAngleToCheck = new AxisAnglef();
 //
 //      for (int i = 0; i < nTests; i++)
 //      {
@@ -437,11 +437,11 @@
 //   }
 //
 //   @Test
-//   public void TestGetTransformAsQuat4dAndVector3d()
+//   public void TestGetTransformAsQuaterniondAndVector3d()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
+//      Quaterniond quatCheck = new Quaterniond();
 //      Vector3d vec = new Vector3d();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
@@ -465,12 +465,12 @@
 //   }
 //
 //   @Test
-//   public void TestCreateTransformWithQuat4dAndVector3d()
+//   public void TestCreateTransformWithQuaterniondAndVector3d()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
 //      Vector3d trans = new Vector3d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quatCheck = new Quaterniond();
 //      Vector3d vec = new Vector3d();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -497,12 +497,12 @@
 //   }
 //
 //   @Test
-//   public void TestCreateTransformWithQuat4fAndVector3f()
+//   public void TestCreateTransformWithQuaternionfAndVector3f()
 //   {
 //      Random random = new Random();
-//      Quat4f quat1 = new Quat4f();
+//      Quaternionf quat1 = new Quaternionf();
 //      Vector3f trans = new Vector3f();
-//      Quat4f quatCheck = new Quat4f();
+//      Quaternionf quatCheck = new Quaternionf();
 //      Vector3f vec = new Vector3f();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -529,12 +529,12 @@
 //   }
 //
 //   @Test
-//   public void TestCreateTransformWithQuat4d()
+//   public void TestCreateTransformWithQuaterniond()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
 //      Vector3d trans = new Vector3d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quatCheck = new Quaterniond();
 //
 //      for (int i = 0; i < nTests; i++)
 //      {
@@ -561,12 +561,12 @@
 //   }
 //
 //   @Test
-//   public void TestSetTransformWithQuat4d()
+//   public void TestSetTransformWithQuaterniond()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
 //      Vector3d trans = new Vector3d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quatCheck = new Quaterniond();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -593,13 +593,13 @@
 //   }
 //
 //   @Test
-//   public void TestSetTransformWithQuat4dAndVector3d()
+//   public void TestSetTransformWithQuaterniondAndVector3d()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
 //      Vector3d trans = new Vector3d();
 //      Vector3d vector = new Vector3d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quatCheck = new Quaterniond();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -628,12 +628,12 @@
 //   }
 //
 //   @Test
-//   public void TestSetTransformWithQuat4f()
+//   public void TestSetTransformWithQuaternionf()
 //   {
 //      Random random = new Random();
-//      Quat4f quat1 = new Quat4f();
+//      Quaternionf quat1 = new Quaternionf();
 //      Vector3f trans = new Vector3f();
-//      Quat4f quatCheck = new Quat4f();
+//      Quaternionf quatCheck = new Quaternionf();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -660,13 +660,13 @@
 //   }
 //
 //   @Test
-//   public void TestSetTransformWithQuat4fAndVector3f()
+//   public void TestSetTransformWithQuaternionfAndVector3f()
 //   {
 //      Random random = new Random();
-//      Quat4f quat1 = new Quat4f();
+//      Quaternionf quat1 = new Quaternionf();
 //      Vector3f trans = new Vector3f();
 //      Vector3f vector = new Vector3f();
-//      Quat4f quatCheck = new Quat4f();
+//      Quaternionf quatCheck = new Quaternionf();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
 //      for (int i = 0; i < nTests; i++)
@@ -711,12 +711,12 @@
 //   }
 //
 //   @Test
-//   public void TestCreateTransformWithQuat4f()
+//   public void TestCreateTransformWithQuaternionf()
 //   {
 //      Random random = new Random();
-//      Quat4f quat1 = new Quat4f();
+//      Quaternionf quat1 = new Quaternionf();
 //      Vector3f trans = new Vector3f();
-//      Quat4f quatCheck = new Quat4f();
+//      Quaternionf quatCheck = new Quaternionf();
 //
 //      for (int i = 0; i < nTests; i++)
 //      {
@@ -742,11 +742,11 @@
 //   }
 //
 //   @Test
-//   public void TestCreateTransformWithQuat4f2()
+//   public void TestCreateTransformWithQuaternionf2()
 //   {
 //      Random random = new Random();
-//      Quat4f quat1 = new Quat4f();
-//      Quat4f quatCheck = new Quat4f();
+//      Quaternionf quat1 = new Quaternionf();
+//      Quaternionf quatCheck = new Quaternionf();
 //
 //      for (int i = 0; i < nTests; i++)
 //      {
@@ -772,8 +772,8 @@
 //   public void TestCreateTransformWithQuatWithZeroVectorElement()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
+//      Quaterniond quatCheck = new Quaterniond();
 //      Vector3d vec = new Vector3d();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
@@ -800,8 +800,8 @@
 //   public void TestCreateTransformWithQuatWithZeroScalarElement()
 //   {
 //      Random random = new Random();
-//      Quat4d quat1 = new Quat4d();
-//      Quat4d quatCheck = new Quat4d();
+//      Quaterniond quat1 = new Quaterniond();
+//      Quaterniond quatCheck = new Quaterniond();
 //      Vector3d vec = new Vector3d();
 //      RigidBodyTransform transform = new RigidBodyTransform();
 //
@@ -822,12 +822,12 @@
 //   }
 //
 //   @Test
-//   public void TestGetTransformAsQuat4fAndVector3f()
+//   public void TestGetTransformAsQuaternionfAndVector3f()
 //   {
 //      Random random = new Random();
-//      Quat4f quat1 = new Quat4f();
+//      Quaternionf quat1 = new Quaternionf();
 //      RigidBodyTransform transform = new RigidBodyTransform();
-//      Quat4f quatCheck = new Quat4f();
+//      Quaternionf quatCheck = new Quaternionf();
 //      Vector3f vec = new Vector3f();
 //
 //      for (int i = 0; i < nTests; i++)
