@@ -2,6 +2,12 @@ public class Matrix4d implements java.io.Serializable
 {
 	private static final long serialVersionUID = -1737981318054196218L;
 
+	double row_scale[] = new double[4];
+	double result[] = new double[16];
+	int row_perm[] = new int[4];
+
+	double[] tmp = new double[16];
+
 	double m00, m01, m02, m03;
 	double m10, m11, m12, m13;
 	double m20, m21, m22, m23;
@@ -814,10 +820,10 @@ public class Matrix4d implements java.io.Serializable
 		this.m32 = this.m23;
 		this.m23 = temp;
 	}
-	
+
 	public void transpose(Matrix4d matrix)
 	{
-		if(this != matrix)
+		if (this != matrix)
 		{
 			set(matrix);
 			transpose();
@@ -825,6 +831,454 @@ public class Matrix4d implements java.io.Serializable
 		else
 		{
 			transpose();
+		}
+	}
+
+	public void multiply(double scalar)
+	{
+		this.m00 *= scalar;
+		this.m01 *= scalar;
+		this.m02 *= scalar;
+		this.m03 *= scalar;
+		this.m10 *= scalar;
+		this.m11 *= scalar;
+		this.m12 *= scalar;
+		this.m13 *= scalar;
+		this.m20 *= scalar;
+		this.m21 *= scalar;
+		this.m22 *= scalar;
+		this.m23 *= scalar;
+		this.m30 *= scalar;
+		this.m31 *= scalar;
+		this.m32 *= scalar;
+		this.m33 *= scalar;
+	}
+
+	public void multiply(Matrix4d matrix, double scalar)
+	{
+		set(matrix);
+		multiply(scalar);
+	}
+
+	public final void mul(Matrix4d matrix)
+	{
+		double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+		double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+
+		tmp00 = this.m00 * matrix.m00 + this.m01 * matrix.m10 + this.m02
+				* matrix.m20 + this.m03 * matrix.m30;
+		tmp01 = this.m00 * matrix.m01 + this.m01 * matrix.m11 + this.m02
+				* matrix.m21 + this.m03 * matrix.m31;
+		tmp02 = this.m00 * matrix.m02 + this.m01 * matrix.m12 + this.m02
+				* matrix.m22 + this.m03 * matrix.m32;
+		tmp03 = this.m00 * matrix.m03 + this.m01 * matrix.m13 + this.m02
+				* matrix.m23 + this.m03 * matrix.m33;
+
+		tmp10 = this.m10 * matrix.m00 + this.m11 * matrix.m10 + this.m12
+				* matrix.m20 + this.m13 * matrix.m30;
+		tmp11 = this.m10 * matrix.m01 + this.m11 * matrix.m11 + this.m12
+				* matrix.m21 + this.m13 * matrix.m31;
+		tmp12 = this.m10 * matrix.m02 + this.m11 * matrix.m12 + this.m12
+				* matrix.m22 + this.m13 * matrix.m32;
+		tmp13 = this.m10 * matrix.m03 + this.m11 * matrix.m13 + this.m12
+				* matrix.m23 + this.m13 * matrix.m33;
+
+		tmp20 = this.m20 * matrix.m00 + this.m21 * matrix.m10 + this.m22
+				* matrix.m20 + this.m23 * matrix.m30;
+		tmp21 = this.m20 * matrix.m01 + this.m21 * matrix.m11 + this.m22
+				* matrix.m21 + this.m23 * matrix.m31;
+		tmp22 = this.m20 * matrix.m02 + this.m21 * matrix.m12 + this.m22
+				* matrix.m22 + this.m23 * matrix.m32;
+		tmp23 = this.m20 * matrix.m03 + this.m21 * matrix.m13 + this.m22
+				* matrix.m23 + this.m23 * matrix.m33;
+
+		tmp30 = this.m30 * matrix.m00 + this.m31 * matrix.m10 + this.m32
+				* matrix.m20 + this.m33 * matrix.m30;
+		tmp31 = this.m30 * matrix.m01 + this.m31 * matrix.m11 + this.m32
+				* matrix.m21 + this.m33 * matrix.m31;
+		tmp32 = this.m30 * matrix.m02 + this.m31 * matrix.m12 + this.m32
+				* matrix.m22 + this.m33 * matrix.m32;
+		tmp33 = this.m30 * matrix.m03 + this.m31 * matrix.m13 + this.m32
+				* matrix.m23 + this.m33 * matrix.m33;
+
+		this.m00 = tmp00;
+		this.m01 = tmp01;
+		this.m02 = tmp02;
+		this.m03 = tmp03;
+		this.m10 = tmp10;
+		this.m11 = tmp11;
+		this.m12 = tmp12;
+		this.m13 = tmp13;
+		this.m20 = tmp20;
+		this.m21 = tmp21;
+		this.m22 = tmp22;
+		this.m23 = tmp23;
+		this.m30 = tmp30;
+		this.m31 = tmp31;
+		this.m32 = tmp32;
+		this.m33 = tmp33;
+	}
+
+	public final void mul(Matrix4d m1, Matrix4d m2)
+	{
+		if (this != m1 && this != m2)
+		{
+			this.m00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20
+					+ m1.m03 * m2.m30;
+			this.m01 = m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21
+					+ m1.m03 * m2.m31;
+			this.m02 = m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22
+					+ m1.m03 * m2.m32;
+			this.m03 = m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23
+					+ m1.m03 * m2.m33;
+
+			this.m10 = m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20
+					+ m1.m13 * m2.m30;
+			this.m11 = m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21
+					+ m1.m13 * m2.m31;
+			this.m12 = m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22
+					+ m1.m13 * m2.m32;
+			this.m13 = m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23
+					+ m1.m13 * m2.m33;
+
+			this.m20 = m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20
+					+ m1.m23 * m2.m30;
+			this.m21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21
+					+ m1.m23 * m2.m31;
+			this.m22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22
+					+ m1.m23 * m2.m32;
+			this.m23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23
+					+ m1.m23 * m2.m33;
+
+			this.m30 = m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20
+					+ m1.m33 * m2.m30;
+			this.m31 = m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21
+					+ m1.m33 * m2.m31;
+			this.m32 = m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22
+					+ m1.m33 * m2.m32;
+			this.m33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23
+					+ m1.m33 * m2.m33;
+		}
+		else
+		{
+			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+			
+			tmp00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20 + m1.m03
+					* m2.m30;
+			tmp01 = m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21 + m1.m03
+					* m2.m31;
+			tmp02 = m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22 + m1.m03
+					* m2.m32;
+			tmp03 = m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23 + m1.m03
+					* m2.m33;
+			tmp10 = m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20 + m1.m13
+					* m2.m30;
+			tmp11 = m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21 + m1.m13
+					* m2.m31;
+			tmp12 = m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22 + m1.m13
+					* m2.m32;
+			tmp13 = m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23 + m1.m13
+					* m2.m33;
+			tmp20 = m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20 + m1.m23
+					* m2.m30;
+			tmp21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21 + m1.m23
+					* m2.m31;
+			tmp22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22 + m1.m23
+					* m2.m32;
+			tmp23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23
+					* m2.m33;
+			tmp30 = m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20 + m1.m33
+					* m2.m30;
+			tmp31 = m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21 + m1.m33
+					* m2.m31;
+			tmp32 = m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22 + m1.m33
+					* m2.m32;
+			tmp33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23 + m1.m33
+					* m2.m33;
+
+			this.m00 = tmp00;
+			this.m01 = tmp01;
+			this.m02 = tmp02;
+			this.m03 = tmp03;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m13 = tmp13;
+			this.m20 = tmp20;
+			this.m21 = tmp21;
+			this.m22 = tmp22;
+			this.m23 = tmp23;
+			this.m30 = tmp30;
+			this.m31 = tmp31;
+			this.m32 = tmp32;
+			this.m33 = tmp33;
+
+		}
+	}
+
+	public void invert(Matrix4d matrix)
+	{
+		if (this != matrix)
+		{
+			set(matrix);
+			invert();
+		}
+		else
+		{
+			invert();
+		}
+	}
+
+	public void invert()
+	{
+		tmp[0] = this.m00;
+		tmp[1] = this.m01;
+		tmp[2] = this.m02;
+		tmp[3] = this.m03;
+
+		tmp[4] = this.m10;
+		tmp[5] = this.m11;
+		tmp[6] = this.m12;
+		tmp[7] = this.m13;
+
+		tmp[8] = this.m20;
+		tmp[9] = this.m21;
+		tmp[10] = this.m22;
+		tmp[11] = this.m23;
+
+		tmp[12] = this.m30;
+		tmp[13] = this.m31;
+		tmp[14] = this.m32;
+		tmp[15] = this.m33;
+
+		if (!luDecomposition(tmp, row_perm))
+		{
+			// Matrix has no inverse
+			throw new RuntimeException("Matrix is singular.");
+		}
+
+		for (int i = 0; i < 16; i++)
+			result[i] = 0.0;
+
+		result[0] = 1.0;
+		result[5] = 1.0;
+		result[10] = 1.0;
+		result[15] = 1.0;
+		luBacksubstitution(tmp, row_perm, result);
+
+		this.m00 = result[0];
+		this.m01 = result[1];
+		this.m02 = result[2];
+		this.m03 = result[3];
+		this.m10 = result[4];
+		this.m11 = result[5];
+		this.m12 = result[6];
+		this.m13 = result[7];
+		this.m20 = result[8];
+		this.m21 = result[9];
+		this.m22 = result[10];
+		this.m23 = result[11];
+		this.m30 = result[12];
+		this.m31 = result[13];
+		this.m32 = result[14];
+		this.m33 = result[15];
+
+	}
+
+	private boolean luDecomposition(double[] matrix0, int[] row_perm)
+	{
+		int i, j;
+		int ptr, rs;
+		double big, temp;
+
+		ptr = 0;
+		rs = 0;
+
+		i = 4;
+		while (i-- != 0)
+		{
+			big = 0.0;
+
+			j = 4;
+			while (j-- != 0)
+			{
+				temp = matrix0[ptr++];
+				temp = Math.abs(temp);
+				if (temp > big)
+				{
+					big = temp;
+				}
+			}
+
+			if (big == 0.0)
+			{
+				return false;
+			}
+			row_scale[rs++] = 1.0 / big;
+		}
+		int mtx;
+
+		mtx = 0;
+
+		// For all columns, execute Crout's method
+		for (j = 0; j < 4; j++)
+		{
+			int imax, k;
+			int target, p1, p2;
+			double sum;
+
+			// Determine elements of upper diagonal matrix U
+			for (i = 0; i < j; i++)
+			{
+				target = mtx + (4 * i) + j;
+				sum = matrix0[target];
+				k = i;
+				p1 = mtx + (4 * i);
+				p2 = mtx + j;
+				while (k-- != 0)
+				{
+					sum -= matrix0[p1] * matrix0[p2];
+					p1++;
+					p2 += 4;
+				}
+				matrix0[target] = sum;
+			}
+
+			// Search for largest pivot element and calculate
+			// intermediate elements of lower diagonal matrix L.
+			big = 0.0;
+			imax = -1;
+			for (i = j; i < 4; i++)
+			{
+				target = mtx + (4 * i) + j;
+				sum = matrix0[target];
+				k = j;
+				p1 = mtx + (4 * i);
+				p2 = mtx + j;
+				while (k-- != 0)
+				{
+					sum -= matrix0[p1] * matrix0[p2];
+					p1++;
+					p2 += 4;
+				}
+				matrix0[target] = sum;
+
+				// Is this the best pivot so far?
+				if ((temp = row_scale[i] * Math.abs(sum)) >= big)
+				{
+					big = temp;
+					imax = i;
+				}
+			}
+
+			if (imax < 0)
+			{
+				throw new RuntimeException(
+						"Value of imax cannot be less than zero.");
+			}
+
+			if (j != imax)
+			{
+				// Yes: exchange rows
+				k = 4;
+				p1 = mtx + (4 * imax);
+				p2 = mtx + (4 * j);
+				while (k-- != 0)
+				{
+					temp = matrix0[p1];
+					matrix0[p1++] = matrix0[p2];
+					matrix0[p2++] = temp;
+				}
+
+				// Record change in scale factor
+				row_scale[imax] = row_scale[j];
+			}
+
+			// Record row permutation
+			row_perm[j] = imax;
+
+			// Is the matrix singular
+			if (matrix0[(mtx + (4 * j) + j)] == 0.0)
+			{
+				return false;
+			}
+
+			// Divide elements of lower diagonal matrix L by pivot
+			if (j != (4 - 1))
+			{
+				temp = 1.0 / (matrix0[(mtx + (4 * j) + j)]);
+				target = mtx + (4 * (j + 1)) + j;
+				i = 3 - j;
+				while (i-- != 0)
+				{
+					matrix0[target] *= temp;
+					target += 4;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	private void luBacksubstitution(double[] matrix1, int[] row_perm,
+			double[] matrix2)
+	{
+		int i, ii, ip, j, k;
+		int rp;
+		int cv, rv;
+
+		rp = 0;
+
+		for (k = 0; k < 4; k++)
+		{
+			cv = k;
+			ii = -1;
+
+			// Forward substitution
+			for (i = 0; i < 4; i++)
+			{
+				double sum;
+
+				ip = row_perm[rp + i];
+				sum = matrix2[cv + 4 * ip];
+				matrix2[cv + 4 * ip] = matrix2[cv + 4 * i];
+				if (ii >= 0)
+				{
+					// rv = &(matrix1[i][0]);
+					rv = i * 4;
+					for (j = ii; j <= i - 1; j++)
+					{
+						sum -= matrix1[rv + j] * matrix2[cv + 4 * j];
+					}
+				}
+				else if (sum != 0.0)
+				{
+					ii = i;
+				}
+				matrix2[cv + 4 * i] = sum;
+			}
+
+			rv = 3 * 4;
+			matrix2[cv + 4 * 3] /= matrix1[rv + 3];
+
+			rv -= 4;
+			matrix2[cv + 4 * 2] = (matrix2[cv + 4 * 2] - matrix1[rv + 3]
+					* matrix2[cv + 4 * 3])
+					/ matrix1[rv + 2];
+
+			rv -= 4;
+			matrix2[cv + 4 * 1] = (matrix2[cv + 4 * 1] - matrix1[rv + 2]
+					* matrix2[cv + 4 * 2] - matrix1[rv + 3]
+					* matrix2[cv + 4 * 3])
+					/ matrix1[rv + 1];
+
+			rv -= 4;
+			matrix2[cv + 4 * 0] = (matrix2[cv + 4 * 0] - matrix1[rv + 1]
+					* matrix2[cv + 4 * 1] - matrix1[rv + 2]
+					* matrix2[cv + 4 * 2] - matrix1[rv + 3]
+					* matrix2[cv + 4 * 3])
+					/ matrix1[rv + 0];
 		}
 	}
 
