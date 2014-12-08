@@ -278,6 +278,86 @@ public class Matrix4d implements java.io.Serializable
 				throw new RuntimeException("Index out of bounds.");
 		}
 	}
+	
+	public void get(Matrix4d matrix)
+	{
+		matrix.m00 = this.m00;
+		matrix.m01 = this.m01;
+		matrix.m02 = this.m02;
+		matrix.m03 = this.m03;
+		matrix.m10 = this.m10;
+		matrix.m11 = this.m11;
+		matrix.m12 = this.m12;
+		matrix.m13 = this.m13;
+		matrix.m20 = this.m20;
+		matrix.m21 = this.m21;
+		matrix.m22 = this.m22;
+		matrix.m23 = this.m23;
+		matrix.m30 = this.m30;
+		matrix.m31 = this.m31;
+		matrix.m32 = this.m32;
+		matrix.m33 = this.m33;
+	}
+	
+	public void get(Matrix4f matrix)
+	{
+		matrix.m00 = (float)this.m00;
+		matrix.m01 = (float)this.m01;
+		matrix.m02 = (float)this.m02;
+		matrix.m03 = (float)this.m03;
+		matrix.m10 = (float)this.m10;
+		matrix.m11 = (float)this.m11;
+		matrix.m12 = (float)this.m12;
+		matrix.m13 = (float)this.m13;
+		matrix.m20 = (float)this.m20;
+		matrix.m21 = (float)this.m21;
+		matrix.m22 = (float)this.m22;
+		matrix.m23 = (float)this.m23;
+		matrix.m30 = (float)this.m30;
+		matrix.m31 = (float)this.m31;
+		matrix.m32 = (float)this.m32;
+		matrix.m33 = (float)this.m33;
+	}
+	
+	public void get(double[] array)
+	{
+		array[0] = this.m00;
+		array[1] = this.m01;
+		array[2] = this.m02;
+		array[3] = this.m03;
+		array[4] = this.m10;
+		array[5] = this.m11;
+		array[6] = this.m12;
+		array[7] = this.m13;
+		array[8] = this.m20;
+		array[9] = this.m21;
+		array[10] = this.m22;
+		array[11] = this.m23;
+		array[12] = this.m30;
+		array[13] = this.m31;
+		array[14] = this.m32;
+		array[15] = this.m33;
+	}
+	
+	public void get(float[] array)
+	{
+		array[0] = (float)this.m00;
+		array[1] = (float)this.m01;
+		array[2] = (float)this.m02;
+		array[3] = (float)this.m03;
+		array[4] = (float)this.m10;
+		array[5] = (float)this.m11;
+		array[6] = (float)this.m12;
+		array[7] = (float)this.m13;
+		array[8] = (float)this.m20;
+		array[9] = (float)this.m21;
+		array[10] = (float)this.m22;
+		array[11] = (float)this.m23;
+		array[12] = (float)this.m30;
+		array[13] = (float)this.m31;
+		array[14] = (float)this.m32;
+		array[15] = (float)this.m33;
+	}
 
 	public double getElement(int row, int column)
 	{
@@ -860,7 +940,7 @@ public class Matrix4d implements java.io.Serializable
 		multiply(scalar);
 	}
 
-	public final void mul(Matrix4d matrix)
+	public final void multiply(Matrix4d matrix)
 	{
 		double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
 		double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
@@ -919,7 +999,7 @@ public class Matrix4d implements java.io.Serializable
 		this.m33 = tmp33;
 	}
 
-	public final void mul(Matrix4d m1, Matrix4d m2)
+	public final void multiply(Matrix4d m1, Matrix4d m2)
 	{
 		if (this != m1 && this != m2)
 		{
@@ -963,39 +1043,39 @@ public class Matrix4d implements java.io.Serializable
 		{
 			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
 			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
-			
-			tmp00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20 + m1.m03
-					* m2.m30;
-			tmp01 = m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21 + m1.m03
-					* m2.m31;
-			tmp02 = m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22 + m1.m03
-					* m2.m32;
-			tmp03 = m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23 + m1.m03
-					* m2.m33;
-			tmp10 = m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20 + m1.m13
-					* m2.m30;
-			tmp11 = m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21 + m1.m13
-					* m2.m31;
-			tmp12 = m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22 + m1.m13
-					* m2.m32;
-			tmp13 = m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23 + m1.m13
-					* m2.m33;
-			tmp20 = m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20 + m1.m23
-					* m2.m30;
-			tmp21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21 + m1.m23
-					* m2.m31;
-			tmp22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22 + m1.m23
-					* m2.m32;
-			tmp23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23
-					* m2.m33;
-			tmp30 = m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20 + m1.m33
-					* m2.m30;
-			tmp31 = m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21 + m1.m33
-					* m2.m31;
-			tmp32 = m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22 + m1.m33
-					* m2.m32;
-			tmp33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23 + m1.m33
-					* m2.m33;
+
+			tmp00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20
+					+ m1.m03 * m2.m30;
+			tmp01 = m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21
+					+ m1.m03 * m2.m31;
+			tmp02 = m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22
+					+ m1.m03 * m2.m32;
+			tmp03 = m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23
+					+ m1.m03 * m2.m33;
+			tmp10 = m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20
+					+ m1.m13 * m2.m30;
+			tmp11 = m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21
+					+ m1.m13 * m2.m31;
+			tmp12 = m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22
+					+ m1.m13 * m2.m32;
+			tmp13 = m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23
+					+ m1.m13 * m2.m33;
+			tmp20 = m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20
+					+ m1.m23 * m2.m30;
+			tmp21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21
+					+ m1.m23 * m2.m31;
+			tmp22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22
+					+ m1.m23 * m2.m32;
+			tmp23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23
+					+ m1.m23 * m2.m33;
+			tmp30 = m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20
+					+ m1.m33 * m2.m30;
+			tmp31 = m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21
+					+ m1.m33 * m2.m31;
+			tmp32 = m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22
+					+ m1.m33 * m2.m32;
+			tmp33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23
+					+ m1.m33 * m2.m33;
 
 			this.m00 = tmp00;
 			this.m01 = tmp01;
@@ -1016,6 +1096,384 @@ public class Matrix4d implements java.io.Serializable
 
 		}
 	}
+
+	public final void mulTransposeBoth(Matrix4d m1, Matrix4d m2)
+	{
+		if (this != m1 && this != m2)
+		{
+			this.m00 = m1.m00 * m2.m00 + m1.m10 * m2.m01 + m1.m20 * m2.m02
+					+ m1.m30 * m2.m03;
+			this.m01 = m1.m00 * m2.m10 + m1.m10 * m2.m11 + m1.m20 * m2.m12
+					+ m1.m30 * m2.m13;
+			this.m02 = m1.m00 * m2.m20 + m1.m10 * m2.m21 + m1.m20 * m2.m22
+					+ m1.m30 * m2.m23;
+			this.m03 = m1.m00 * m2.m30 + m1.m10 * m2.m31 + m1.m20 * m2.m32
+					+ m1.m30 * m2.m33;
+
+			this.m10 = m1.m01 * m2.m00 + m1.m11 * m2.m01 + m1.m21 * m2.m02
+					+ m1.m31 * m2.m03;
+			this.m11 = m1.m01 * m2.m10 + m1.m11 * m2.m11 + m1.m21 * m2.m12
+					+ m1.m31 * m2.m13;
+			this.m12 = m1.m01 * m2.m20 + m1.m11 * m2.m21 + m1.m21 * m2.m22
+					+ m1.m31 * m2.m23;
+			this.m13 = m1.m01 * m2.m30 + m1.m11 * m2.m31 + m1.m21 * m2.m32
+					+ m1.m31 * m2.m33;
+
+			this.m20 = m1.m02 * m2.m00 + m1.m12 * m2.m01 + m1.m22 * m2.m02
+					+ m1.m32 * m2.m03;
+			this.m21 = m1.m02 * m2.m10 + m1.m12 * m2.m11 + m1.m22 * m2.m12
+					+ m1.m32 * m2.m13;
+			this.m22 = m1.m02 * m2.m20 + m1.m12 * m2.m21 + m1.m22 * m2.m22
+					+ m1.m32 * m2.m23;
+			this.m23 = m1.m02 * m2.m30 + m1.m12 * m2.m31 + m1.m22 * m2.m32
+					+ m1.m32 * m2.m33;
+
+			this.m30 = m1.m03 * m2.m00 + m1.m13 * m2.m01 + m1.m23 * m2.m02
+					+ m1.m33 * m2.m03;
+			this.m31 = m1.m03 * m2.m10 + m1.m13 * m2.m11 + m1.m23 * m2.m12
+					+ m1.m33 * m2.m13;
+			this.m32 = m1.m03 * m2.m20 + m1.m13 * m2.m21 + m1.m23 * m2.m22
+					+ m1.m33 * m2.m23;
+			this.m33 = m1.m03 * m2.m30 + m1.m13 * m2.m31 + m1.m23 * m2.m32
+					+ m1.m33 * m2.m33;
+		}
+		else
+		{
+			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+
+			tmp00 = m1.m00 * m2.m00 + m1.m10 * m2.m01 + m1.m20 * m2.m02
+					+ m1.m30 * m2.m03;
+			tmp01 = m1.m00 * m2.m10 + m1.m10 * m2.m11 + m1.m20 * m2.m12
+					+ m1.m30 * m2.m13;
+			tmp02 = m1.m00 * m2.m20 + m1.m10 * m2.m21 + m1.m20 * m2.m22
+					+ m1.m30 * m2.m23;
+			tmp03 = m1.m00 * m2.m30 + m1.m10 * m2.m31 + m1.m20 * m2.m32
+					+ m1.m30 * m2.m33;
+			tmp10 = m1.m01 * m2.m00 + m1.m11 * m2.m01 + m1.m21 * m2.m02
+					+ m1.m31 * m2.m03;
+			tmp11 = m1.m01 * m2.m10 + m1.m11 * m2.m11 + m1.m21 * m2.m12
+					+ m1.m31 * m2.m13;
+			tmp12 = m1.m01 * m2.m20 + m1.m11 * m2.m21 + m1.m21 * m2.m22
+					+ m1.m31 * m2.m23;
+			tmp13 = m1.m01 * m2.m30 + m1.m11 * m2.m31 + m1.m21 * m2.m32
+					+ m1.m31 * m2.m33;
+			tmp20 = m1.m02 * m2.m00 + m1.m12 * m2.m01 + m1.m22 * m2.m02
+					+ m1.m32 * m2.m03;
+			tmp21 = m1.m02 * m2.m10 + m1.m12 * m2.m11 + m1.m22 * m2.m12
+					+ m1.m32 * m2.m13;
+			tmp22 = m1.m02 * m2.m20 + m1.m12 * m2.m21 + m1.m22 * m2.m22
+					+ m1.m32 * m2.m23;
+			tmp23 = m1.m02 * m2.m30 + m1.m12 * m2.m31 + m1.m22 * m2.m32
+					+ m1.m32 * m2.m33;
+			tmp30 = m1.m03 * m2.m00 + m1.m13 * m2.m01 + m1.m23 * m2.m02
+					+ m1.m33 * m2.m03;
+			tmp31 = m1.m03 * m2.m10 + m1.m13 * m2.m11 + m1.m23 * m2.m12
+					+ m1.m33 * m2.m13;
+			tmp32 = m1.m03 * m2.m20 + m1.m13 * m2.m21 + m1.m23 * m2.m22
+					+ m1.m33 * m2.m23;
+			tmp33 = m1.m03 * m2.m30 + m1.m13 * m2.m31 + m1.m23 * m2.m32
+					+ m1.m33 * m2.m33;
+
+			this.m00 = tmp00;
+			this.m01 = tmp01;
+			this.m02 = tmp02;
+			this.m03 = tmp03;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m13 = tmp13;
+			this.m20 = tmp20;
+			this.m21 = tmp21;
+			this.m22 = tmp22;
+			this.m23 = tmp23;
+			this.m30 = tmp30;
+			this.m31 = tmp31;
+			this.m32 = tmp32;
+			this.m33 = tmp33;
+		}
+	}
+
+	public final void mulTransposeRight(Matrix4d m1, Matrix4d m2)
+	{
+		if (this != m1 && this != m2)
+		{
+			this.m00 = m1.m00 * m2.m00 + m1.m01 * m2.m01 + m1.m02 * m2.m02
+					+ m1.m03 * m2.m03;
+			this.m01 = m1.m00 * m2.m10 + m1.m01 * m2.m11 + m1.m02 * m2.m12
+					+ m1.m03 * m2.m13;
+			this.m02 = m1.m00 * m2.m20 + m1.m01 * m2.m21 + m1.m02 * m2.m22
+					+ m1.m03 * m2.m23;
+			this.m03 = m1.m00 * m2.m30 + m1.m01 * m2.m31 + m1.m02 * m2.m32
+					+ m1.m03 * m2.m33;
+			this.m10 = m1.m10 * m2.m00 + m1.m11 * m2.m01 + m1.m12 * m2.m02
+					+ m1.m13 * m2.m03;
+			this.m11 = m1.m10 * m2.m10 + m1.m11 * m2.m11 + m1.m12 * m2.m12
+					+ m1.m13 * m2.m13;
+			this.m12 = m1.m10 * m2.m20 + m1.m11 * m2.m21 + m1.m12 * m2.m22
+					+ m1.m13 * m2.m23;
+			this.m13 = m1.m10 * m2.m30 + m1.m11 * m2.m31 + m1.m12 * m2.m32
+					+ m1.m13 * m2.m33;
+			this.m20 = m1.m20 * m2.m00 + m1.m21 * m2.m01 + m1.m22 * m2.m02
+					+ m1.m23 * m2.m03;
+			this.m21 = m1.m20 * m2.m10 + m1.m21 * m2.m11 + m1.m22 * m2.m12
+					+ m1.m23 * m2.m13;
+			this.m22 = m1.m20 * m2.m20 + m1.m21 * m2.m21 + m1.m22 * m2.m22
+					+ m1.m23 * m2.m23;
+			this.m23 = m1.m20 * m2.m30 + m1.m21 * m2.m31 + m1.m22 * m2.m32
+					+ m1.m23 * m2.m33;
+			this.m30 = m1.m30 * m2.m00 + m1.m31 * m2.m01 + m1.m32 * m2.m02
+					+ m1.m33 * m2.m03;
+			this.m31 = m1.m30 * m2.m10 + m1.m31 * m2.m11 + m1.m32 * m2.m12
+					+ m1.m33 * m2.m13;
+			this.m32 = m1.m30 * m2.m20 + m1.m31 * m2.m21 + m1.m32 * m2.m22
+					+ m1.m33 * m2.m23;
+			this.m33 = m1.m30 * m2.m30 + m1.m31 * m2.m31 + m1.m32 * m2.m32
+					+ m1.m33 * m2.m33;
+		}
+		else
+		{
+			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+
+			tmp00 = m1.m00 * m2.m00 + m1.m01 * m2.m01 + m1.m02 * m2.m02
+					+ m1.m03 * m2.m03;
+			tmp01 = m1.m00 * m2.m10 + m1.m01 * m2.m11 + m1.m02 * m2.m12
+					+ m1.m03 * m2.m13;
+			tmp02 = m1.m00 * m2.m20 + m1.m01 * m2.m21 + m1.m02 * m2.m22
+					+ m1.m03 * m2.m23;
+			tmp03 = m1.m00 * m2.m30 + m1.m01 * m2.m31 + m1.m02 * m2.m32
+					+ m1.m03 * m2.m33;
+
+			tmp10 = m1.m10 * m2.m00 + m1.m11 * m2.m01 + m1.m12 * m2.m02
+					+ m1.m13 * m2.m03;
+			tmp11 = m1.m10 * m2.m10 + m1.m11 * m2.m11 + m1.m12 * m2.m12
+					+ m1.m13 * m2.m13;
+			tmp12 = m1.m10 * m2.m20 + m1.m11 * m2.m21 + m1.m12 * m2.m22
+					+ m1.m13 * m2.m23;
+			tmp13 = m1.m10 * m2.m30 + m1.m11 * m2.m31 + m1.m12 * m2.m32
+					+ m1.m13 * m2.m33;
+
+			tmp20 = m1.m20 * m2.m00 + m1.m21 * m2.m01 + m1.m22 * m2.m02
+					+ m1.m23 * m2.m03;
+			tmp21 = m1.m20 * m2.m10 + m1.m21 * m2.m11 + m1.m22 * m2.m12
+					+ m1.m23 * m2.m13;
+			tmp22 = m1.m20 * m2.m20 + m1.m21 * m2.m21 + m1.m22 * m2.m22
+					+ m1.m23 * m2.m23;
+			tmp23 = m1.m20 * m2.m30 + m1.m21 * m2.m31 + m1.m22 * m2.m32
+					+ m1.m23 * m2.m33;
+
+			tmp30 = m1.m30 * m2.m00 + m1.m31 * m2.m01 + m1.m32 * m2.m02
+					+ m1.m33 * m2.m03;
+			tmp31 = m1.m30 * m2.m10 + m1.m31 * m2.m11 + m1.m32 * m2.m12
+					+ m1.m33 * m2.m13;
+			tmp32 = m1.m30 * m2.m20 + m1.m31 * m2.m21 + m1.m32 * m2.m22
+					+ m1.m33 * m2.m23;
+			tmp33 = m1.m30 * m2.m30 + m1.m31 * m2.m31 + m1.m32 * m2.m32
+					+ m1.m33 * m2.m33;
+
+			this.m00 = tmp00;
+			this.m01 = tmp01;
+			this.m02 = tmp02;
+			this.m03 = tmp03;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m13 = tmp13;
+			this.m20 = tmp20;
+			this.m21 = tmp21;
+			this.m22 = tmp22;
+			this.m23 = tmp23;
+			this.m30 = tmp30;
+			this.m31 = tmp31;
+			this.m32 = tmp32;
+			this.m33 = tmp33;
+		}
+	}
+
+	public final void mulTransposeLeft(Matrix4d m1, Matrix4d m2)
+	{
+		if (this != m1 && this != m2)
+		{
+			this.m00 = m1.m00 * m2.m00 + m1.m10 * m2.m10 + m1.m20 * m2.m20
+					+ m1.m30 * m2.m30;
+			this.m01 = m1.m00 * m2.m01 + m1.m10 * m2.m11 + m1.m20 * m2.m21
+					+ m1.m30 * m2.m31;
+			this.m02 = m1.m00 * m2.m02 + m1.m10 * m2.m12 + m1.m20 * m2.m22
+					+ m1.m30 * m2.m32;
+			this.m03 = m1.m00 * m2.m03 + m1.m10 * m2.m13 + m1.m20 * m2.m23
+					+ m1.m30 * m2.m33;
+			this.m10 = m1.m01 * m2.m00 + m1.m11 * m2.m10 + m1.m21 * m2.m20
+					+ m1.m31 * m2.m30;
+			this.m11 = m1.m01 * m2.m01 + m1.m11 * m2.m11 + m1.m21 * m2.m21
+					+ m1.m31 * m2.m31;
+			this.m12 = m1.m01 * m2.m02 + m1.m11 * m2.m12 + m1.m21 * m2.m22
+					+ m1.m31 * m2.m32;
+			this.m13 = m1.m01 * m2.m03 + m1.m11 * m2.m13 + m1.m21 * m2.m23
+					+ m1.m31 * m2.m33;
+			this.m20 = m1.m02 * m2.m00 + m1.m12 * m2.m10 + m1.m22 * m2.m20
+					+ m1.m32 * m2.m30;
+			this.m21 = m1.m02 * m2.m01 + m1.m12 * m2.m11 + m1.m22 * m2.m21
+					+ m1.m32 * m2.m31;
+			this.m22 = m1.m02 * m2.m02 + m1.m12 * m2.m12 + m1.m22 * m2.m22
+					+ m1.m32 * m2.m32;
+			this.m23 = m1.m02 * m2.m03 + m1.m12 * m2.m13 + m1.m22 * m2.m23
+					+ m1.m32 * m2.m33;
+			this.m30 = m1.m03 * m2.m00 + m1.m13 * m2.m10 + m1.m23 * m2.m20
+					+ m1.m33 * m2.m30;
+			this.m31 = m1.m03 * m2.m01 + m1.m13 * m2.m11 + m1.m23 * m2.m21
+					+ m1.m33 * m2.m31;
+			this.m32 = m1.m03 * m2.m02 + m1.m13 * m2.m12 + m1.m23 * m2.m22
+					+ m1.m33 * m2.m32;
+			this.m33 = m1.m03 * m2.m03 + m1.m13 * m2.m13 + m1.m23 * m2.m23
+					+ m1.m33 * m2.m33;
+		}
+		else
+		{
+			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+
+			tmp00 = m1.m00 * m2.m00 + m1.m10 * m2.m10 + m1.m20 * m2.m20
+					+ m1.m30 * m2.m30;
+			tmp01 = m1.m00 * m2.m01 + m1.m10 * m2.m11 + m1.m20 * m2.m21
+					+ m1.m30 * m2.m31;
+			tmp02 = m1.m00 * m2.m02 + m1.m10 * m2.m12 + m1.m20 * m2.m22
+					+ m1.m30 * m2.m32;
+			tmp03 = m1.m00 * m2.m03 + m1.m10 * m2.m13 + m1.m20 * m2.m23
+					+ m1.m30 * m2.m33;
+
+			tmp10 = m1.m01 * m2.m00 + m1.m11 * m2.m10 + m1.m21 * m2.m20
+					+ m1.m31 * m2.m30;
+			tmp11 = m1.m01 * m2.m01 + m1.m11 * m2.m11 + m1.m21 * m2.m21
+					+ m1.m31 * m2.m31;
+			tmp12 = m1.m01 * m2.m02 + m1.m11 * m2.m12 + m1.m21 * m2.m22
+					+ m1.m31 * m2.m32;
+			tmp13 = m1.m01 * m2.m03 + m1.m11 * m2.m13 + m1.m21 * m2.m23
+					+ m1.m31 * m2.m33;
+
+			tmp20 = m1.m02 * m2.m00 + m1.m12 * m2.m10 + m1.m22 * m2.m20
+					+ m1.m32 * m2.m30;
+			tmp21 = m1.m02 * m2.m01 + m1.m12 * m2.m11 + m1.m22 * m2.m21
+					+ m1.m32 * m2.m31;
+			tmp22 = m1.m02 * m2.m02 + m1.m12 * m2.m12 + m1.m22 * m2.m22
+					+ m1.m32 * m2.m32;
+			tmp23 = m1.m02 * m2.m03 + m1.m12 * m2.m13 + m1.m22 * m2.m23
+					+ m1.m32 * m2.m33;
+
+			tmp30 = m1.m03 * m2.m00 + m1.m13 * m2.m10 + m1.m23 * m2.m20
+					+ m1.m33 * m2.m30;
+			tmp31 = m1.m03 * m2.m01 + m1.m13 * m2.m11 + m1.m23 * m2.m21
+					+ m1.m33 * m2.m31;
+			tmp32 = m1.m03 * m2.m02 + m1.m13 * m2.m12 + m1.m23 * m2.m22
+					+ m1.m33 * m2.m32;
+			tmp33 = m1.m03 * m2.m03 + m1.m13 * m2.m13 + m1.m23 * m2.m23
+					+ m1.m33 * m2.m33;
+
+			this.m00 = tmp00;
+			this.m01 = tmp01;
+			this.m02 = tmp02;
+			this.m03 = tmp03;
+			this.m10 = tmp10;
+			this.m11 = tmp11;
+			this.m12 = tmp12;
+			this.m13 = tmp13;
+			this.m20 = tmp20;
+			this.m21 = tmp21;
+			this.m22 = tmp22;
+			this.m23 = tmp23;
+			this.m30 = tmp30;
+			this.m31 = tmp31;
+			this.m32 = tmp32;
+			this.m33 = tmp33;
+		}
+	}
+	
+	public boolean equals(Matrix4d matrix)
+	{
+		return epsilonEquals(matrix,1e-16);
+	}
+
+	public boolean epsilonEquals(Matrix4d matrix, double epsilon)
+	{
+		double diff;
+
+		diff = m00 - matrix.m00;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m01 - matrix.m01;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m02 - matrix.m02;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m03 - matrix.m03;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m10 - matrix.m10;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m11 - matrix.m11;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m12 - matrix.m12;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m13 - matrix.m13;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m20 - matrix.m20;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m21 - matrix.m21;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m22 - matrix.m22;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m23 - matrix.m23;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m30 - matrix.m30;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m31 - matrix.m31;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m32 - matrix.m32;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+		diff = m33 - matrix.m33;
+		if ((diff < 0 ? -diff : diff) > epsilon)
+			return false;
+
+		return true;
+	}
+	
+	public void negate(Matrix4d matrix)
+	{
+		set(matrix);
+		negate();
+	}
+	
+	public void negate()
+    {
+        m00 = -m00;
+        m01 = -m01;
+        m02 = -m02;
+        m03 = -m03;
+        m10 = -m10;
+        m11 = -m11;
+        m12 = -m12;
+        m13 = -m13;
+        m20 = -m20;
+        m21 = -m21;
+        m22 = -m22;
+        m23 = -m23;
+        m30 = -m30;
+        m31 = -m31;
+        m32 = -m32;
+        m33 = -m33;
+    }
 
 	public void invert(Matrix4d matrix)
 	{
