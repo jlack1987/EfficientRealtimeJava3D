@@ -24,7 +24,10 @@ public class Matrix4dTest
 	public void testMatrixSetIdentity()
 	{
 		Matrix4d matrix = new Matrix4d();
+		createRandomMatrix4d(matrix);
 		matrix.setIdentity();
+		
+		assertMatrix4dIsIdentity(matrix, 1e-12);
 	}
 	
 	@Test
@@ -402,6 +405,39 @@ public class Matrix4dTest
 		}
 	}
 	
+	@Test
+	public void testMatrixMultiplyAndInverse()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<1; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			
+			matrix1.invert();
+			matrix1.multiply(matrix2);
+			assertMatrix4dIsIdentity(matrix1, 1e-8);
+		}
+	}
+	
+	@Test
+	public void testMatrixMultiplyAndInverse2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<1; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			
+			matrix2.invert(matrix1);
+			matrix2.multiply(matrix1);
+			assertMatrix4dIsIdentity(matrix2, 1e-8);
+		}
+	}
+	
 	private void randomizeVector4d(Vector4d vector)
 	{
 		vector.set(random.nextDouble(), random.nextDouble(), random.nextDouble(), random.nextDouble());
@@ -458,14 +494,21 @@ public class Matrix4dTest
 		}
 	}
 	
-	public boolean assertMatrix4dIsIdentity(Matrix4d matrix)
+	public void assertMatrix4dIsIdentity(Matrix4d matrix,double epsilon)
 	{
-		Matrix4d matrix1 = new Matrix4d();
-		matrix1.set(0,0,1.0);
-		matrix1.set(1,1,1.0);
-		matrix1.set(2,2,1.0);
-		matrix1.set(3,3,1.0);
-		
-		return matrix.equals(matrix1);
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				if(i != j)
+				{
+					assertEquals(matrix.get(i,j),0.0,epsilon);
+				}
+				else
+				{
+					assertEquals(matrix.get(i,j),1.0,epsilon);
+				}
+			}
+		}
 	}
 }
