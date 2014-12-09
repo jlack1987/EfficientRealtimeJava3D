@@ -12,9 +12,19 @@ public class Vector4d implements java.io.Serializable
 	
 	public void setToZero()
 	{
-		this.x = 0;
-		this.y = 0;
-		this.z = 0;
-		this.w = 0;
+		set(0,0,0,0);
+	}
+	
+	public void set(Vector4d vector)
+	{
+		set(vector.x,vector.y,vector.z,vector.w);
+	}
+	
+	public void set(double x, double y, double z, double w)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.w = w;
 	}
 }

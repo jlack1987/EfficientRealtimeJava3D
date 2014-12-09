@@ -359,7 +359,7 @@ public class Matrix4d implements java.io.Serializable
 		array[15] = (float)this.m33;
 	}
 
-	public double getElement(int row, int column)
+	public double get(int row, int column)
 	{
 		switch (row)
 		{
