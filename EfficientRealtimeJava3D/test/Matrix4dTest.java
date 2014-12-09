@@ -438,6 +438,128 @@ public class Matrix4dTest
 		}
 	}
 	
+	@Test
+	public void testMultiplyTransposeBoth()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			matrix1.setIdentity();
+			createRandomMatrix4d(matrix2);
+			matrix3.set(matrix2);
+			matrix3.transpose();
+			
+			matrix1.multiplyTransposeBoth(matrix1, matrix2);
+			
+			assertMatrix4dEquals(matrix1, matrix3, 1e-16);
+		}
+	}
+	
+	@Test
+	public void testMultiplyTransposeLeft()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			matrix1.setIdentity();
+			createRandomMatrix4d(matrix2);
+			
+			matrix1.multiplyTransposeLeft(matrix1, matrix2);
+			
+			assertMatrix4dEquals(matrix1, matrix2, 1e-16);
+		}
+	}
+	
+	@Test
+	public void testMultiplyTransposeRight()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			matrix1.setIdentity();
+			createRandomMatrix4d(matrix2);
+			matrix3.set(matrix2);
+			matrix3.transpose();
+			
+			matrix1.multiplyTransposeBoth(matrix1, matrix2);
+			
+			assertMatrix4dEquals(matrix1, matrix3, 1e-16);
+		}
+	}
+	
+	@Test
+	public void testMatrixEqualsAndEpsilonEquals()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			
+			assertTrue(matrix1.equals(matrix2));
+			
+			matrix2.add(1e-15);
+			
+			boolean tmp = matrix1.equals(matrix2);
+			assertFalse(tmp);
+			
+			assertTrue(matrix1.epsilonEquals(matrix2, 1e-14));
+		}
+	}
+	
+	@Test
+	public void testNegate()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			
+			matrix1.negate();
+			for(int j = 0; j<4; j++)
+			{
+				for(int k = 0; k<4; k++)
+				{
+					assertEquals(matrix1.get(j,k),-matrix2.get(j,k),1e-16);
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testNegate2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			
+			matrix2.negate(matrix1);
+			for(int j = 0; j<4; j++)
+			{
+				for(int k = 0; k<4; k++)
+				{
+					assertEquals(matrix1.get(j,k),-matrix2.get(j,k),1e-16);
+				}
+			}
+		}
+	}
+	
 	private void randomizeVector4d(Vector4d vector)
 	{
 		vector.set(random.nextDouble(), random.nextDouble(), random.nextDouble(), random.nextDouble());

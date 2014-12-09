@@ -1102,7 +1102,7 @@ public class Matrix4d implements java.io.Serializable
 		}
 	}
 
-	public final void mulTransposeBoth(Matrix4d m1, Matrix4d m2)
+	public final void multiplyTransposeBoth(Matrix4d m1, Matrix4d m2)
 	{
 		if (this != m1 && this != m2)
 		{
@@ -1114,7 +1114,6 @@ public class Matrix4d implements java.io.Serializable
 					+ m1.m30 * m2.m23;
 			this.m03 = m1.m00 * m2.m30 + m1.m10 * m2.m31 + m1.m20 * m2.m32
 					+ m1.m30 * m2.m33;
-
 			this.m10 = m1.m01 * m2.m00 + m1.m11 * m2.m01 + m1.m21 * m2.m02
 					+ m1.m31 * m2.m03;
 			this.m11 = m1.m01 * m2.m10 + m1.m11 * m2.m11 + m1.m21 * m2.m12
@@ -1123,7 +1122,6 @@ public class Matrix4d implements java.io.Serializable
 					+ m1.m31 * m2.m23;
 			this.m13 = m1.m01 * m2.m30 + m1.m11 * m2.m31 + m1.m21 * m2.m32
 					+ m1.m31 * m2.m33;
-
 			this.m20 = m1.m02 * m2.m00 + m1.m12 * m2.m01 + m1.m22 * m2.m02
 					+ m1.m32 * m2.m03;
 			this.m21 = m1.m02 * m2.m10 + m1.m12 * m2.m11 + m1.m22 * m2.m12
@@ -1132,7 +1130,6 @@ public class Matrix4d implements java.io.Serializable
 					+ m1.m32 * m2.m23;
 			this.m23 = m1.m02 * m2.m30 + m1.m12 * m2.m31 + m1.m22 * m2.m32
 					+ m1.m32 * m2.m33;
-
 			this.m30 = m1.m03 * m2.m00 + m1.m13 * m2.m01 + m1.m23 * m2.m02
 					+ m1.m33 * m2.m03;
 			this.m31 = m1.m03 * m2.m10 + m1.m13 * m2.m11 + m1.m23 * m2.m12
@@ -1199,7 +1196,7 @@ public class Matrix4d implements java.io.Serializable
 		}
 	}
 
-	public final void mulTransposeRight(Matrix4d m1, Matrix4d m2)
+	public final void multiplyTransposeRight(Matrix4d m1, Matrix4d m2)
 	{
 		if (this != m1 && this != m2)
 		{
@@ -1296,7 +1293,7 @@ public class Matrix4d implements java.io.Serializable
 		}
 	}
 
-	public final void mulTransposeLeft(Matrix4d m1, Matrix4d m2)
+	public final void multiplyTransposeLeft(Matrix4d m1, Matrix4d m2)
 	{
 		if (this != m1 && this != m2)
 		{
