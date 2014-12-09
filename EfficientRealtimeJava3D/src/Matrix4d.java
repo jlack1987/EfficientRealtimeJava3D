@@ -851,6 +851,11 @@ public class Matrix4d implements java.io.Serializable
 		set(matrix1);
 		subtract(matrix2);
 	}
+	
+	public void subtract(double scalar)
+	{
+		add(-scalar);
+	}
 
 	public void subtract(Matrix4d matrix)
 	{

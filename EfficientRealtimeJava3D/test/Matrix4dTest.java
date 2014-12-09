@@ -289,6 +289,119 @@ public class Matrix4dTest
 		}
 	}
 	
+	@Test
+	public void testMatrixSubtract1()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			double a = random.nextDouble()*100-50;
+			
+			matrix1.subtract(a);
+			for(int k = 0; k<4; k++)
+			{
+				for(int j = 0; j<4; j++)
+				{
+					assertEquals(matrix1.get(k,j),matrix2.get(k,j)-a,1e-16);
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testMatrixSubtract2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			createRandomMatrix4d(matrix2);
+			matrix3.subtract(matrix1,matrix2);
+			
+			for(int k = 0; k<4; k++)
+			{
+				for(int j = 0; j<4; j++)
+				{
+					assertEquals(matrix3.get(k,j),matrix1.get(k,j)-matrix2.get(k,j),1e-16);
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testMatrixSubtract3()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			createRandomMatrix4d(matrix2);
+			matrix3.set(matrix1);
+			matrix1.add(matrix1,matrix2);
+			
+			for(int k = 0; k<4; k++)
+			{
+				for(int j = 0; j<4; j++)
+				{
+					assertEquals(matrix1.get(k,j),matrix3.get(k,j)+matrix2.get(k,j),1e-16);
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testMatrixTranspose1()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			matrix2.transpose();
+			
+			for(int j = 0; j<4; j++)
+			{
+				for(int k = 0; k<4; k++)
+				{
+					assertEquals(matrix1.get(j,k),matrix2.get(k,j),1e-16);
+				}
+			}
+		}
+	}
+	
+	@Test
+	public void testMatrixTranspose2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.transpose(matrix1);
+			
+			for(int j = 0; j<4; j++)
+			{
+				for(int k = 0; k<4; k++)
+				{
+					assertEquals(matrix1.get(j,k),matrix2.get(k,j),1e-16);
+				}
+			}
+		}
+	}
+	
 	private void randomizeVector4d(Vector4d vector)
 	{
 		vector.set(random.nextDouble(), random.nextDouble(), random.nextDouble(), random.nextDouble());
@@ -304,22 +417,13 @@ public class Matrix4dTest
 	
 	private void createRandomMatrix4d(Matrix4d matrix)
 	{
-		matrix.m00 = random.nextDouble()*1000-500;
-		matrix.m01 = random.nextDouble()*1000-500;
-		matrix.m02 = random.nextDouble()*1000-500;
-		matrix.m03 = random.nextDouble()*1000-500;
-		matrix.m10 = random.nextDouble()*1000-500;
-		matrix.m11 = random.nextDouble()*1000-500;
-		matrix.m12 = random.nextDouble()*1000-500;
-		matrix.m13 = random.nextDouble()*1000-500;
-		matrix.m20 = random.nextDouble()*1000-500;
-		matrix.m21 = random.nextDouble()*1000-500;
-		matrix.m22 = random.nextDouble()*1000-500;
-		matrix.m23 = random.nextDouble()*1000-500;
-		matrix.m30 = random.nextDouble()*1000-500;
-		matrix.m31 = random.nextDouble()*1000-500;
-		matrix.m32 = random.nextDouble()*1000-500;
-		matrix.m33 = random.nextDouble()*1000-500;
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				matrix.set(i,j,random.nextDouble()*100-50);
+			}
+		}
 	}
 	
 	public void assertVector4dEquals(Vector4d v1, Vector4d v2, double epsilon)
@@ -345,22 +449,13 @@ public class Matrix4dTest
 	
 	public void assertMatrix4dEquals(Matrix4d matrix1, Matrix4d matrix2, double epsilon)
 	{
-		assertEquals(matrix1.m00,matrix2.m00,epsilon);
-		assertEquals(matrix1.m01,matrix2.m01,epsilon);
-		assertEquals(matrix1.m02,matrix2.m02,epsilon);
-		assertEquals(matrix1.m03,matrix2.m03,epsilon);
-		assertEquals(matrix1.m10,matrix2.m10,epsilon);
-		assertEquals(matrix1.m11,matrix2.m11,epsilon);
-		assertEquals(matrix1.m12,matrix2.m12,epsilon);
-		assertEquals(matrix1.m13,matrix2.m13,epsilon);
-		assertEquals(matrix1.m20,matrix2.m20,epsilon);
-		assertEquals(matrix1.m21,matrix2.m21,epsilon);
-		assertEquals(matrix1.m22,matrix2.m22,epsilon);
-		assertEquals(matrix1.m23,matrix2.m23,epsilon);
-		assertEquals(matrix1.m30,matrix2.m30,epsilon);
-		assertEquals(matrix1.m31,matrix2.m31,epsilon);
-		assertEquals(matrix1.m32,matrix2.m32,epsilon);
-		assertEquals(matrix1.m33,matrix2.m33,epsilon);
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(matrix1.get(i,j),matrix2.get(i,j),epsilon);
+			}
+		}
 	}
 	
 	public boolean assertMatrix4dIsIdentity(Matrix4d matrix)
