@@ -27,4 +27,19 @@ public class Vector4d implements java.io.Serializable
 		this.z = z;
 		this.w = w;
 	}
+	
+	public double dot(Vector4d vector)
+	{
+		return (vector.x*this.x + vector.y*this.y + vector.z*this.z + vector.w*this.w);
+	}
+	
+	public double length()
+	{
+		return Math.sqrt(x*x + y*y + z*z + w*w);
+	}
+	
+	public double lengthSquared()
+	{
+		return (x*x+y*y+z*z+w*w);
+	}
 }
