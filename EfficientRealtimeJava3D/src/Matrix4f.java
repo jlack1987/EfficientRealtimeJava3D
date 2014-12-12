@@ -7,10 +7,10 @@ public class Matrix4f implements java.io.Serializable
 
 	double[] tmp = new double[16];
 
-	double m00, m01, m02, m03;
-	double m10, m11, m12, m13;
-	double m20, m21, m22, m23;
-	double m30, m31, m32, m33;
+	float m00, m01, m02, m03;
+	float m10, m11, m12, m13;
+	float m20, m21, m22, m23;
+	float m30, m31, m32, m33;
 
 	public Matrix4f()
 	{
@@ -39,22 +39,22 @@ public class Matrix4f implements java.io.Serializable
 
 	public void set(Matrix4d matrix)
 	{
-		this.m00 = matrix.m00;
-		this.m01 = matrix.m01;
-		this.m02 = matrix.m02;
-		this.m03 = matrix.m03;
-		this.m10 = matrix.m10;
-		this.m11 = matrix.m11;
-		this.m12 = matrix.m12;
-		this.m13 = matrix.m13;
-		this.m20 = matrix.m20;
-		this.m21 = matrix.m21;
-		this.m22 = matrix.m22;
-		this.m23 = matrix.m23;
-		this.m30 = matrix.m30;
-		this.m31 = matrix.m31;
-		this.m32 = matrix.m32;
-		this.m33 = matrix.m33;
+		this.m00 = (float)matrix.m00;
+		this.m01 = (float)matrix.m01;
+		this.m02 = (float)matrix.m02;
+		this.m03 = (float)matrix.m03;
+		this.m10 = (float)matrix.m10;
+		this.m11 = (float)matrix.m11;
+		this.m12 = (float)matrix.m12;
+		this.m13 = (float)matrix.m13;
+		this.m20 = (float)matrix.m20;
+		this.m21 = (float)matrix.m21;
+		this.m22 = (float)matrix.m22;
+		this.m23 = (float)matrix.m23;
+		this.m30 = (float)matrix.m30;
+		this.m31 = (float)matrix.m31;
+		this.m32 = (float)matrix.m32;
+		this.m33 = (float)matrix.m33;
 	}
 
 	public void set(Matrix4f matrix)
@@ -79,22 +79,22 @@ public class Matrix4f implements java.io.Serializable
 
 	public void set(double[] array)
 	{
-		this.m00 = array[0];
-		this.m01 = array[1];
-		this.m02 = array[2];
-		this.m03 = array[3];
-		this.m10 = array[4];
-		this.m11 = array[5];
-		this.m12 = array[6];
-		this.m13 = array[7];
-		this.m20 = array[8];
-		this.m21 = array[9];
-		this.m22 = array[10];
-		this.m23 = array[11];
-		this.m30 = array[12];
-		this.m31 = array[13];
-		this.m32 = array[14];
-		this.m33 = array[15];
+		this.m00 = (float)array[0];
+		this.m01 = (float)array[1];
+		this.m02 = (float)array[2];
+		this.m03 = (float)array[3];
+		this.m10 = (float)array[4];
+		this.m11 = (float)array[5];
+		this.m12 = (float)array[6];
+		this.m13 = (float)array[7];
+		this.m20 = (float)array[8];
+		this.m21 = (float)array[9];
+		this.m22 = (float)array[10];
+		this.m23 = (float)array[11];
+		this.m30 = (float)array[12];
+		this.m31 = (float)array[13];
+		this.m32 = (float)array[14];
+		this.m33 = (float)array[15];
 	}
 
 	public void set(float[] array)
@@ -117,19 +117,19 @@ public class Matrix4f implements java.io.Serializable
 		this.m33 = array[15];
 	}
 
-	public Matrix4f(double m00, double m01, double m02, double m03, double m10,
-			double m11, double m12, double m13, double m20, double m21,
-			double m22, double m23, double m30, double m31, double m32,
-			double m33)
+	public Matrix4f(float m00, float m01, float m02, float m03, float m10,
+			float m11, float m12, float m13, float m20, float m21,
+			float m22, float m23, float m30, float m31, float m32,
+			float m33)
 	{
 		set(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30,
 				m31, m32, m33);
 	}
 
-	public void set(double m00, double m01, double m02, double m03, double m10,
-			double m11, double m12, double m13, double m20, double m21,
-			double m22, double m23, double m30, double m31, double m32,
-			double m33)
+	public void set(float m00, float m01, float m02, float m03, float m10,
+			float m11, float m12, float m13, float m20, float m21,
+			float m22, float m23, float m30, float m31, float m32,
+			float m33)
 	{
 		this.m00 = m00;
 		this.m01 = m01;
@@ -189,7 +189,7 @@ public class Matrix4f implements java.io.Serializable
 		this.m33 = 0;
 	}
 
-	public void set(int row, int column, double value)
+	public void set(int row, int column, float value)
 	{
 		switch (row)
 		{
@@ -340,22 +340,22 @@ public class Matrix4f implements java.io.Serializable
 
 	public void get(float[] array)
 	{
-		array[0] = (float) this.m00;
-		array[1] = (float) this.m01;
-		array[2] = (float) this.m02;
-		array[3] = (float) this.m03;
-		array[4] = (float) this.m10;
-		array[5] = (float) this.m11;
-		array[6] = (float) this.m12;
-		array[7] = (float) this.m13;
-		array[8] = (float) this.m20;
-		array[9] = (float) this.m21;
-		array[10] = (float) this.m22;
-		array[11] = (float) this.m23;
-		array[12] = (float) this.m30;
-		array[13] = (float) this.m31;
-		array[14] = (float) this.m32;
-		array[15] = (float) this.m33;
+		array[0] = this.m00;
+		array[1] = this.m01;
+		array[2] = this.m02;
+		array[3] = this.m03;
+		array[4] = this.m10;
+		array[5] = this.m11;
+		array[6] = this.m12;
+		array[7] = this.m13;
+		array[8] = this.m20;
+		array[9] = this.m21;
+		array[10] = this.m22;
+		array[11] = this.m23;
+		array[12] = this.m30;
+		array[13] = this.m31;
+		array[14] = this.m32;
+		array[15] = this.m33;
 	}
 
 	public double get(int row, int column)
@@ -431,7 +431,7 @@ public class Matrix4f implements java.io.Serializable
 		throw new RuntimeException("Index out of bounds.");
 	}
 
-	public void getRow(int row, Vector4d vector)
+	public void getRow(int row, Vector4f vector)
 	{
 		if (row == 0)
 		{
@@ -467,7 +467,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void getRow(int row, double vector[])
+	public void getRow(int row, float vector[])
 	{
 		if (row == 0)
 		{
@@ -504,7 +504,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void getColumn(int column, Vector4d vector)
+	public void getColumn(int column, Vector4f vector)
 	{
 		if (column == 0)
 		{
@@ -540,7 +540,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void getColumn(int column, double vector[])
+	public void getColumn(int column, float vector[])
 	{
 		if (column == 0)
 		{
@@ -577,7 +577,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void setRow(int row, double x, double y, double z, double w)
+	public void setRow(int row, float x, float y, float z, float w)
 	{
 		switch (row)
 		{
@@ -614,7 +614,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void setRow(int row, Vector4d vector)
+	public void setRow(int row, Vector4f vector)
 	{
 		switch (row)
 		{
@@ -651,7 +651,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void setRow(int row, double vector[])
+	public void setRow(int row, float vector[])
 	{
 		switch (row)
 		{
@@ -688,7 +688,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void setColumn(int column, double x, double y, double z, double w)
+	public void setColumn(int column, float x, float y, float z, float w)
 	{
 		switch (column)
 		{
@@ -725,7 +725,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void setColumn(int column, Vector4d vector)
+	public void setColumn(int column, Vector4f vector)
 	{
 		switch (column)
 		{
@@ -762,7 +762,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void setColumn(int column, double vector[])
+	public void setColumn(int column, float vector[])
 	{
 		switch (column)
 		{
@@ -799,7 +799,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void add(double scalar)
+	public void add(float scalar)
 	{
 		this.m00 += scalar;
 		this.m01 += scalar;
@@ -851,7 +851,7 @@ public class Matrix4f implements java.io.Serializable
 		subtract(matrix2);
 	}
 
-	public void subtract(double scalar)
+	public void subtract(float scalar)
 	{
 		add(-scalar);
 	}
@@ -878,7 +878,7 @@ public class Matrix4f implements java.io.Serializable
 
 	public void transpose()
 	{
-		double temp;
+		float temp;
 
 		temp = this.m10;
 		this.m10 = this.m01;
@@ -918,7 +918,7 @@ public class Matrix4f implements java.io.Serializable
 		}
 	}
 
-	public void multiply(double scalar)
+	public void multiply(float scalar)
 	{
 		this.m00 *= scalar;
 		this.m01 *= scalar;
@@ -938,7 +938,7 @@ public class Matrix4f implements java.io.Serializable
 		this.m33 *= scalar;
 	}
 
-	public void multiply(Matrix4f matrix, double scalar)
+	public void multiply(Matrix4f matrix, float scalar)
 	{
 		set(matrix);
 		multiply(scalar);
@@ -946,8 +946,8 @@ public class Matrix4f implements java.io.Serializable
 
 	public final void multiply(Matrix4f matrix)
 	{
-		double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
-		double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+		float tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+		float tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
 
 		tmp00 = this.m00 * matrix.m00 + this.m01 * matrix.m10 + this.m02
 				* matrix.m20 + this.m03 * matrix.m30;
@@ -1045,8 +1045,8 @@ public class Matrix4f implements java.io.Serializable
 		}
 		else
 		{
-			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
-			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+			float tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			float tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
 
 			tmp00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20
 					+ m1.m03 * m2.m30;
@@ -1140,8 +1140,8 @@ public class Matrix4f implements java.io.Serializable
 		}
 		else
 		{
-			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
-			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+			float tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			float tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
 
 			tmp00 = m1.m00 * m2.m00 + m1.m10 * m2.m01 + m1.m20 * m2.m02
 					+ m1.m30 * m2.m03;
@@ -1234,8 +1234,8 @@ public class Matrix4f implements java.io.Serializable
 		}
 		else
 		{
-			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
-			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+			float tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			float tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
 
 			tmp00 = m1.m00 * m2.m00 + m1.m01 * m2.m01 + m1.m02 * m2.m02
 					+ m1.m03 * m2.m03;
@@ -1331,8 +1331,8 @@ public class Matrix4f implements java.io.Serializable
 		}
 		else
 		{
-			double tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
-			double tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
+			float tmp00, tmp01, tmp02, tmp03, tmp10, tmp11, tmp12, tmp13;
+			float tmp20, tmp21, tmp22, tmp23, tmp30, tmp31, tmp32, tmp33;
 
 			tmp00 = m1.m00 * m2.m00 + m1.m10 * m2.m10 + m1.m20 * m2.m20
 					+ m1.m30 * m2.m30;
@@ -1391,12 +1391,12 @@ public class Matrix4f implements java.io.Serializable
 
 	public boolean equals(Matrix4f matrix)
 	{
-		return epsilonEquals(matrix, 1e-16);
+		return epsilonEquals(matrix, 1e-6f);
 	}
 
-	public boolean epsilonEquals(Matrix4f matrix, double epsilon)
+	public boolean epsilonEquals(Matrix4f matrix, float epsilon)
 	{
-		double diff;
+		float diff;
 
 		diff = m00 - matrix.m00;
 		if ((diff < 0 ? -diff : diff) > epsilon)
@@ -1526,22 +1526,22 @@ public class Matrix4f implements java.io.Serializable
 		result[15] = 1.0;
 		luBacksubstitution(tmp, row_perm, result);
 
-		this.m00 = result[0];
-		this.m01 = result[1];
-		this.m02 = result[2];
-		this.m03 = result[3];
-		this.m10 = result[4];
-		this.m11 = result[5];
-		this.m12 = result[6];
-		this.m13 = result[7];
-		this.m20 = result[8];
-		this.m21 = result[9];
-		this.m22 = result[10];
-		this.m23 = result[11];
-		this.m30 = result[12];
-		this.m31 = result[13];
-		this.m32 = result[14];
-		this.m33 = result[15];
+		this.m00 = (float) result[0];
+		this.m01 = (float) result[1];
+		this.m02 = (float) result[2];
+		this.m03 = (float) result[3];
+		this.m10 = (float) result[4];
+		this.m11 = (float) result[5];
+		this.m12 = (float) result[6];
+		this.m13 = (float) result[7];
+		this.m20 = (float) result[8];
+		this.m21 = (float) result[9];
+		this.m22 = (float) result[10];
+		this.m23 = (float) result[11];
+		this.m30 = (float) result[12];
+		this.m31 = (float) result[13];
+		this.m32 = (float) result[14];
+		this.m33 = (float) result[15];
 
 	}
 

@@ -10,11 +10,16 @@ public class Vector4f implements java.io.Serializable
 		setToZero();
 	}
 	
+	public void set(float x, float y, float z, float w)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.w = w;
+	}
+	
 	public void setToZero()
 	{
-		this.x = 0.0f;
-		this.y = 0.0f;
-		this.z = 0.0f;
-		this.w = 0.0f;
+		set(0.0f,0.0f,0.0f,0.0f);
 	}
 }
