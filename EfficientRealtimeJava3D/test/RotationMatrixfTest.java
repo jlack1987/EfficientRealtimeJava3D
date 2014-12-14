@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -12,14 +14,31 @@ public class RotationMatrixfTest
 	Random random = new Random();
 	int nTests = 10;
 
+	@Before
 	public void setUp()
 	{
 
 	}
 
+	@After
 	public void tearDown()
 	{
 		System.gc();
+	}
+	
+	@Test
+	public void testConstructors()
+	{
+		RotationMatrixf R = new RotationMatrixf();
+		createRandomRotationMatrix(R, random);
+		Quaternionf Q = new Quaternionf(R);
+		AxisAnglef A = new AxisAnglef(R);
+		
+		RotationMatrixf R2 = new RotationMatrixf(Q);
+		RotationMatrixf R3 = new RotationMatrixf(A);
+		
+		assertMatrix3fEquals(R, R2, 1e-6f);
+		assertMatrix3fEquals(R, R3, 1e-6f);
 	}
 
 	@Test
@@ -106,6 +125,94 @@ public class RotationMatrixfTest
 			assertMatrix3fEquals(matrix2, matrix1, (float)1e-6);
 		}
 	}
+	
+	@Test
+	public void testInvert2()
+	{
+		RotationMatrixf matrix1 = new RotationMatrixf();
+		RotationMatrixf matrix2 = new RotationMatrixf();
+		RotationMatrixf matrix3 = new RotationMatrixf();
+		
+		matrix1.setToIdentity();
+		
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix2.rotZ(random.nextFloat());
+			matrix3.invert(matrix2);
+
+			matrix2.multiply(matrix3);
+
+			assertMatrix3fEquals(matrix2, matrix1, 1e-6f);
+		}
+	}
+	
+	@Test
+	public void testInvert3()
+	{
+		RotationMatrixf matrix1 = new RotationMatrixf();
+		RotationMatrixf matrix2 = new RotationMatrixf();
+		
+		matrix1.setToIdentity();
+		
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix2.rotZ(random.nextFloat());
+			RotationMatrixf matrix3 = new RotationMatrixf(matrix2);
+			matrix3.set(matrix2);
+			matrix2.invert(matrix2);
+
+			matrix2.multiply(matrix3);
+
+			assertMatrix3fEquals(matrix2, matrix1, 1e-6f);
+		}
+	}
+	
+	@Test
+	public void testSetAsAxisAngleEdgeCase()
+	{
+		AxisAnglef a = new AxisAnglef(0,0,0,1);
+		RotationMatrixf r = new RotationMatrixf();
+		r.rotX((float)Math.PI/4);
+		r.set(a);
+		assertTrue(isIdentity(r, 1e-6f));
+	}
+	
+	@Test
+	public void testRotateVector()
+	{
+		Vector3f v = new Vector3f(1,0,0);
+		RotationMatrixf R = new RotationMatrixf();
+		R.rotZ((float)Math.PI);
+		R.rotate(v);
+		
+		assertEquals(v.x,-1,1e-6f);
+		assertEquals(v.y,0,1e-6f);
+		assertEquals(v.z,0,1e-6f);
+		
+		R.rotX((float)Math.PI);
+		R.rotate(v);
+		assertEquals(v.x,-1,1e-6f);
+		
+	}
+	
+	@Test
+	public void testRotateVector2()
+	{
+		Vector3f v = new Vector3f(1,0,0);
+		Vector3f v2 = new Vector3f();
+		RotationMatrixf R = new RotationMatrixf();
+		R.rotZ((float)Math.PI);
+		R.rotate(v,v2);
+		
+		assertEquals(v2.x,-1,1e-6f);
+		assertEquals(v2.y,0,1e-6f);
+		assertEquals(v2.z,0,1e-6f);
+		
+		R.rotX((float)Math.PI);
+		R.rotate(v2,v2);
+		assertEquals(v2.x,-1,1e-6f);
+		
+	}
 
 	@Test
 	public void testNormalize()
@@ -120,20 +227,20 @@ public class RotationMatrixfTest
 			matrix.normalize();
 
 			matrix.getColumn(1, vector);
-			assertEquals(vector.length(), 1.0, 1e-5);
+			assertEquals(vector.length(), 1.0f, 1e-5f);
 
 			matrix.getColumn(2, vector);
-			assertEquals(vector.length(), 1.0, 1e-5);
+			assertEquals(vector.length(), 1.0f, 1e-5f);
 
 			matrix.getColumn(3, vector);
-			assertEquals(vector.length(), 1.0, 1e-5);
+			assertEquals(vector.length(), 1.0f, 1e-5f);
 
 			matrix.getColumn(1, vector);
 			matrix.getColumn(2, vector2);
-			assertEquals(vector.dot(vector2), 0, 1e-5);
+			assertEquals(vector.dot(vector2), 0.0f, 1e-5f);
 
 			matrix.getColumn(3, vector2);
-			assertEquals(vector.dot(vector2), 0, 1e-5);
+			assertEquals(vector.dot(vector2), 0.0f, 1e-5f);
 
 		}
 	}

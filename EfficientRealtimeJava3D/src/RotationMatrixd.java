@@ -183,7 +183,14 @@ public class RotationMatrixd extends Matrix3d implements java.io.Serializable
 
 	public void invert(RotationMatrixd matrix)
 	{
-		super.set(matrix);
-		super.transpose();
+		if(this != matrix)
+		{
+			super.set(matrix);
+			super.transpose();
+		}
+		else
+		{
+			invert();
+		}
 	}
 }

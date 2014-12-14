@@ -7,30 +7,22 @@ public class Vector3f implements java.io.Serializable
 	
 	public Vector3f()
 	{
-		this.x = 0;
-		this.y = 0;
-		this.z = 0;
+		set(0.0f,0.0f,0.0f);
 	}
 
 	public Vector3f(float x, float y, float z)
 	{
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		set(x,y,z);
 	}
 
 	public Vector3f(Vector3f vector)
 	{
-		this.x = vector.x;
-		this.y = vector.y;
-		this.z = vector.z;
+		set(vector.x,vector.y,vector.z);
 	}
 	
 	public void set(Vector3f vector)
 	{
-		this.x = vector.x;
-		this.y = vector.y;
-		this.z = vector.z;
+		set(vector.x,vector.y,vector.z);
 	}
 	
 	public void set(float x,float y,float z)
@@ -54,13 +46,6 @@ public class Vector3f implements java.io.Serializable
 		array[2] = z;
 	}
 
-	/**
-	 * Add method in which the vector argument is added to this and the result
-	 * is stored in this, i.e. this = this + vector. The Vector3d argument is
-	 * not modified.
-	 * 
-	 * @param vector
-	 */
 	public void add(Vector3f vector)
 	{
 		this.x = this.x + vector.x;
@@ -68,13 +53,6 @@ public class Vector3f implements java.io.Serializable
 		this.z = this.z + vector.z;
 	}
 
-	/**
-	 * Subtract method in which the vector argument is subtracted to this and
-	 * the result is stored in this, i.e. this = this - vector. The Vector3d
-	 * argument is not modified.
-	 * 
-	 * @param vector
-	 */
 	public void subtract(Vector3f vector)
 	{
 		this.x = this.x - vector.x;
@@ -82,15 +60,28 @@ public class Vector3f implements java.io.Serializable
 		this.z = this.z - vector.z;
 	}
 
-	/**
-	 * Dot method in which the elements of this are multiplied by the
-	 * corresponding elements of the vector and summed up. Vector3d argument is
-	 * not modified.
-	 * 
-	 * @param vector
-	 * @return
-	 */
-	public double dot(Vector3f vector)
+	public void normalize()
+	{
+		float length = length();
+		x /= length;
+		y /= length;
+		z /= length;
+	}
+	
+	public void normalize(Vector3f vector)
+	{
+		if(this != vector)
+		{
+			set(vector);
+			normalize();
+		}
+		else
+		{
+			normalize();
+		}
+	}
+	
+	public float dot(Vector3f vector)
 	{
 		return this.x * vector.x + this.y * vector.y + this.z * vector.z;
 	}
@@ -119,5 +110,20 @@ public class Vector3f implements java.io.Serializable
 	public float length()
 	{
 		return (float)Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+	}
+	
+	public float lengthSquared()
+	{
+		return (x*x + y*y + z*z);
+	}
+	
+	public float angle(Vector3f vector1)
+	{
+		float vDot = this.dot(vector1) / (this.length() * vector1.length());
+		if (vDot < -1.0f)
+			vDot = -1.0f;
+		if (vDot > 1.0f)
+			vDot = 1.0f;
+		return ((float) (Math.acos(vDot)));
 	}
 }

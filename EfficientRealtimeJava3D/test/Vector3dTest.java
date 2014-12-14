@@ -11,6 +11,91 @@ public class Vector3dTest
 	int nTests = 10;
 
 	@Test
+	public void testGetAndSet1()
+	{
+		Vector3d vector = new Vector3d();
+		vector.toString();
+		for(int i = 0; i<nTests; i++)
+		{
+			vector.x = random.nextDouble();
+			vector.y = random.nextDouble();
+			vector.z = random.nextDouble();
+			
+			Vector3d v2 = new Vector3d(vector);
+			
+			vector.get(v2);
+			
+			assertEquals(v2.x, vector.x,1e-12);
+			assertEquals(v2.y, vector.y,1e-12);
+			assertEquals(v2.z, vector.z,1e-12);
+		}
+	}
+	
+	@Test
+	public void testNormalize()
+	{
+		Vector3d vector = new Vector3d();
+		double[] v = new double[3];
+		for(int i = 0; i<nTests; i++)
+		{
+			vector.x = random.nextDouble();
+			vector.y = random.nextDouble();
+			vector.z = random.nextDouble();
+			vector.normalize();
+			vector.get(v);
+			assertEquals(Math.sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]),1.0,1e-12);
+		}
+	}
+	
+	@Test
+	public void testNormalize2()
+	{
+		Vector3d vector = new Vector3d();
+		Vector3d v = new Vector3d();
+		for(int i = 0; i<nTests; i++)
+		{
+			vector.x = random.nextDouble();
+			vector.y = random.nextDouble();
+			vector.z = random.nextDouble();
+			v.normalize(vector);
+			
+			assertEquals(v.length(),1.0,1e-12);
+		}
+	}
+	
+	@Test
+	public void testNormalize3()
+	{
+		Vector3d vector = new Vector3d();
+		for(int i = 0; i<nTests; i++)
+		{
+			vector.x = random.nextDouble();
+			vector.y = random.nextDouble();
+			vector.z = random.nextDouble();
+			vector.normalize(vector);
+			
+			assertEquals(vector.length(),1.0,1e-12);
+			assertEquals(vector.lengthSquared(),1.0,1e-12);
+		}
+	}
+	
+	@Test
+	public void testAngleBetweenVectors()
+	{
+		Vector3d v1 = new Vector3d(1,0,0);
+		Vector3d v2 = new Vector3d(0,1,0);
+		Vector3d v3 = new Vector3d(0,0,1);
+		Vector3d v4 = new Vector3d(-1,-1,-1);
+		Vector3d v5 = new Vector3d(2,2,2);
+		Vector3d v6 = new Vector3d(2,2,2);
+		
+		assertEquals(v1.angle(v2),Math.PI/2,1e-12);
+		assertEquals(v2.angle(v3),Math.PI/2,1e-12);
+		assertEquals(v4.angle(v5),Math.PI,1e-12);
+		assertEquals(v5.angle(v6),0,1e-8);
+	}
+	
+	@Test
 	public void testVector3dEmptyConstructor()
 	{
 		Vector3d vector = new Vector3d();

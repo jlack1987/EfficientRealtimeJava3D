@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 
 import java.util.Random;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class RotationMatrixdTest
@@ -9,14 +11,63 @@ public class RotationMatrixdTest
 	Random random = new Random();
 	int nTests = 10;
 
+	@Before
 	public void setUp()
 	{
 
 	}
 
+	@After
 	public void tearDown()
 	{
 		System.gc();
+	}
+	
+	@Test
+	public void testRotateVector()
+	{
+		Vector3d v = new Vector3d(1,0,0);
+		RotationMatrixd R = new RotationMatrixd();
+		R.rotZ(Math.PI);
+		R.rotate(v);
+		
+		assertEquals(v.x,-1,1e-12);
+		assertEquals(v.y,0,1e-12);
+		assertEquals(v.z,0,1e-12);
+		
+		R.rotX(Math.PI);
+		R.rotate(v);
+		assertEquals(v.x,-1,1e-12);
+		
+	}
+	
+	@Test
+	public void testRotateVector2()
+	{
+		Vector3d v = new Vector3d(1,0,0);
+		Vector3d v2 = new Vector3d();
+		RotationMatrixd R = new RotationMatrixd();
+		R.rotZ(Math.PI);
+		R.rotate(v,v2);
+		
+		assertEquals(v2.x,-1,1e-12);
+		assertEquals(v2.y,0,1e-12);
+		assertEquals(v2.z,0,1e-12);
+		
+		R.rotX(Math.PI);
+		R.rotate(v2,v2);
+		assertEquals(v2.x,-1,1e-12);
+		
+	}
+	
+	@Test
+	public void testSetAsAxisAngleEdgeCase()
+	{
+		AxisAngled a = new AxisAngled(0,0,0,1);
+		RotationMatrixd r = new RotationMatrixd();
+		r.rotX(Math.PI/4);
+		r.set(a);
+		assertTrue(isIdentity(r, 1e-6));
 	}
 
 	@Test
@@ -90,18 +141,73 @@ public class RotationMatrixdTest
 	{
 		RotationMatrixd matrix1 = new RotationMatrixd();
 		RotationMatrixd matrix2 = new RotationMatrixd();
-		RotationMatrixd matrix3 = new RotationMatrixd();
 
 		for (int i = 0; i < nTests; i++)
 		{
 			matrix2.rotZ(random.nextDouble());
-			matrix3.set(matrix2);
+			RotationMatrixd matrix3 = new RotationMatrixd(matrix2);
 			matrix2.invert();
 
 			matrix2.multiply(matrix3);
 
 			assertMatrix3dEquals(matrix2, matrix1, 1e-15);
 		}
+	}
+	
+	@Test
+	public void testInvert2()
+	{
+		RotationMatrixd matrix1 = new RotationMatrixd();
+		RotationMatrixd matrix2 = new RotationMatrixd();
+		RotationMatrixd matrix3 = new RotationMatrixd();
+		
+		matrix1.setToIdentity();
+		
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix2.rotZ(random.nextDouble());
+			matrix3.invert(matrix2);
+
+			matrix2.multiply(matrix3);
+
+			assertMatrix3dEquals(matrix2, matrix1, 1e-15);
+		}
+	}
+	
+	@Test
+	public void testInvert3()
+	{
+		RotationMatrixd matrix1 = new RotationMatrixd();
+		RotationMatrixd matrix2 = new RotationMatrixd();
+		RotationMatrixd matrix3 = new RotationMatrixd();
+		
+		matrix1.setToIdentity();
+		
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix2.rotZ(random.nextDouble());
+			matrix3.set(matrix2);
+			matrix2.invert(matrix2);
+
+			matrix2.multiply(matrix3);
+
+			assertMatrix3dEquals(matrix2, matrix1, 1e-15);
+		}
+	}
+	
+	@Test
+	public void testConstructors()
+	{
+		RotationMatrixd R = new RotationMatrixd();
+		createRandomRotationMatrix(R, random);
+		Quaterniond Q = new Quaterniond(R);
+		AxisAngled A = new AxisAngled(R);
+		
+		RotationMatrixd R2 = new RotationMatrixd(Q);
+		RotationMatrixd R3 = new RotationMatrixd(A);
+		
+		assertMatrix3dEquals(R, R2, 1e-8);
+		assertMatrix3dEquals(R, R3, 1e-8);
 	}
 
 	@Test

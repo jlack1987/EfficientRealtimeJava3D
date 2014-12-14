@@ -9,6 +9,11 @@ public class Quaterniond implements java.io.Serializable
 	{
 		set(0, 0, 0, 1);
 	}
+	
+	public Quaterniond(AxisAngled A)
+	{
+		set(A);
+	}
 
 	public Quaterniond(double[] array)
 	{
@@ -24,6 +29,11 @@ public class Quaterniond implements java.io.Serializable
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 	}
+	
+	public Quaterniond(RotationMatrixd R)
+	{
+		set(R);
+	}
 
 	public void set(double x, double y, double z, double w)
 	{
@@ -31,7 +41,6 @@ public class Quaterniond implements java.io.Serializable
 		this.y = y;
 		this.z = z;
 		this.w = w;
-		normalize();
 	}
 	
 	public void set(Quaterniond quaternion)
@@ -39,7 +48,7 @@ public class Quaterniond implements java.io.Serializable
 		set(quaternion.x,quaternion.y,quaternion.z,quaternion.w);
 	}
 
-	public final void set(AxisAngled axisAngle)
+	public void set(AxisAngled axisAngle)
 	{
 		double mag, tmpMag;
 
@@ -107,8 +116,6 @@ public class Quaterniond implements java.io.Serializable
 		this.y = cj * ss + sj * cc;
 		this.z = cj * cs - sj * sc;
 		this.w = cj * cc + sj * ss;
-
-		normalize();
 	}
 
 	public final void multiply(Quaterniond quaternion1, Quaterniond quaternion2)

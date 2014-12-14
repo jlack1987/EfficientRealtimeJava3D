@@ -26,6 +26,16 @@ public class Quaternionf implements java.io.Serializable
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 	}
+	
+	public Quaternionf(RotationMatrixf R)
+	{
+		set(R);
+	}
+	
+	public Quaternionf(AxisAnglef A)
+	{
+		set(A);
+	}
 
 	public void set(float x, float y, float z, float w)
 	{
@@ -109,8 +119,6 @@ public class Quaternionf implements java.io.Serializable
 		this.y = cj * ss + sj * cc;
 		this.z = cj * cs - sj * sc;
 		this.w = cj * cc + sj * ss;
-
-		normalize();
 	}
 
 	public final void multiply(Quaternionf quaternion1, Quaternionf quaternion2)

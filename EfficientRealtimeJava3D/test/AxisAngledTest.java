@@ -24,13 +24,12 @@ public class AxisAngledTest
 	{
 		RotationMatrixd matrix = new RotationMatrixd();
 		AxisAngled axisAngle = new AxisAngled();
-		RotationMatrixd matrix2 = new RotationMatrixd();
 		
 		for(int i = 0; i<nTests; i++)
 		{
 			createRandomRotationMatrix(matrix, random);
 			axisAngle.set(matrix);
-			matrix2.set(axisAngle);
+			RotationMatrixd matrix2 = new RotationMatrixd(axisAngle);
 			assertMatrixEquals(matrix, matrix2, 1e-8);
 		}
 	}

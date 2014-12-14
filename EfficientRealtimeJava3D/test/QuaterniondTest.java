@@ -23,20 +23,47 @@ public class QuaterniondTest
 	}
 
 	@Test
-	public void testCreateQuaternionFromAxisAngled()
+	public void testCreateQuaternionFromRotationMatrixd()
 	{
 		Quaterniond quat1 = new Quaterniond();
 		Quaterniond quat2 = new Quaterniond();
-		RotationMatrixd mat = new RotationMatrixd();
 
 		for (int i = 0; i < nTests; i++)
 		{
 			createRandomQuaternion(random, quat1);
-			mat.set(quat1);
+			RotationMatrixd mat = new RotationMatrixd(quat1);
 			quat2.set(mat);
 
 			assertQuaterniondEquals(quat1, quat2, 1e-8);
 		}
+	}
+	
+	@Test
+	public void testCreateQuaternionFromAxisAngled()
+	{
+		Quaterniond quat1 = new Quaterniond();
+		Quaterniond quat2 = new Quaterniond();
+
+		for (int i = 0; i < nTests; i++)
+		{
+			createRandomQuaternion(random, quat1);
+			AxisAngled A = new AxisAngled(quat1);
+			quat2.set(A);
+
+			assertQuaterniondEquals(quat1, quat2, 1e-8);
+		}
+	}
+	
+	@Test
+	public void testCreateQuaternionFromAxisAngled2()
+	{
+		Quaterniond quat1 = new Quaterniond();
+
+		quat1.set(0,0,0,0);
+		AxisAngled A = new AxisAngled(0,0,0,0);
+		Quaterniond quat2 = new Quaterniond(A);
+
+		assertQuaterniondEquals(quat1, quat2, 1e-8);
 	}
 
 	@Test
@@ -64,19 +91,88 @@ public class QuaterniondTest
 		Quaterniond q1 = new Quaterniond();
 		Quaterniond q2 = new Quaterniond();
 
-		createRandomQuaternion(random, q1);
-		createRandomQuaternion(random, q2);
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomQuaternion(random, q1);
+			createRandomQuaternion(random, q2);
+	
+			Quat4d q3 = new Quat4d();
+			Quat4d q4 = new Quat4d();
+	
+			q3.set(q1.x, q1.y, q1.z, q1.w);
+			q4.set(q2.x, q2.y, q2.z, q2.w);
+	
+			q1.multiply(q2);
+			q3.mul(q4);
+	
+			assertQuaterniondEquals(q1, q3, 1e-5);
+		}
+	}
+	
+	@Test
+	public void testMultiply2()
+	{
+		Quaterniond q1 = new Quaterniond();
+		Quaterniond q2 = new Quaterniond();
+		Quaterniond q3 = new Quaterniond();
 
-		Quat4d q3 = new Quat4d();
-		Quat4d q4 = new Quat4d();
-
-		q3.set(q1.x, q1.y, q1.z, q1.w);
-		q4.set(q2.x, q2.y, q2.z, q2.w);
-
-		q1.multiply(q2);
-		q3.mul(q4);
-
-		assertQuaterniondEquals(q1, q3, 1e-5);
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomQuaternion(random, q1);
+			q3.set(q1);
+			createRandomQuaternion(random, q2);
+	
+			q3.multiply(q3,q2);
+			q1.multiply(q2);
+	
+			assertQuaterniondEquals(q1, q3, 1e-5);
+		}
+	}
+	
+	@Test
+	public void testNormalize()
+	{
+		double[] f = new double[4];
+		
+		f[0] = random.nextDouble();
+		f[1] = random.nextDouble();
+		f[2] = random.nextDouble();
+		f[3] = random.nextDouble();
+		Quaterniond Q = new Quaterniond(f);
+		Q.normalize();
+		
+		double mag = Math.sqrt(Q.x*Q.x+Q.y*Q.y+Q.z*Q.z+Q.w*Q.w);
+		Q.x/=mag;
+		Q.y/=mag;
+		Q.z/=mag;
+		Q.w/=mag;
+		
+		assertEquals(Math.sqrt(Q.x*Q.x+Q.y*Q.y+Q.z*Q.z+Q.w*Q.w),1.0,1e-12);
+	}
+	
+	@Test
+	public void testNormalize2()
+	{
+		double[] f = new double[4];
+		Quaterniond Q1 = new Quaterniond();
+		Q1.toString();
+		for(int i = 0; i<nTests; i++)
+		{
+			f[0] = random.nextDouble();
+			f[1] = random.nextDouble();
+			f[2] = random.nextDouble();
+			f[3] = random.nextDouble();
+			Quaterniond Q = new Quaterniond(f);
+			Q1.normalize(Q);
+			
+			double mag = Math.sqrt(Q1.x*Q1.x+Q1.y*Q1.y+Q1.z*Q1.z+Q1.w*Q1.w);
+			Q1.x/=mag;
+			Q1.y/=mag;
+			Q1.z/=mag;
+			Q1.w/=mag;
+			
+			assertEquals(Math.sqrt(Q1.x*Q1.x+Q1.y*Q1.y+Q1.z*Q1.z+Q1.w*Q1.w),1.0,1e-12);
+		}
 	}
 
 	@Test
