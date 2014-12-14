@@ -25,6 +25,11 @@ public class Vector4d implements java.io.Serializable
 		set(vector[0],vector[1],vector[2],vector[3]);
 	}
 	
+	public Vector4d(double x, double y, double z, double w)
+	{
+		set(x,y,z,w);
+	}
+	
 	public void setToZero()
 	{
 		set(0,0,0,0);

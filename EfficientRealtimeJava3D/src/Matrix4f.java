@@ -358,7 +358,7 @@ public class Matrix4f implements java.io.Serializable
 		array[15] = this.m33;
 	}
 
-	public double get(int row, int column)
+	public float get(int row, int column)
 	{
 		switch (row)
 		{

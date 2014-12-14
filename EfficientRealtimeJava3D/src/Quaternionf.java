@@ -15,16 +15,25 @@ public class Quaternionf implements java.io.Serializable
 	public Quaternionf(double[] array)
 	{
 		set((float)array[0], (float)array[1], (float)array[2], (float)array[3]);
+		normalize();
 	}
 
 	public Quaternionf(float[] array)
 	{
 		set(array[0], array[1], array[2], array[3]);
+		normalize();
 	}
 	
 	public Quaternionf(Quaternionf quaternion)
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+		normalize();
+	}
+	
+	public Quaternionf(Vector4f vector)
+	{
+		set(vector.x,vector.y,vector.z,vector.w);
+		normalize();
 	}
 	
 	public Quaternionf(RotationMatrixf R)
@@ -37,13 +46,12 @@ public class Quaternionf implements java.io.Serializable
 		set(A);
 	}
 
-	public void set(float x, float y, float z, float w)
+	private void set(float x, float y, float z, float w)
 	{
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.w = w;
-		normalize();
+		this.w = w;;
 	}
 	
 	public void set(Quaternionf quaternion)
@@ -246,6 +254,31 @@ public class Quaternionf implements java.io.Serializable
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		inverse();
+	}
+	
+	public void rotate(Vector3f vector)
+	{
+		float w = -this.x * vector.x - this.y * vector.y - this.z * vector.z;
+		float x = this.w * vector.x + this.y * vector.z - this.z * vector.y;
+		float y = this.w * vector.y - this.x * vector.z + this.z * vector.x;
+		float z = this.w * vector.z + this.x * vector.y - this.y * vector.x;
+
+		float norm;
+
+		norm = 1.0f / (this.w * this.w + this.x * this.x + this.y * this.y + this.z
+				* this.z);
+
+		float tmpw = this.w * norm;
+		float tmpx = this.x * -norm;
+		float tmpy = this.y * -norm;
+		float tmpz = this.z * -norm;
+
+		vector.x = w * tmpx + tmpw * x + y * tmpz
+				- z * tmpy;
+		vector.y = w * tmpy + tmpw * y - x * tmpz
+				+ z * tmpx;
+		vector.z = w * tmpz + tmpw * z + x * tmpy
+				- y * tmpx;
 	}
 
 	public void conjugate(Quaternionf quaternion)

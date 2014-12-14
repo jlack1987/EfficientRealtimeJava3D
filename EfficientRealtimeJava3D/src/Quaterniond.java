@@ -9,7 +9,7 @@ public class Quaterniond implements java.io.Serializable
 	{
 		set(0, 0, 0, 1);
 	}
-	
+
 	public Quaterniond(AxisAngled A)
 	{
 		set(A);
@@ -18,34 +18,43 @@ public class Quaterniond implements java.io.Serializable
 	public Quaterniond(double[] array)
 	{
 		set(array[0], array[1], array[2], array[3]);
+		normalize();
 	}
 
 	public Quaterniond(float[] array)
 	{
 		set(array[0], array[1], array[2], array[3]);
+		normalize();
+	}
+	
+	public Quaterniond(Vector4d vector)
+	{
+		set(vector.x,vector.y,vector.z,vector.w);
+		normalize();
 	}
 
 	public Quaterniond(Quaterniond quaternion)
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+		normalize();
 	}
-	
+
 	public Quaterniond(RotationMatrixd R)
 	{
 		set(R);
 	}
 
-	public void set(double x, double y, double z, double w)
+	private void set(double x, double y, double z, double w)
 	{
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.w = w;
 	}
-	
+
 	public void set(Quaterniond quaternion)
 	{
-		set(quaternion.x,quaternion.y,quaternion.z,quaternion.w);
+		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 	}
 
 	public void set(AxisAngled axisAngle)
@@ -187,14 +196,10 @@ public class Quaterniond implements java.io.Serializable
 
 		double x, y, w;
 
-		w = this.w * tmpw - this.x * tmpx - this.y * tmpy
-				- this.z * tmpz;
-		x = this.w * tmpx + tmpw * this.x + this.y * tmpz
-				- this.z * tmpy;
-		y = this.w * tmpy + tmpw * this.y - this.x * tmpz
-				+ this.z * tmpx;
-		this.z = this.w * tmpz + tmpw * this.z + this.x
-				* tmpy - this.y * tmpx;
+		w = this.w * tmpw - this.x * tmpx - this.y * tmpy - this.z * tmpz;
+		x = this.w * tmpx + tmpw * this.x + this.y * tmpz - this.z * tmpy;
+		y = this.w * tmpy + tmpw * this.y - this.x * tmpz + this.z * tmpx;
+		this.z = this.w * tmpz + tmpw * this.z + this.x * tmpy - this.y * tmpx;
 		this.w = w;
 		this.x = x;
 		this.y = y;
@@ -245,6 +250,31 @@ public class Quaterniond implements java.io.Serializable
 		inverse();
 	}
 
+	public void rotate(Vector3d vector)
+	{
+		double w = -this.x * vector.x - this.y * vector.y - this.z * vector.z;
+		double x = this.w * vector.x + this.y * vector.z - this.z * vector.y;
+		double y = this.w * vector.y - this.x * vector.z + this.z * vector.x;
+		double z = this.w * vector.z + this.x * vector.y - this.y * vector.x;
+
+		double norm;
+
+		norm = 1.0 / (this.w * this.w + this.x * this.x + this.y * this.y + this.z
+				* this.z);
+
+		double tmpw = this.w * norm;
+		double tmpx = this.x * -norm;
+		double tmpy = this.y * -norm;
+		double tmpz = this.z * -norm;
+
+		vector.x = w * tmpx + tmpw * x + y * tmpz
+				- z * tmpy;
+		vector.y = w * tmpy + tmpw * y - x * tmpz
+				+ z * tmpx;
+		vector.z = w * tmpz + tmpw * z + x * tmpy
+				- y * tmpx;
+	}
+
 	public void conjugate(Quaterniond quaternion)
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
@@ -283,7 +313,7 @@ public class Quaterniond implements java.io.Serializable
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		normalize();
 	}
-	
+
 	public String toString()
 	{
 		return "(" + x + "," + y + "," + z + "," + w + ")";

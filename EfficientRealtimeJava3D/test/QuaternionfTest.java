@@ -1,13 +1,14 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
-import javax.vecmath.AxisAngle4d;
 import javax.vecmath.Quat4d;
 
 import org.junit.Test;
 
-public class QuaterniondTest
+
+public class QuaternionfTest
 {
 	Random random = new Random();
 	double nTests = 10;
@@ -23,71 +24,71 @@ public class QuaterniondTest
 	}
 	
 	@Test
-	public void testCreateQuaternionFromVector4d()
+	public void testCreateQuaternionFromVector4f()
 	{
-		Vector4d V = new Vector4d();
+		Vector4f V = new Vector4f();
 		
 		for(int i = 0; i<nTests; i++)
 		{
-			V.set(random.nextDouble(),random.nextDouble(),random.nextDouble(),random.nextDouble());
+			V.set(random.nextFloat(),random.nextFloat(),random.nextFloat(),random.nextFloat());
 			V.normalize();
-			Quaterniond Q = new Quaterniond(V);
+			Quaternionf Q = new Quaternionf(V);
 			
-			assertEquals(V.x,Q.x,1e-12);
-			assertEquals(V.y,Q.y,1e-12);
-			assertEquals(V.z,Q.z,1e-12);
-			assertEquals(V.w,Q.w,1e-12);
+			assertEquals(V.x,Q.x,1e-5f);
+			assertEquals(V.y,Q.y,1e-5f);
+			assertEquals(V.z,Q.z,1e-5f);
+			assertEquals(V.w,Q.w,1e-5f);
 		}
 	}
 
 	@Test
-	public void testCreateQuaternionFromRotationMatrixd()
+	public void testCreateQuaternionFromRotationMatrixf()
 	{
-		Quaterniond quat1 = new Quaterniond();
+		Quaternionf quat1 = new Quaternionf();
 
 		for (int i = 0; i < nTests; i++)
 		{
 			createRandomQuaternion(random, quat1);
-			RotationMatrixd mat = new RotationMatrixd(quat1);
-			Quaterniond quat2 = new Quaterniond(mat);
+			RotationMatrixf mat = new RotationMatrixf(quat1);
+			Quaternionf quat2 = new Quaternionf(mat);
 
-			assertQuaterniondEquals(quat1, quat2, 1e-8);
+			assertQuaternionfEquals(quat1, quat2, 1e-5f);
 		}
 	}
 	
 	@Test
-	public void testCreateQuaternionFromAxisAngled()
+	public void testCreateQuaternionFromAxisAnglef()
 	{
-		Quaterniond quat1 = new Quaterniond();
-		Quaterniond quat2 = new Quaterniond();
+		Quaternionf quat1 = new Quaternionf();
+		Quaternionf quat2 = new Quaternionf();
 
 		for (int i = 0; i < nTests; i++)
 		{
 			createRandomQuaternion(random, quat1);
-			AxisAngled A = new AxisAngled(quat1);
+			AxisAnglef A = new AxisAnglef(quat1);
 			quat2.set(A);
 
-			assertQuaterniondEquals(quat1, quat2, 1e-8);
+			assertQuaternionfEquals(quat1, quat2, 1e-5f);
 		}
 	}
 	
 	@Test
-	public void testCreateQuaternionFromAxisAngled2()
+	public void testCreateQuaternionFromAxisAnglef2()
 	{
-		Quaterniond quat1 = new Quaterniond();
+		Quaternionf quat1 = new Quaternionf();
 		
 		quat1.x = 0; quat1.y = 0; quat1.z = 0; quat1.w = 0;
-		AxisAngled A = new AxisAngled(0,0,0,0);
-		Quaterniond quat2 = new Quaterniond(A);
+		AxisAnglef A = new AxisAnglef(0,0,0,0);
+		Quaternionf quat2 = new Quaternionf(A);
 
-		assertQuaterniondEquals(quat1, quat2, 1e-8);
+		assertQuaternionfEquals(quat1, quat2, 1e-5f);
 	}
 
 	@Test
 	public void testQuaternionConjugate()
 	{
-		Quaterniond quat = new Quaterniond();
-		Quaterniond quat2 = new Quaterniond();
+		Quaternionf quat = new Quaternionf();
+		Quaternionf quat2 = new Quaternionf();
 
 		for (int i = 0; i < nTests; i++)
 		{
@@ -105,8 +106,8 @@ public class QuaterniondTest
 	@Test
 	public void testMultiply()
 	{
-		Quaterniond q1 = new Quaterniond();
-		Quaterniond q2 = new Quaterniond();
+		Quaternionf q1 = new Quaternionf();
+		Quaternionf q2 = new Quaternionf();
 
 		for(int i = 0; i<nTests; i++)
 		{
@@ -122,16 +123,16 @@ public class QuaterniondTest
 			q1.multiply(q2);
 			q3.mul(q4);
 	
-			assertQuaterniondEquals(q1, q3, 1e-5);
+			assertQuaternionfEquals(q1, q3, 1e-5);
 		}
 	}
 	
 	@Test
 	public void testMultiply2()
 	{
-		Quaterniond q1 = new Quaterniond();
-		Quaterniond q2 = new Quaterniond();
-		Quaterniond q3 = new Quaterniond();
+		Quaternionf q1 = new Quaternionf();
+		Quaternionf q2 = new Quaternionf();
+		Quaternionf q3 = new Quaternionf();
 
 		for(int i = 0; i<nTests; i++)
 		{
@@ -142,7 +143,7 @@ public class QuaterniondTest
 			q3.multiply(q3,q2);
 			q1.multiply(q2);
 	
-			assertQuaterniondEquals(q1, q3, 1e-5);
+			assertQuaternionfEquals(q1, q3, 1e-5);
 		}
 	}
 	
@@ -151,11 +152,11 @@ public class QuaterniondTest
 	{
 		double[] f = new double[4];
 		
-		f[0] = random.nextDouble();
-		f[1] = random.nextDouble();
-		f[2] = random.nextDouble();
-		f[3] = random.nextDouble();
-		Quaterniond Q = new Quaterniond(f);
+		f[0] = random.nextFloat();
+		f[1] = random.nextFloat();
+		f[2] = random.nextFloat();
+		f[3] = random.nextFloat();
+		Quaternionf Q = new Quaternionf(f);
 		Q.normalize();
 		
 		double mag = Math.sqrt(Q.x*Q.x+Q.y*Q.y+Q.z*Q.z+Q.w*Q.w);
@@ -164,22 +165,22 @@ public class QuaterniondTest
 		Q.z/=mag;
 		Q.w/=mag;
 		
-		assertEquals(Math.sqrt(Q.x*Q.x+Q.y*Q.y+Q.z*Q.z+Q.w*Q.w),1.0,1e-12);
+		assertEquals(Math.sqrt(Q.x*Q.x+Q.y*Q.y+Q.z*Q.z+Q.w*Q.w),1.0,1e-5f);
 	}
 	
 	@Test
 	public void testNormalize2()
 	{
 		double[] f = new double[4];
-		Quaterniond Q1 = new Quaterniond();
+		Quaternionf Q1 = new Quaternionf();
 		Q1.toString();
 		for(int i = 0; i<nTests; i++)
 		{
-			f[0] = random.nextDouble();
-			f[1] = random.nextDouble();
-			f[2] = random.nextDouble();
-			f[3] = random.nextDouble();
-			Quaterniond Q = new Quaterniond(f);
+			f[0] = random.nextFloat();
+			f[1] = random.nextFloat();
+			f[2] = random.nextFloat();
+			f[3] = random.nextFloat();
+			Quaternionf Q = new Quaternionf(f);
 			Q1.normalize(Q);
 			
 			double mag = Math.sqrt(Q1.x*Q1.x+Q1.y*Q1.y+Q1.z*Q1.z+Q1.w*Q1.w);
@@ -188,7 +189,7 @@ public class QuaterniondTest
 			Q1.z/=mag;
 			Q1.w/=mag;
 			
-			assertEquals(Math.sqrt(Q1.x*Q1.x+Q1.y*Q1.y+Q1.z*Q1.z+Q1.w*Q1.w),1.0,1e-12);
+			assertEquals(Math.sqrt(Q1.x*Q1.x+Q1.y*Q1.y+Q1.z*Q1.z+Q1.w*Q1.w),1.0,1e-5f);
 		}
 	}
 	
@@ -201,7 +202,7 @@ public class QuaterniondTest
 		f[1] = 0.0f;
 		f[2] = 0.0f;
 		f[3] = 0.0f;
-		Quaterniond Q = new Quaterniond(f);
+		Quaternionf Q = new Quaternionf(f);
 		Q.normalize();
 		
 		assertEquals(Math.sqrt(Q.x*Q.x+Q.y*Q.y+Q.z*Q.z+Q.w*Q.w),0,1e-12);
@@ -210,8 +211,8 @@ public class QuaterniondTest
 	@Test
 	public void testMultiplyInverse()
 	{
-		Quaterniond q1 = new Quaterniond();
-		Quaterniond q2 = new Quaterniond();
+		Quaternionf q1 = new Quaternionf();
+		Quaternionf q2 = new Quaternionf();
 
 		createRandomQuaternion(random, q1);
 		createRandomQuaternion(random, q2);
@@ -225,14 +226,14 @@ public class QuaterniondTest
 		q1.multiplyInverse(q2);
 		q3.mulInverse(q4);
 
-		assertQuaterniondEquals(q1, q3, 1e-5);
+		assertQuaternionfEquals(q1, q3, 1e-5);
 	}
 
 	@Test
 	public void testMultiplyInverse2()
 	{
-		Quaterniond q1 = new Quaterniond();
-		Quaterniond q2 = new Quaterniond();
+		Quaternionf q1 = new Quaternionf();
+		Quaternionf q2 = new Quaternionf();
 
 		createRandomQuaternion(random, q1);
 		createRandomQuaternion(random, q2);
@@ -246,14 +247,14 @@ public class QuaterniondTest
 		q1.multiplyInverse(q2, q2);
 		q3.mulInverse(q4, q4);
 
-		assertQuaterniondEquals(q1, q3, 1e-5);
+		assertQuaternionfEquals(q1, q3, 1e-5);
 	}
 
 	@Test
 	public void testMultiplyInverse3()
 	{
-		Quaterniond q1 = new Quaterniond();
-		Quaterniond q2 = new Quaterniond();
+		Quaternionf q1 = new Quaternionf();
+		Quaternionf q2 = new Quaternionf();
 
 		createRandomQuaternion(random, q1);
 		createRandomQuaternion(random, q2);
@@ -267,36 +268,36 @@ public class QuaterniondTest
 		q1.multiplyInverse(q1, q2);
 		q3.mulInverse(q3, q4);
 
-		assertQuaterniondEquals(q1, q3, 1e-5);
+		assertQuaternionfEquals(q1, q3, 1e-5);
 	}
 
 	@Test
 	public void testRotations()
 	{
-		Quaterniond q = new Quaterniond();
-		q.set(new AxisAngled(new Vector3d(1, 0, -1), Math.PI));
+		Quaternionf q = new Quaternionf();
+		q.set(new AxisAnglef(new Vector3f(1.0f, 0.0f, -1.0f), (float)Math.PI));
 
-		Vector3d v = new Vector3d(1, 2, 3);
-		RotationMatrixd m = new RotationMatrixd();
+		Vector3f v = new Vector3f(1, 2, 3);
+		RotationMatrixf m = new RotationMatrixf();
 
-		Vector3d vResult = new Vector3d(-3, -2, -1);
+		Vector3f vResult = new Vector3f(-3, -2, -1);
 
 		String rotMethod = "";
 
 		for (int i = 0; i < nTests; i++)
 		{
 			rotMethod += "q";
-			Vector3d vp = rotate(q, v);
+			Vector3f vp = rotate(q, v);
 			System.out.println(rotMethod + ": " + vp + " ==> "
-					+ vector3dEquals(vResult, vp, 1e-8));
-			assertTrue(vector3dEquals(vResult, vp, 1e-8));
+					+ Vector3fEquals(vResult, vp, 1e-5f));
+			assertTrue(Vector3fEquals(vResult, vp, 1e-5f));
 			m.set(q);
 
 			rotMethod += "m";
-			Vector3d vm = rotate(m, v);
+			Vector3f vm = rotate(m, v);
 			System.out.println(rotMethod + ": " + vm + " ==> "
-					+ vector3dEquals(vResult, vm, 1e-8));
-			assertTrue(vector3dEquals(vResult, vm, 1e-8));
+					+ Vector3fEquals(vResult, vm, 1e-5f));
+			assertTrue(Vector3fEquals(vResult, vm, 1e-5f));
 
 			q.set(m);
 		}
@@ -305,10 +306,10 @@ public class QuaterniondTest
 	@Test
 	public void testConjugate()
 	{
-		Quaterniond Q = new Quaterniond();
+		Quaternionf Q = new Quaternionf();
 		
 		createRandomQuaternion(random, Q);
-		Quaterniond Q2 = new Quaterniond();
+		Quaternionf Q2 = new Quaternionf();
 		Q.conjugate(Q2);
 		
 		assertEquals(Q.x,-Q2.x,1e-12);
@@ -319,14 +320,14 @@ public class QuaterniondTest
 	@Test
 	public void testRotateVector()
 	{
-		Quaterniond Q = new Quaterniond();
-		Vector3d V = new Vector3d();
-		Vector3d V2 = new Vector3d();
+		Quaternionf Q = new Quaternionf();
+		Vector3f V = new Vector3f();
+		Vector3f V2 = new Vector3f();
 		
 		createRandomQuaternion(random, Q);
-		V.set(random.nextDouble(),random.nextDouble(),random.nextDouble());
+		V.set(random.nextFloat(),random.nextFloat(),random.nextFloat());
 		V2.set(V);
-		RotationMatrixd R = new RotationMatrixd(Q);
+		RotationMatrixf R = new RotationMatrixf(Q);
 		
 		Q.rotate(V);
 		R.rotate(V2);
@@ -334,74 +335,74 @@ public class QuaterniondTest
 		System.out.println(V + "\n");
 		System.out.println(V2 + "\n");
 		
-		assertEquals(V.x,V2.x,1e-12);
-		assertEquals(V.y,V2.y,1e-12);
-		assertEquals(V.z,V2.z,1e-12);
+		assertEquals(V.x,V2.x,1e-5f);
+		assertEquals(V.y,V2.y,1e-5f);
+		assertEquals(V.z,V2.z,1e-5f);
 	}
 	
 	@Test
 	public void testInverse()
 	{
-		Quaterniond Q = new Quaterniond();
+		Quaternionf Q = new Quaternionf();
 		
 		for(int i = 0; i<nTests; i++)
 		{
 			createRandomQuaternion(random, Q);
-			Quaterniond Q2 = new Quaterniond(Q);
-			Quaterniond Q3 = new Quaterniond(Q);
+			Quaternionf Q2 = new Quaternionf(Q);
+			Quaternionf Q3 = new Quaternionf(Q);
 			
 			Q2.inverse();
 			
 			Q3.multiplyInverse(Q);
 			Q.multiply(Q2);
-			assertQuaterniondEquals(Q, Q3, 1e-12);
+			assertQuaternionfEquals(Q, Q3, 1e-5f);
 		}
 	}
 	
 	@Test
 	public void testInverse2()
 	{
-		Quaterniond Q = new Quaterniond();
+		Quaternionf Q = new Quaternionf();
 		
 		for(int i = 0; i<nTests; i++)
 		{
 			createRandomQuaternion(random, Q);
-			Quaterniond Q2 = new Quaterniond();
-			Quaterniond Q3 = new Quaterniond(Q);
+			Quaternionf Q2 = new Quaternionf();
+			Quaternionf Q3 = new Quaternionf(Q);
 			
 			Q2.inverse(Q);
 			
 			Q3.multiplyInverse(Q);
 			Q.multiply(Q2);
-			assertQuaterniondEquals(Q, Q3, 1e-12);
+			assertQuaternionfEquals(Q, Q3, 1e-5f);
 		}
 	}
 
-	private Vector3d rotate(RotationMatrixd m, Vector3d vector)
+	private Vector3f rotate(RotationMatrixf m, Vector3f vector)
 	{
-		Vector3d tmpV = new Vector3d(vector);
+		Vector3f tmpV = new Vector3f(vector);
 		m.rotate(tmpV);
 		return tmpV;
 	}
 
-	private Vector3d rotate(Quaterniond q, Vector3d vector)
+	private Vector3f rotate(Quaternionf q, Vector3f vector)
 	{
-		Quaterniond q2 = new Quaterniond();
+		Quaternionf q2 = new Quaternionf();
 		q2.x = vector.x;
 		q2.y = vector.y;
 		q2.z = vector.z;
-		q2.w = 0.0;
+		q2.w = 0.0f;
 
-		Quaterniond tmpQ = new Quaterniond();
+		Quaternionf tmpQ = new Quaternionf();
 
 		tmpQ.multiply(q, q2);
 		tmpQ.multiplyInverse(q);
 
-		return new Vector3d(tmpQ.x, tmpQ.y, tmpQ.z);
+		return new Vector3f(tmpQ.x, tmpQ.y, tmpQ.z);
 	}
 
 	@SuppressWarnings("unused")
-	private void assertQuaterniondEquals(Quaterniond q1, Quaterniond q2,
+	private void assertQuaternionfEquals(Quaternionf q1, Quaternionf q2,
 			double epsilon)
 	{
 		assertEquals(q1.x, q2.x, epsilon);
@@ -411,7 +412,7 @@ public class QuaterniondTest
 	}
 
 	@SuppressWarnings("unused")
-	private void assertQuaterniondEquals(Quaterniond q1, Quat4d q2,
+	private void assertQuaternionfEquals(Quaternionf q1, Quat4d q2,
 			double epsilon)
 	{
 		assertEquals(q1.x, q2.x, epsilon);
@@ -421,8 +422,8 @@ public class QuaterniondTest
 	}
 
 	@SuppressWarnings("unused")
-	private void assertAxisAngledEquals(AxisAngled axisAngle1,
-			AxisAngled axisAngle2, double epsilon)
+	private void assertAxisAnglefEquals(AxisAnglef axisAngle1,
+			AxisAnglef axisAngle2, double epsilon)
 	{
 		assertEquals(axisAngle1.x, axisAngle2.x, epsilon);
 		assertEquals(axisAngle1.y, axisAngle2.y, epsilon);
@@ -445,7 +446,7 @@ public class QuaterniondTest
 		assertEquals(matrix1.m22, matrix2.m22, epsilon);
 	}
 
-	private boolean vector3dEquals(Vector3d v1, Vector3d v2, double epsilon)
+	private boolean Vector3fEquals(Vector3f v1, Vector3f v2, double epsilon)
 	{
 		return (Math.abs(v1.x - v2.x) < epsilon
 				&& Math.abs(v1.y - v2.y) < epsilon && Math.abs(v1.z - v2.z) < epsilon);
@@ -478,7 +479,7 @@ public class QuaterniondTest
 
 	private void createRandomRotationMatrixX(Random random, Matrix3d matrix)
 	{
-		double theta = random.nextDouble();
+		double theta = random.nextFloat();
 		double cTheta = Math.cos(theta);
 		double sTheta = Math.sin(theta);
 		matrix.m00 = 1;
@@ -494,7 +495,7 @@ public class QuaterniondTest
 
 	private void createRandomRotationMatrixY(Random random, Matrix3d matrix)
 	{
-		double theta = random.nextDouble();
+		double theta = random.nextFloat();
 		double cTheta = Math.cos(theta);
 		double sTheta = Math.sin(theta);
 		matrix.m00 = cTheta;
@@ -508,11 +509,11 @@ public class QuaterniondTest
 		matrix.m22 = cTheta;
 	}
 
-	private void createRandomAxisAngle(Random random, AxisAngled axisAngle)
+	private void createRandomAxisAngle(Random random, AxisAnglef axisAngle)
 	{
-		axisAngle.x = random.nextDouble();
-		axisAngle.y = random.nextDouble();
-		axisAngle.z = random.nextDouble();
+		axisAngle.x = random.nextFloat();
+		axisAngle.y = random.nextFloat();
+		axisAngle.z = random.nextFloat();
 		double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y
 				* axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -520,16 +521,16 @@ public class QuaterniondTest
 		axisAngle.y *= 1 / mag;
 		axisAngle.z *= 1 / mag;
 
-		axisAngle.angle = random.nextDouble() * Math.PI;
+		axisAngle.angle = (float)(random.nextFloat() * Math.PI);
 	}
 
 	@SuppressWarnings("unused")
-	private void createRandomQuaternion(Random random, Quaterniond q)
+	private void createRandomQuaternion(Random random, Quaternionf q)
 	{
-		q.x = random.nextDouble();
-		q.y = random.nextDouble();
-		q.z = random.nextDouble();
-		q.w = random.nextDouble();
+		q.x = random.nextFloat();
+		q.y = random.nextFloat();
+		q.z = random.nextFloat();
+		q.w = random.nextFloat();
 
 		double val = 1 / (Math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w
 				* q.w));
@@ -542,7 +543,7 @@ public class QuaterniondTest
 
 	private void createRandomRotationMatrixZ(Random random, Matrix3d matrix)
 	{
-		double theta = random.nextDouble();
+		double theta = random.nextFloat();
 		double cTheta = Math.cos(theta);
 		double sTheta = Math.sin(theta);
 		matrix.m00 = cTheta;
