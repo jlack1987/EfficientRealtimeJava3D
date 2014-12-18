@@ -851,7 +851,7 @@ public class RigidBodyTransformTest
          transform.getTranslation(vectorCheck);
 
          assertRotationMatrixdEquals(matrixCheck, matrixCheck, 1e-20);
-         assertVector3dEquals(vectorCheck, vector, 1e-20);
+         assertVector3dEquals("",vectorCheck, vector, 1e-20);
       }
    }
 
@@ -871,7 +871,7 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform = new RigidBodyTransform(matrix, vector);
 
          double scale = random.nextDouble();
-         matrix.multiply(scale);
+         matrix.scale(scale);
 
          transform.setRotation(matrix);
 
@@ -879,7 +879,7 @@ public class RigidBodyTransformTest
          transform.getTranslation(vectorCheck);
 
          assertRotationMatrixdEquals(matrix, matrixCheck, 1e-8);
-         assertVector3dEquals(vectorCheck, vector, 1e-8);
+         assertVector3dEquals("",vectorCheck, vector, 1e-8);
       }
    }
 
@@ -900,15 +900,15 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform = new RigidBodyTransform(matrix, vector);
 
          double scale = random.nextDouble();
-         matrix.multiply((float) scale);
+         matrix.scale((float) scale);
 
          transform.setRotation(matrix);
 
          transform.getRotation(matrixCheck);
          transform.getTranslation(vectorCheck);
 
-         JUnitTools.assertRotationMatrixfEquals("", matrix, matrixCheck, 1e-3);
-         JUnitTools.assertVector3fEquals("", vectorCheck, vector, 1e-3);
+         assertMatrix3fEquals("", matrix, matrixCheck, 1e-3);
+         assertVector3fEquals("", vectorCheck, vector, 1e-3);
       }
    }
 
@@ -938,7 +938,7 @@ public class RigidBodyTransformTest
                0));
          transform.get(matrixCheck);
 
-         JUnitTools.assertMatrix4dEquals("", matrixCheck, matrix4, 1e-12);
+         assertMatrix4dEquals("", matrixCheck, matrix4, 1e-12);
       }
    }
 
@@ -975,7 +975,7 @@ public class RigidBodyTransformTest
 
          transform.get(matrixCheck);
 
-         JUnitTools.assertMatrix4dEquals("", matrixCheck, matrix4, 1e-12);
+         assertMatrix4dEquals("", matrixCheck, matrix4, 1e-12);
       }
    }
 
@@ -1003,7 +1003,7 @@ public class RigidBodyTransformTest
 
          transform.get(matrixCheck);
 
-         JUnitTools.assertMatrix4dEquals("", matrixCheck, matrix4, 1e-12);
+         assertMatrix4dEquals("", matrixCheck, matrix4, 1e-12);
       }
    }
 
@@ -1031,7 +1031,7 @@ public class RigidBodyTransformTest
 
          transform.get(matrixCheck);
 
-         JUnitTools.assertMatrix4fEquals("", matrixCheck, matrix4, 1e-5);
+         assertMatrix4fEquals("", matrixCheck, matrix4, 1e-5);
       }
    }
 
@@ -1068,7 +1068,7 @@ public class RigidBodyTransformTest
 
          transform.get(matrixCheck);
 
-         JUnitTools.assertMatrix4fEquals("", matrixCheck, matrix4, 1e-5);
+         assertMatrix4fEquals("", matrixCheck, matrix4, 1e-5);
       }
    }
 
@@ -1092,7 +1092,7 @@ public class RigidBodyTransformTest
          transform.get(matrixCheck, vectorCheck);
 
          assertRotationMatrixdEquals(matrixCheck, matrix, 1e-12);
-         assertVector3dEquals(vectorCheck, vector, 1e-12);
+         assertVector3dEquals("",vectorCheck, vector, 1e-12);
 
          transform.get(matrixCheck);
 
@@ -1100,7 +1100,7 @@ public class RigidBodyTransformTest
 
          transform.get(vectorCheck);
 
-         assertVector3dEquals(vectorCheck, vector, 1e-12);
+         assertVector3dEquals("",vectorCheck, vector, 1e-12);
       }
    }
 
@@ -1130,7 +1130,7 @@ public class RigidBodyTransformTest
                0));
          transform.get(matrixCheck);
 
-         JUnitTools.assertMatrix4fEquals("", matrixCheck, matrix4, 1e-6);
+         assertMatrix4fEquals("", matrixCheck, matrix4, 1e-6);
       }
    }
 
@@ -1152,14 +1152,14 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform = new RigidBodyTransform(matrix, vector);
          transform.get(matrixCheck, vectorCheck);
 
-         JUnitTools.assertRotationMatrixfEquals("", matrixCheck, matrix, 1e-6);
-         JUnitTools.assertVector3fEquals("", vectorCheck, vector, 1e-6);
+         assertMatrix3fEquals("", matrixCheck, matrix, 1e-6);
+         assertVector3fEquals("", vectorCheck, vector, 1e-6);
 
          transform.get(matrixCheck);
-         JUnitTools.assertRotationMatrixfEquals("", matrixCheck, matrix, 1e-6);
+         assertMatrix3fEquals("", matrixCheck, matrix, 1e-6);
 
          transform.get(vectorCheck);
-         JUnitTools.assertVector3fEquals("", vectorCheck, vector, 1e-6);
+         assertVector3fEquals("", vectorCheck, vector, 1e-6);
       }
    }
 
@@ -1167,8 +1167,8 @@ public class RigidBodyTransformTest
    public void TestCreateFromTransform()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F matrixCheck = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
+      Matrix4d matrixCheck = new Matrix4d();
 
       createRandomTransformationMatrix(matrix, random);
       RigidBodyTransform transform = new RigidBodyTransform(matrix);
@@ -1177,7 +1177,7 @@ public class RigidBodyTransformTest
       transform.get(matrix);
       transformCheck.get(matrixCheck);
 
-      JUnitTools.assertMatrixEquals("", matrixCheck, matrix, 1e-12);
+      assertMatrix4dEquals("", matrixCheck, matrix, 1e-12);
    }
 
    @Test
@@ -1199,9 +1199,8 @@ public class RigidBodyTransformTest
          transform.getRotation(matrixCheck);
          transform.getTranslation(vectorCheck);
 
-         JUnitTools
-               .assertRotationMatrixfEquals("", matrixCheck, matrixCheck, 1e-20);
-         JUnitTools.assertVector3fEquals("", vectorCheck, vector, 1e-20);
+         assertMatrix3fEquals("", matrixCheck, matrixCheck, 1e-20);
+         assertVector3fEquals("", vectorCheck, vector, 1e-20);
       }
    }
 
@@ -1248,7 +1247,7 @@ public class RigidBodyTransformTest
 
          transform3d.get(check);
 
-         JUnitTools.assertMatrix4dEquals("", check, matrix, 1e-20);
+         assertMatrix4dEquals("", check, matrix, 1e-20);
       }
    }
 
@@ -1270,7 +1269,7 @@ public class RigidBodyTransformTest
 
          transform3d.get(check);
 
-         JUnitTools.assertMatrix4dEquals("", check, matrix, 1e-20);
+         assertMatrix4dEquals("", check, matrix, 1e-20);
       }
    }
 
@@ -1296,7 +1295,7 @@ public class RigidBodyTransformTest
          transform3d.get(check);
 
          matrix.transpose();
-         JUnitTools.assertMatrix4fEquals("", check, matrix, 1e-6);
+         assertMatrix4fEquals("", check, matrix, 1e-6);
       }
    }
 
@@ -1318,7 +1317,7 @@ public class RigidBodyTransformTest
 
          transform3d.get(check);
 
-         JUnitTools.assertMatrix4fEquals("", check, matrix, 1e-10);
+         assertMatrix4fEquals("", check, matrix, 1e-10);
       }
    }
 
@@ -1338,7 +1337,7 @@ public class RigidBodyTransformTest
 
          transform3d.get(check);
 
-         JUnitTools.assertMatrix4fEquals("", check, matrix, 1e-8);
+         assertMatrix4fEquals("", check, matrix, 1e-8);
       }
    }
 
@@ -1346,7 +1345,7 @@ public class RigidBodyTransformTest
    public void TestCreateFromfloatArray()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
       float[] floatArray = new float[16];
 
       for (int i = 0; i < nTests; i++)
@@ -1380,13 +1379,13 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform2 = new RigidBodyTransform(matrix2);
 
          matrix1.multiply(matrix2);
-         transform1.multiplytiply(transform2);
+         transform1.multiply(transform2);
 
          Matrix4d transformMat4d = new Matrix4d();
 
          transform1.get(transformMat4d);
 
-         JUnitTools.assertMatrix4dEquals("", matrix1, transformMat4d, 1e-15);
+         assertMatrix4dEquals("", matrix1, transformMat4d, 1e-15);
       }
    }
    
@@ -1407,13 +1406,13 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform2 = new RigidBodyTransform(matrix2);
 
          matrix1.multiply(matrix2);
-         transform.multiplytiply(transform1, transform2);
+         transform.multiply(transform1, transform2);
 
          Matrix4d transformMat4d = new Matrix4d();
 
          transform.get(transformMat4d);
 
-         JUnitTools.assertMatrix4dEquals("", matrix1, transformMat4d, 1e-15);
+         assertMatrix4dEquals("", matrix1, transformMat4d, 1e-15);
       }
    }
 
@@ -1433,14 +1432,13 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform2 = new RigidBodyTransform(matrix2);
          // matrix1.multiply(matrix2);
          matrix2.multiply(matrix1);
-         transform1.multiplytiply(transform2, transform1);
+         transform1.multiply(transform2, transform1);
 
          Matrix4d transform1Mat4d = new Matrix4d();
 
          transform1.get(transform1Mat4d);
 
-         JUnitTools
-               .assertMatrix4dEquals("", matrix2, transform1Mat4d, 1e-15);
+         assertMatrix4dEquals("", matrix2, transform1Mat4d, 1e-15);
       }
    }
    
@@ -1460,14 +1458,13 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform2 = new RigidBodyTransform(matrix2);
 
          matrix2.multiply(matrix2);
-         transform2.multiplytiply(transform2);
+         transform2.multiply(transform2);
 
          Matrix4d transform1Mat4d = new Matrix4d();
 
          transform2.get(transform1Mat4d);
 
-         JUnitTools
-               .assertMatrix4dEquals("", matrix2, transform1Mat4d, 1e-15);
+         assertMatrix4dEquals("", matrix2, transform1Mat4d, 1e-15);
       }
    }
 
@@ -1483,8 +1480,8 @@ public class RigidBodyTransformTest
          for (int i = 0; i < 10000; i++)
          {
             createRandomTransformationMatrix(matrix1, random);
-            RigidBodyTransform transformTomultiplyt = new RigidBodyTransform(matrix1);
-            transform.multiplytiply(transformTomultiplyt);
+            RigidBodyTransform transformTomultiply = new RigidBodyTransform(matrix1);
+            transform.multiply(transformTomultiply);
          }
 
          Matrix4d retXform = new Matrix4d();
@@ -1500,8 +1497,8 @@ public class RigidBodyTransformTest
    @Test
    public void TestMatrixInverse()
    {
-      DenseMatrix64F denseMatrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F checkMatrix = new DenseMatrix64F(4, 4);
+      Matrix4d denseMatrix = new Matrix4d();
+      Matrix4d checkMatrix = new Matrix4d();
       Random random = new Random();
 
       for (int i = 0; i < nTests; i++)
@@ -1510,20 +1507,20 @@ public class RigidBodyTransformTest
 
          RigidBodyTransform transform3d = new RigidBodyTransform(denseMatrix);
 
-         CommonOps.invert(denseMatrix);
+         denseMatrix.invert();
 
          transform3d.invert();
          transform3d.get(checkMatrix);
 
-         JUnitTools.assertMatrixEquals(denseMatrix, checkMatrix, 1e-15);
+         assertMatrix4dEquals("",denseMatrix, checkMatrix, 1e-15);
       }
    }
 
    @Test
    public void TestMatrixInverse7()
    {
-      DenseMatrix64F denseMatrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F checkMatrix = new DenseMatrix64F(4, 4);
+      Matrix4d denseMatrix = new Matrix4d();
+      Matrix4d checkMatrix = new Matrix4d();
       Random random = new Random();
       RigidBodyTransform transform2 = new RigidBodyTransform();
 
@@ -1534,12 +1531,12 @@ public class RigidBodyTransformTest
          RigidBodyTransform transform3d = new RigidBodyTransform(denseMatrix);
          transform2.invert(transform3d);
          transform3d.invert();
-         CommonOps.invert(denseMatrix);
+         denseMatrix.invert();
 
          transform3d.get(checkMatrix);
          transform2.get(denseMatrix);
 
-         JUnitTools.assertMatrixEquals(denseMatrix, checkMatrix, 1e-15);
+         assertMatrix4dEquals("",denseMatrix, checkMatrix, 1e-15);
       }
    }
 
@@ -1566,18 +1563,18 @@ public class RigidBodyTransformTest
          transform3d.getRotation(mat);
          RotationFunctions.isRotationProper(mat);
 
-         JUnitTools.assertMatrix4dEquals("", matrix, checkMatrix, 1e-10);
+         assertMatrix4dEquals("", matrix, checkMatrix, 1e-10);
       }
    }
 
    @Test
    public void TestInvertTransform2()
    {
-      DenseMatrix64F matrix = new DenseMatrix64F(3, 3);
-      DenseMatrix64F matrix2 = new DenseMatrix64F(4, 4);
+      RotationMatrixd matrix = new RotationMatrixd();
+      Matrix4d matrix2 = new Matrix4d();
       Vector3d vector = new Vector3d();
-      DenseMatrix64F checkMatrix2 = new DenseMatrix64F(4, 4);
-      DenseMatrix64F checkMatrix = new DenseMatrix64F(4, 4);
+      Matrix4d checkMatrix2 = new Matrix4d();
+      Matrix4d checkMatrix = new Matrix4d();
       Random random = new Random();
 
       for (int i = 0; i < nTests; i++)
@@ -1587,7 +1584,7 @@ public class RigidBodyTransformTest
 
          RigidBodyTransform transform = new RigidBodyTransform(matrix, vector);
          transform.get(matrix2);
-         CommonOps.invert(matrix2);
+         matrix2.invert();
          RigidBodyTransform transform2 = new RigidBodyTransform(matrix2);
 
          transform2.invert();
@@ -1595,18 +1592,18 @@ public class RigidBodyTransformTest
          transform.get(checkMatrix);
          transform2.get(checkMatrix2);
 
-         JUnitTools.assertMatrixEquals(checkMatrix2, checkMatrix, 1e-15);
+         assertMatrix4dEquals("",checkMatrix2, checkMatrix, 1e-15);
       }
    }
 
    @Test
    public void TestInvertTransform3()
    {
-      DenseMatrix64F matrix = new DenseMatrix64F(3, 3);
-      DenseMatrix64F matrix2 = new DenseMatrix64F(4, 4);
+      RotationMatrixd matrix = new RotationMatrixd();
+      Matrix4d matrix2 = new Matrix4d();
+      Matrix4d checkMatrix2 = new Matrix4d();
+      Matrix4d checkMatrix = new Matrix4d();
       Vector3d vector = new Vector3d();
-      DenseMatrix64F checkMatrix2 = new DenseMatrix64F(4, 4);
-      DenseMatrix64F checkMatrix = new DenseMatrix64F(4, 4);
       Random random = new Random();
 
       for (int i = 0; i < nTests; i++)
@@ -1622,15 +1619,15 @@ public class RigidBodyTransformTest
          transform.get(checkMatrix);
          transform2.get(checkMatrix2);
 
-         JUnitTools.assertMatrixEquals(checkMatrix2, checkMatrix, 1e-15);
+         assertMatrix4dEquals("",checkMatrix2, checkMatrix, 1e-15);
       }
    }
 
    @Test
    public void TestMatrixInverse2()
    {
-      DenseMatrix64F denseMatrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F checkMatrix = new DenseMatrix64F(4, 4);
+      Matrix4d denseMatrix = new Matrix4d();
+      Matrix4d checkMatrix = new Matrix4d();
       Matrix4d matrix = new Matrix4d();
       Random random = new Random();
       RigidBodyTransform transform2 = new RigidBodyTransform();
@@ -1649,7 +1646,7 @@ public class RigidBodyTransformTest
          transform2.get(denseMatrix);
          transform3d.get(checkMatrix);
 
-         JUnitTools.assertMatrixEquals(denseMatrix, checkMatrix, 1e-15);
+         assertMatrix4dEquals("",denseMatrix, checkMatrix, 1e-15);
       }
    }
 
@@ -1657,7 +1654,7 @@ public class RigidBodyTransformTest
    public void TestEpsilonEquals()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
       double epsilon = 1e-8;
 
       for (int i = 0; i < nTests; i++)
@@ -1689,20 +1686,20 @@ public class RigidBodyTransformTest
       Vector3d vector = new Vector3d(1, 0, 0);
       Vector3d vector2 = new Vector3d(0, 1, 0);
       Vector3d vector3 = new Vector3d(0, 0, 1);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       RigidBodyTransform transform = new RigidBodyTransform();
       transform.rotX(Math.PI / 2);
       transform.getRotation(rotationMatrix);
 
-      MatrixTools.multiplyt(rotationMatrix, vector);
-      MatrixTools.multiplyt(rotationMatrix, vector2);
-      MatrixTools.multiplyt(rotationMatrix, vector3);
+      rotationMatrix.rotate(vector);
+      rotationMatrix.rotate(vector2);
+      rotationMatrix.rotate(vector3);
 
-      JUnitTools.assertVector3dEquals("", new Vector3d(1, 0, 0), vector,
+      assertVector3dEquals("", new Vector3d(1, 0, 0), vector,
             1e-12);
-      JUnitTools.assertVector3dEquals("", new Vector3d(0, 0, 1), vector2,
+      assertVector3dEquals("", new Vector3d(0, 0, 1), vector2,
             1e-12);
-      JUnitTools.assertVector3dEquals("", new Vector3d(0, -1, 0), vector3,
+      assertVector3dEquals("", new Vector3d(0, -1, 0), vector3,
             1e-12);
    }
 
@@ -1712,20 +1709,20 @@ public class RigidBodyTransformTest
       Vector3d vector = new Vector3d(1, 0, 0);
       Vector3d vector2 = new Vector3d(0, 1, 0);
       Vector3d vector3 = new Vector3d(0, 0, 1);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       RigidBodyTransform transform = new RigidBodyTransform();
       transform.rotY(Math.PI / 2);
       transform.getRotation(rotationMatrix);
 
-      MatrixTools.multiplyt(rotationMatrix, vector);
-      MatrixTools.multiplyt(rotationMatrix, vector2);
-      MatrixTools.multiplyt(rotationMatrix, vector3);
+      rotationMatrix.rotate(vector);
+      rotationMatrix.rotate(vector2);
+      rotationMatrix.rotate(vector3);
 
-      JUnitTools.assertVector3dEquals("", new Vector3d(0, 0, -1), vector,
+      assertVector3dEquals("", new Vector3d(0, 0, -1), vector,
             1e-12);
-      JUnitTools.assertVector3dEquals("", new Vector3d(0, 1, 0), vector2,
+      assertVector3dEquals("", new Vector3d(0, 1, 0), vector2,
             1e-12);
-      JUnitTools.assertVector3dEquals("", new Vector3d(1, 0, 0), vector3,
+      assertVector3dEquals("", new Vector3d(1, 0, 0), vector3,
             1e-12);
    }
 
@@ -1735,20 +1732,20 @@ public class RigidBodyTransformTest
       Vector3d vector = new Vector3d(1, 0, 0);
       Vector3d vector2 = new Vector3d(0, 1, 0);
       Vector3d vector3 = new Vector3d(0, 0, 1);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       RigidBodyTransform transform = new RigidBodyTransform();
       transform.rotZ(Math.PI / 2);
       transform.getRotation(rotationMatrix);
 
-      MatrixTools.multiplyt(rotationMatrix, vector);
-      MatrixTools.multiplyt(rotationMatrix, vector2);
-      MatrixTools.multiplyt(rotationMatrix, vector3);
+      rotationMatrix.rotate(vector);
+      rotationMatrix.rotate(vector2);
+      rotationMatrix.rotate(vector3);
 
-      JUnitTools.assertVector3dEquals("", new Vector3d(0, 1, 0), vector,
+      assertVector3dEquals("", new Vector3d(0, 1, 0), vector,
             1e-12);
-      JUnitTools.assertVector3dEquals("", new Vector3d(-1, 0, 0), vector2,
+      assertVector3dEquals("", new Vector3d(-1, 0, 0), vector2,
             1e-12);
-      JUnitTools.assertVector3dEquals("", new Vector3d(0, 0, 1), vector3,
+      assertVector3dEquals("", new Vector3d(0, 0, 1), vector3,
             1e-12);
    }
 
@@ -1756,7 +1753,7 @@ public class RigidBodyTransformTest
    public void TestEquals()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
 
       for (int i = 0; i < nTests; i++)
       {
@@ -1775,7 +1772,7 @@ public class RigidBodyTransformTest
    public void TestEqualsWithScale()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
 
       for (int i = 0; i < nTests; i++)
       {
@@ -1812,7 +1809,7 @@ public class RigidBodyTransformTest
          transform.setEuler(vector);
 
          transform.getEulerXYZ(vectorToCheck);
-         JUnitTools.assertVector3dEquals("", vector, vectorToCheck, 1e-5);
+         assertVector3dEquals("", vector, vectorToCheck, 1e-5);
       }
    }
 
@@ -1820,7 +1817,7 @@ public class RigidBodyTransformTest
    public void TestTransformVector4d()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
       Vector4d vector = new Vector4d();
       Vector4d vector2 = new Vector4d();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1836,7 +1833,7 @@ public class RigidBodyTransformTest
          MatrixTools.multiplyt(matrix, vector);
          transform.transform(vector2);
 
-         JUnitTools.assertVector4dEquals("", vector, vector2, 1e-12);
+         assertVector4dEquals("", vector, vector2, 1e-12);
       }
    }
 
@@ -1844,7 +1841,7 @@ public class RigidBodyTransformTest
    public void TestTransformVector4d2()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
       Vector4d vector = new Vector4d();
       Vector4d vector2 = new Vector4d();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1859,7 +1856,7 @@ public class RigidBodyTransformTest
          transform.transform(vector, vector2);
          MatrixTools.multiplyt(matrix, vector);
 
-         JUnitTools.assertVector4dEquals("", vector, vector2, 1e-12);
+         assertVector4dEquals("", vector, vector2, 1e-12);
       }
    }
 
@@ -1867,7 +1864,7 @@ public class RigidBodyTransformTest
    public void TestTransformVector4f()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
       Vector4f vector = new Vector4f();
       Vector4f vector2 = new Vector4f();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1883,7 +1880,7 @@ public class RigidBodyTransformTest
          MatrixTools.multiplyt(matrix, vector);
          transform.transform(vector2);
 
-         JUnitTools.assertVector4fEquals("", vector, vector2, 1e-6);
+         assertVector4fEquals("", vector, vector2, 1e-6);
       }
    }
 
@@ -1891,7 +1888,7 @@ public class RigidBodyTransformTest
    public void TestTransformVector4f2()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
+      Matrix4d matrix = new Matrix4d();
       Vector4f vector = new Vector4f();
       Vector4f vector2 = new Vector4f();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1906,7 +1903,7 @@ public class RigidBodyTransformTest
          transform.transform(vector, vector2);
          MatrixTools.multiplyt(matrix, vector);
 
-         JUnitTools.assertVector4fEquals("", vector, vector2, 1e-6);
+         assertVector4fEquals("", vector, vector2, 1e-6);
       }
    }
 
@@ -1914,8 +1911,8 @@ public class RigidBodyTransformTest
    public void TestTransformVector3d()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Vector3d vector = new Vector3d();
       Vector3d vector2 = new Vector3d();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1929,10 +1926,10 @@ public class RigidBodyTransformTest
          randomizeVector(random, vector);
          vector2.set(vector);
 
-         MatrixTools.multiplyt(rotationMatrix, vector);
+         rotationMatrix.rotate(vector);
          transform.transform(vector2);
 
-         JUnitTools.assertVector3dEquals("", vector, vector2, 1e-12);
+         assertVector3dEquals("", vector, vector2, 1e-12);
       }
    }
 
@@ -1940,8 +1937,8 @@ public class RigidBodyTransformTest
    public void TestTransformVector3f()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Vector3f vector = new Vector3f();
       Vector3f vector2 = new Vector3f();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1955,10 +1952,10 @@ public class RigidBodyTransformTest
          randomizeVector(random, vector);
          vector2.set(vector);
 
-         MatrixTools.multiplyt(rotationMatrix, vector);
+         rotationMatrix.rotate(vector);
          transform.transform(vector2);
 
-         JUnitTools.assertVector3fEquals("", vector, vector2, 1e-6);
+         assertVector3fEquals("", vector, vector2, 1e-6);
       }
    }
 
@@ -1966,8 +1963,8 @@ public class RigidBodyTransformTest
    public void TestTransformVector3f2()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Vector3f vector = new Vector3f();
       Vector3f vector2 = new Vector3f();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -1981,9 +1978,9 @@ public class RigidBodyTransformTest
          randomizeVector(random, vector);
 
          transform.transform(vector, vector2);
-         MatrixTools.multiplyt(rotationMatrix, vector);
+         rotationMatrix.rotate(vector);
 
-         JUnitTools.assertVector3fEquals("", vector, vector2, 1e-6);
+         assertVector3fEquals("", vector, vector2, 1e-6);
       }
    }
 
@@ -1991,8 +1988,8 @@ public class RigidBodyTransformTest
    public void TestTransformVector3d2()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Vector3d vector = new Vector3d();
       Vector3d vector2 = new Vector3d();
       RigidBodyTransform transform = new RigidBodyTransform();
@@ -2006,9 +2003,9 @@ public class RigidBodyTransformTest
          randomizeVector(random, vector);
 
          transform.transform(vector, vector2);
-         MatrixTools.multiplyt(rotationMatrix, vector);
+         rotationMatrix.rotate(vector);
 
-         assertVector3dEquals(vector, vector2, 1e-6);
+         assertVector3dEquals("",vector, vector2, 1e-6);
       }
    }
 
@@ -2016,8 +2013,8 @@ public class RigidBodyTransformTest
    public void TestTransformPoint3d()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Point3d point = new Point3d();
       Point3d point2 = new Point3d();
       Vector3d vector = new Vector3d();
@@ -2033,11 +2030,11 @@ public class RigidBodyTransformTest
          randomizePoint3d(random, point);
          point2.set(point);
 
-         MatrixTools.multiplyt(rotationMatrix, point);
+         rotationMatrix.rotate(point);
          point.add(vector);
          transform.transform(point2);
 
-         JUnitTools.assertPoint3dEquals("", point, point2, 1e-12);
+         assertPoint3dEquals("", point, point2, 1e-12);
       }
    }
 
@@ -2045,8 +2042,8 @@ public class RigidBodyTransformTest
    public void TestTransformPoint3d2()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Point3d point = new Point3d();
       Point3d point2 = new Point3d();
       Vector3d vector = new Vector3d();
@@ -2062,10 +2059,10 @@ public class RigidBodyTransformTest
          randomizePoint3d(random, point);
 
          transform.transform(point, point2);
-         MatrixTools.multiplyt(rotationMatrix, point);
+         rotationMatrix.rotate(point);
          point.add(vector);
 
-         JUnitTools.assertPoint3dEquals("", point, point2, 1e-12);
+         assertPoint3dEquals("", point, point2, 1e-12);
       }
    }
 
@@ -2073,8 +2070,8 @@ public class RigidBodyTransformTest
    public void TestTransformPoint3f()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Point3f point = new Point3f();
       Point3f point2 = new Point3f();
       Vector3f vector = new Vector3f();
@@ -2090,11 +2087,11 @@ public class RigidBodyTransformTest
          randomizePoint3f(random, point);
          point2.set(point);
 
-         MatrixTools.multiplyt(rotationMatrix, point);
+         rotationMatrix.rotate(point);
          point.add(vector);
          transform.transform(point2);
 
-         JUnitTools.assertPoint3fEquals("", point, point2, 1e-6);
+         assertPoint3fEquals("", point, point2, 1e-6);
       }
    }
 
@@ -2102,8 +2099,8 @@ public class RigidBodyTransformTest
    public void TestTransformPoint3f2()
    {
       Random random = new Random();
-      DenseMatrix64F matrix = new DenseMatrix64F(4, 4);
-      DenseMatrix64F rotationMatrix = new DenseMatrix64F(3, 3);
+      Matrix4d matrix = new Matrix4d();
+      RotationMatrixd rotationMatrix = new RotationMatrixd();
       Point3f point = new Point3f();
       Point3f point2 = new Point3f();
       Vector3f vector = new Vector3f();
@@ -2119,10 +2116,10 @@ public class RigidBodyTransformTest
          randomizePoint3f(random, point);
 
          transform.transform(point, point2);
-         MatrixTools.multiplyt(rotationMatrix, point);
+         rotationMatrix.rotate(point);
          point.add(vector);
 
-         JUnitTools.assertPoint3fEquals("", point, point2, 1e-6);
+         assertPoint3fEquals("", point, point2, 1e-6);
       }
    }
 
@@ -2168,7 +2165,7 @@ public class RigidBodyTransformTest
       point.z = random.nextFloat();
    }
 
-   private void createRandomTransformationMatrix(DenseMatrix64F matrix,
+   private void createRandomTransformationMatrix(Matrix4d matrix,
          Random random)
    {
       RotationMatrixd rotX = new RotationMatrixd();
@@ -2228,32 +2225,6 @@ public class RigidBodyTransformTest
       matrix.m22 = rotX.m22;
    }
 
-   private void createRandomRotationMatrix(DenseMatrix64F matrix, Random random)
-   {
-      RotationMatrixd rotX = new RotationMatrixd();
-      RotationMatrixd rotY = new RotationMatrixd();
-      RotationMatrixd rotZ = new RotationMatrixd();
-      Vector3d trans = new Vector3d();
-
-      randomizeVector(random, trans);
-      createRandomRotationMatrixX(random, rotX);
-      createRandomRotationMatrixY(random, rotY);
-      createRandomRotationMatrixZ(random, rotZ);
-
-      rotX.multiply(rotY);
-      rotX.multiply(rotZ);
-
-      matrix.set(0, 0, rotX.m00);
-      matrix.set(0, 1, rotX.m01);
-      matrix.set(0, 2, rotX.m02);
-      matrix.set(1, 0, rotX.m10);
-      matrix.set(1, 1, rotX.m11);
-      matrix.set(1, 2, rotX.m12);
-      matrix.set(2, 0, rotX.m20);
-      matrix.set(2, 1, rotX.m21);
-      matrix.set(2, 2, rotX.m22);
-   }
-
    private void createRandomRotationMatrix(RotationMatrixf matrix, Random random)
    {
       RotationMatrixf rotX = new RotationMatrixf();
@@ -2278,39 +2249,6 @@ public class RigidBodyTransformTest
       matrix.m20 = rotX.m20;
       matrix.m21 = rotX.m21;
       matrix.m22 = rotX.m22;
-   }
-
-   private void createRandomTransformationMatrix(Matrix4d matrix, Random random)
-   {
-      RotationMatrixd rotX = new RotationMatrixd();
-      RotationMatrixd rotY = new RotationMatrixd();
-      RotationMatrixd rotZ = new RotationMatrixd();
-      Vector3d trans = new Vector3d();
-
-      randomizeVector(random, trans);
-      createRandomRotationMatrixX(random, rotX);
-      createRandomRotationMatrixY(random, rotY);
-      createRandomRotationMatrixZ(random, rotZ);
-
-      rotX.multiply(rotY);
-      rotX.multiply(rotZ);
-
-      matrix.m00 = rotX.m00;
-      matrix.m01 = rotX.m01;
-      matrix.m02 = rotX.m02;
-      matrix.m03 = trans.x;
-      matrix.m10 = rotX.m10;
-      matrix.m11 = rotX.m11;
-      matrix.m12 = rotX.m12;
-      matrix.m13 = trans.y;
-      matrix.m20 = rotX.m20;
-      matrix.m21 = rotX.m21;
-      matrix.m22 = rotX.m22;
-      matrix.m23 = trans.z;
-      matrix.m30 = 0;
-      matrix.m31 = 0;
-      matrix.m32 = 0;
-      matrix.m33 = 1;
    }
 
    private void createRandomTransformationMatrix(Matrix4f matrix, Random random)
@@ -2517,10 +2455,91 @@ public class RigidBodyTransformTest
 		assertEquals(matrix1.m22, matrix2.m22, epsilon);
 	}
    
-   private void assertVector3dEquals(Vector3d vector1, Vector3d vector2, double epsilon)
+   private void assertVector3dEquals(String string, Vector3d vector1, Vector3d vector2, double epsilon)
    {
 	   assertEquals(vector1.x,vector2.x,epsilon);
 	   assertEquals(vector1.y,vector2.y,epsilon);
 	   assertEquals(vector1.z,vector2.z,epsilon);
+   }
+   
+   private void assertVector3fEquals(String string, Vector3f vector1, Vector3f vector2, double epsilon)
+   {
+	   assertEquals(vector1.x,vector2.x,epsilon);
+	   assertEquals(vector1.y,vector2.y,epsilon);
+	   assertEquals(vector1.z,vector2.z,epsilon);
+   }
+   
+   private void assertPoint3dEquals(String string, Point3d vector1, Point3d vector2, double epsilon)
+   {
+	   assertEquals(vector1.x,vector2.x,epsilon);
+	   assertEquals(vector1.y,vector2.y,epsilon);
+	   assertEquals(vector1.z,vector2.z,epsilon);
+   }
+   
+   private void assertPoint3fEquals(String string, Point3f vector1, Point3f vector2, double epsilon)
+   {
+	   assertEquals(vector1.x,vector2.x,epsilon);
+	   assertEquals(vector1.y,vector2.y,epsilon);
+	   assertEquals(vector1.z,vector2.z,epsilon);
+   }
+   
+   private void assertVector4dEquals(String string, Vector4d vector1, Vector4d vector2, double epsilon)
+   {
+	   assertEquals(vector1.x,vector2.x,epsilon);
+	   assertEquals(vector1.y,vector2.y,epsilon);
+	   assertEquals(vector1.z,vector2.z,epsilon);
+	   assertEquals(vector1.w,vector2.w,epsilon);
+   }
+   
+   private void assertVector4fEquals(String string, Vector4f vector1, Vector4f vector2, double epsilon)
+   {
+	   assertEquals(vector1.x,vector2.x,epsilon);
+	   assertEquals(vector1.y,vector2.y,epsilon);
+	   assertEquals(vector1.z,vector2.z,epsilon);
+	   assertEquals(vector1.w,vector2.w,epsilon);
+   }
+   
+   private void assertMatrix4dEquals(String string, Matrix4d m1, Matrix4d m2, double epsilon)
+   {
+	   for(int i = 0; i<4; i++)
+	   {
+		   for(int j = 0; j<4; j++)
+		   {
+			   assertEquals(m1.get(i,j),m2.get(i,j),epsilon);
+		   }
+	   }
+   }
+   
+   private void assertMatrix4fEquals(String string, Matrix4f m1, Matrix4f m2, double epsilon)
+   {
+	   for(int i = 0; i<4; i++)
+	   {
+		   for(int j = 0; j<4; j++)
+		   {
+			   assertEquals(m1.get(i,j),m2.get(i,j),epsilon);
+		   }
+	   }
+   }
+   
+   private void assertMatrix3dEquals(String string, Matrix3d m1, Matrix3d m2, double epsilon)
+   {
+	   for(int i = 0; i<3; i++)
+	   {
+		   for(int j = 0; j<3; j++)
+		   {
+			   assertEquals(m1.get(i,j),m2.get(i,j),epsilon);
+		   }
+	   }
+   }
+   
+   private void assertMatrix3fEquals(String string, Matrix3f m1, Matrix3f m2, double epsilon)
+   {
+	   for(int i = 0; i<3; i++)
+	   {
+		   for(int j = 0; j<3; j++)
+		   {
+			   assertEquals(m1.get(i,j),m2.get(i,j),epsilon);
+		   }
+	   }
    }
 }

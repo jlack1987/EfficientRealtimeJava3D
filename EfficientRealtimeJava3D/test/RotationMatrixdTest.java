@@ -67,6 +67,7 @@ public class RotationMatrixdTest
 		RotationMatrixd r = new RotationMatrixd();
 		r.rotX(Math.PI/4);
 		r.set(a);
+		assertTrue(isRotationMatrixProper(r));
 		assertTrue(isIdentity(r, 1e-6));
 	}
 
@@ -80,6 +81,7 @@ public class RotationMatrixdTest
 			double theta = random.nextDouble() * 10 - 5;
 			matrix.rotX(theta);
 
+			assertTrue(isRotationMatrixProper(matrix));
 			assertEquals(matrix.m00, 1, 1e-15);
 			assertEquals(matrix.m01, 0, 1e-15);
 			assertEquals(matrix.m02, 0, 1e-15);

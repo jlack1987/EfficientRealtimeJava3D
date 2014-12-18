@@ -161,6 +161,39 @@ public class RotationMatrixd extends Matrix3d implements java.io.Serializable
 		vector.y = y;
 	}
 	
+	public void rotate(Vector3f vector)
+	{
+		float x,y;
+		
+		x = (float)(vector.x*m00 + vector.y*m01 + vector.z*m02);
+		y = (float)(vector.x*m10 + vector.y*m11 + vector.z*m12);
+		vector.z = (float)(vector.x*m20 + vector.y*m21 + vector.z*m22);
+		vector.x = x;
+		vector.y = y;
+	}
+	
+	public void rotate(Point3d point)
+	{
+		double x,y;
+		
+		x = point.x*m00 + point.y*m01 + point.z*m02;
+		y = point.x*m10 + point.y*m11 + point.z*m12;
+		point.z = point.x*m20 + point.y*m21 + point.z*m22;
+		point.x = x;
+		point.y = y;
+	}
+	
+	public void rotate(Point3f point)
+	{
+		float x,y;
+		
+		x = (float)(point.x*m00 + point.y*m01 + point.z*m02);
+		y = (float)(point.x*m10 + point.y*m11 + point.z*m12);
+		point.z = (float)(point.x*m20 + point.y*m21 + point.z*m22);
+		point.x = x;
+		point.y = y;
+	}
+	
 	public void rotate(Vector3d vectorIn, Vector3d vectorOut)
 	{
 		if(vectorIn != vectorOut)
@@ -172,6 +205,48 @@ public class RotationMatrixd extends Matrix3d implements java.io.Serializable
 		else
 		{
 			rotate(vectorIn);
+		}
+	}
+	
+	public void rotate(Vector3f vectorIn, Vector3f vectorOut)
+	{
+		if(vectorIn != vectorOut)
+		{
+			vectorOut.x = (float)(vectorIn.x*m00 + vectorIn.y*m01 + vectorIn.z*m02);
+			vectorOut.y = (float)(vectorIn.x*m10 + vectorIn.y*m11 + vectorIn.z*m12);
+			vectorOut.z = (float)(vectorIn.x*m20 + vectorIn.y*m21 + vectorIn.z*m22);
+		}
+		else
+		{
+			rotate(vectorIn);
+		}
+	}
+	
+	public void rotate(Point3d pointIn, Point3d pointOut)
+	{
+		if(pointIn != pointOut)
+		{
+			pointOut.x = pointIn.x*m00 + pointIn.y*m01 + pointIn.z*m02;
+			pointOut.y = pointIn.x*m10 + pointIn.y*m11 + pointIn.z*m12;
+			pointOut.z = pointIn.x*m20 + pointIn.y*m21 + pointIn.z*m22;
+		}
+		else
+		{
+			rotate(pointIn);
+		}
+	}
+	
+	public void rotate(Point3f pointIn, Point3f pointOut)
+	{
+		if(pointIn != pointOut)
+		{
+			pointOut.x = (float)(pointIn.x*m00 + pointIn.y*m01 + pointIn.z*m02);
+			pointOut.y = (float)(pointIn.x*m10 + pointIn.y*m11 + pointIn.z*m12);
+			pointOut.z = (float)(pointIn.x*m20 + pointIn.y*m21 + pointIn.z*m22);
+		}
+		else
+		{
+			rotate(pointIn);
 		}
 	}
 
@@ -234,5 +309,20 @@ public class RotationMatrixd extends Matrix3d implements java.io.Serializable
 		m02 = m02 / magZ;
 		m12 = m12 / magZ;
 		m22 = m22 / magZ;
+	}
+	
+	public boolean isRotationProper()
+	{
+		if(!((this.determinant()-1) < 1e-10))
+			return false;
+		
+		double a1 = m00; double a2 = m10; double a3 = m20;
+		double b1 = m01; double b2 = m11; double b3 = m21;
+		
+		double zx = a2*b3 - a3*b2;
+		double zy = a3*b1 - a1*b3;
+		double zz = a1*b2 - a2*b1;
+		
+		return ((zx-m02)<1e-10 && (zy-m12)<1e-10 && (zz-m22)<1e-10);
 	}
 }
