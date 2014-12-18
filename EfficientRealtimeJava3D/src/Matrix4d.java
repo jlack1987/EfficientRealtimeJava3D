@@ -278,7 +278,7 @@ public class Matrix4d implements java.io.Serializable
 				throw new RuntimeException("Index out of bounds.");
 		}
 	}
-	
+
 	public void get(Matrix4d matrix)
 	{
 		matrix.m00 = this.m00;
@@ -298,27 +298,27 @@ public class Matrix4d implements java.io.Serializable
 		matrix.m32 = this.m32;
 		matrix.m33 = this.m33;
 	}
-	
+
 	public void get(Matrix4f matrix)
 	{
-		matrix.m00 = (float)this.m00;
-		matrix.m01 = (float)this.m01;
-		matrix.m02 = (float)this.m02;
-		matrix.m03 = (float)this.m03;
-		matrix.m10 = (float)this.m10;
-		matrix.m11 = (float)this.m11;
-		matrix.m12 = (float)this.m12;
-		matrix.m13 = (float)this.m13;
-		matrix.m20 = (float)this.m20;
-		matrix.m21 = (float)this.m21;
-		matrix.m22 = (float)this.m22;
-		matrix.m23 = (float)this.m23;
-		matrix.m30 = (float)this.m30;
-		matrix.m31 = (float)this.m31;
-		matrix.m32 = (float)this.m32;
-		matrix.m33 = (float)this.m33;
+		matrix.m00 = (float) this.m00;
+		matrix.m01 = (float) this.m01;
+		matrix.m02 = (float) this.m02;
+		matrix.m03 = (float) this.m03;
+		matrix.m10 = (float) this.m10;
+		matrix.m11 = (float) this.m11;
+		matrix.m12 = (float) this.m12;
+		matrix.m13 = (float) this.m13;
+		matrix.m20 = (float) this.m20;
+		matrix.m21 = (float) this.m21;
+		matrix.m22 = (float) this.m22;
+		matrix.m23 = (float) this.m23;
+		matrix.m30 = (float) this.m30;
+		matrix.m31 = (float) this.m31;
+		matrix.m32 = (float) this.m32;
+		matrix.m33 = (float) this.m33;
 	}
-	
+
 	public void get(double[] array)
 	{
 		array[0] = this.m00;
@@ -338,25 +338,25 @@ public class Matrix4d implements java.io.Serializable
 		array[14] = this.m32;
 		array[15] = this.m33;
 	}
-	
+
 	public void get(float[] array)
 	{
-		array[0] = (float)this.m00;
-		array[1] = (float)this.m01;
-		array[2] = (float)this.m02;
-		array[3] = (float)this.m03;
-		array[4] = (float)this.m10;
-		array[5] = (float)this.m11;
-		array[6] = (float)this.m12;
-		array[7] = (float)this.m13;
-		array[8] = (float)this.m20;
-		array[9] = (float)this.m21;
-		array[10] = (float)this.m22;
-		array[11] = (float)this.m23;
-		array[12] = (float)this.m30;
-		array[13] = (float)this.m31;
-		array[14] = (float)this.m32;
-		array[15] = (float)this.m33;
+		array[0] = (float) this.m00;
+		array[1] = (float) this.m01;
+		array[2] = (float) this.m02;
+		array[3] = (float) this.m03;
+		array[4] = (float) this.m10;
+		array[5] = (float) this.m11;
+		array[6] = (float) this.m12;
+		array[7] = (float) this.m13;
+		array[8] = (float) this.m20;
+		array[9] = (float) this.m21;
+		array[10] = (float) this.m22;
+		array[11] = (float) this.m23;
+		array[12] = (float) this.m30;
+		array[13] = (float) this.m31;
+		array[14] = (float) this.m32;
+		array[15] = (float) this.m33;
 	}
 
 	public double get(int row, int column)
@@ -800,6 +800,26 @@ public class Matrix4d implements java.io.Serializable
 		}
 	}
 
+	public final double determinant()
+	{
+		double det;
+
+		det = m00
+				* (m11 * m22 * m33 + m12 * m23 * m31 + m13 * m21 * m32 - m13
+						* m22 * m31 - m11 * m23 * m32 - m12 * m21 * m33);
+		det -= m01
+				* (m10 * m22 * m33 + m12 * m23 * m30 + m13 * m20 * m32 - m13
+						* m22 * m30 - m10 * m23 * m32 - m12 * m20 * m33);
+		det += m02
+				* (m10 * m21 * m33 + m11 * m23 * m30 + m13 * m20 * m31 - m13
+						* m21 * m30 - m10 * m23 * m31 - m11 * m20 * m33);
+		det -= m03
+				* (m10 * m21 * m32 + m11 * m22 * m30 + m12 * m20 * m31 - m12
+						* m21 * m30 - m10 * m22 * m31 - m11 * m20 * m32);
+
+		return det;
+	}
+
 	public void add(double scalar)
 	{
 		this.m00 += scalar;
@@ -851,7 +871,7 @@ public class Matrix4d implements java.io.Serializable
 		set(matrix1);
 		subtract(matrix2);
 	}
-	
+
 	public void subtract(double scalar)
 	{
 		add(-scalar);
@@ -1389,10 +1409,10 @@ public class Matrix4d implements java.io.Serializable
 			this.m33 = tmp33;
 		}
 	}
-	
+
 	public boolean equals(Matrix4d matrix)
 	{
-		return epsilonEquals(matrix,1e-16);
+		return epsilonEquals(matrix, 1e-16);
 	}
 
 	public boolean epsilonEquals(Matrix4d matrix, double epsilon)
@@ -1450,32 +1470,32 @@ public class Matrix4d implements java.io.Serializable
 
 		return true;
 	}
-	
+
 	public void negate(Matrix4d matrix)
 	{
 		set(matrix);
 		negate();
 	}
-	
+
 	public void negate()
-    {
-        m00 = -m00;
-        m01 = -m01;
-        m02 = -m02;
-        m03 = -m03;
-        m10 = -m10;
-        m11 = -m11;
-        m12 = -m12;
-        m13 = -m13;
-        m20 = -m20;
-        m21 = -m21;
-        m22 = -m22;
-        m23 = -m23;
-        m30 = -m30;
-        m31 = -m31;
-        m32 = -m32;
-        m33 = -m33;
-    }
+	{
+		m00 = -m00;
+		m01 = -m01;
+		m02 = -m02;
+		m03 = -m03;
+		m10 = -m10;
+		m11 = -m11;
+		m12 = -m12;
+		m13 = -m13;
+		m20 = -m20;
+		m21 = -m21;
+		m22 = -m22;
+		m23 = -m23;
+		m30 = -m30;
+		m31 = -m31;
+		m32 = -m32;
+		m33 = -m33;
+	}
 
 	public void invert(Matrix4d matrix)
 	{
