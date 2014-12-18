@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Random;
 
@@ -39,6 +39,7 @@ public class AxisAngledTest
 	{
 		AxisAngled axisAngle1 = new AxisAngled();
 		AxisAngled axisAngle2 = new AxisAngled();
+		axisAngle2.toString();
 		RotationMatrixd matrix = new RotationMatrixd();
 		
 		for(int i = 0; i<nTests; i++)
@@ -51,7 +52,40 @@ public class AxisAngledTest
 	}
 	
 	@Test
-	public void tesSetFromQuaternion1()
+	public void testConstructors()
+	{
+		AxisAngled A = new AxisAngled();
+		double angle = Math.PI/4;
+		A.x = Math.cos(angle);
+		A.y = Math.sin(angle);
+		A.z = 0;
+		A.angle = angle;
+		AxisAngled A2 = new AxisAngled(A);
+		A2.get(A);
+		assertEquals(A.x,A2.x,1e-12);
+		assertEquals(A.y,A2.y,1e-12);
+		assertEquals(A.z,A2.z,1e-12);
+		assertEquals(A.angle,A2.angle,1e-12);
+	}
+	
+	@Test
+	public void testGetAndSetFromAxisAndAngle()
+	{
+		Vector3d V = new Vector3d();
+		V.set(random.nextDouble(),random.nextDouble(),random.nextDouble());
+		double angle = random.nextDouble();
+		
+		AxisAngled A = new AxisAngled(V,angle);
+		double[] D = new double[4];
+		A.get(D);
+		assertEquals(D[0],A.x,1e-12);
+		assertEquals(D[1],A.y,1e-12);
+		assertEquals(D[2],A.z,1e-12);
+		assertEquals(D[3],A.angle,1e-12);
+	}
+	
+	@Test
+	public void testSetFromQuaternion1()
 	{
 		Quaterniond quaternion = new Quaterniond();
 		AxisAngled axisAngle1 = new AxisAngled();
@@ -65,6 +99,57 @@ public class AxisAngledTest
 			
 			assertAxisAngledEquals(axisAngle1, axisAngle2, 1e-8);
 		}
+	}
+	
+	@Test
+	public void testSetFromZeroQuaternion()
+	{
+		Quaterniond Q = new Quaterniond();
+		Q.set(0,0,0,0);
+		
+		AxisAngled A = new AxisAngled(Q);
+		A.toString();
+		assertEquals(A.x,0,1e-12);
+		assertEquals(A.y,1,1e-12);
+		assertEquals(A.z,0,1e-12);
+		assertEquals(A.angle,0,1e-12);
+	}
+	
+	@Test
+	public void testEquals()
+	{
+		double[] D = new double[4];
+		D[0] = 0;
+		D[1] = 0;
+		D[2] = 0;
+		D[3] = 0;
+		
+		AxisAngled A = new AxisAngled(D);
+		AxisAngled A2 = new AxisAngled(D);
+		assertTrue(A.equals(A2));
+		
+		D[1] = 1e-12;
+		
+		A.set(D);
+		assertFalse(A.equals(A2));
+		assertTrue(A.epsilonEquals(A2, 1e-5));
+	}
+	
+	@Test
+	public void testSetFromIdentityRotation()
+	{
+		RotationMatrixd R = new RotationMatrixd();
+		R.setToIdentity();
+		
+		AxisAngled A = new AxisAngled(R);
+		
+		Vector3d V = new Vector3d();
+		A.getAxis(V);
+		double angle = A.getAngle();
+		assertEquals(V.x,0,1e-12);
+		assertEquals(V.y,1,1e-12);
+		assertEquals(V.z,0,1e-12);
+		assertEquals(angle,0,1e-12);
 	}
 	
 	@SuppressWarnings("unused")

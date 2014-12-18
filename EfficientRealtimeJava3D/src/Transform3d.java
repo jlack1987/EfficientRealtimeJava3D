@@ -1,15 +1,4 @@
 
-import javax.vecmath.AxisAngle4d;
-import javax.vecmath.AxisAngle4f;
-import javax.vecmath.Matrix3d;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Matrix4d;
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Quat4d;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
-
 /**
  * 
  * This class creates a 4x4 affine, rigid body transformation matrix. The top
@@ -186,7 +175,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     * @param vector
     */
-   public Transform3d(Quat4d quat, Vector3d vector, Vector3d scales)
+   public Transform3d(Quaterniond quat, Vector3d vector, Vector3d scales)
    {
       set(quat, vector, scales);
    }
@@ -198,7 +187,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     * @param vector
     */
-   public Transform3d(Quat4d quat, Vector3d vector)
+   public Transform3d(Quaterniond quat, Vector3d vector)
    {
       set(quat, vector);
    }
@@ -211,7 +200,7 @@ public class Transform3d extends RigidBodyTransform
     * @param vector
     * @param scale
     */
-   public Transform3d(Quat4d quat, Vector3d vector, double scale)
+   public Transform3d(Quaterniond quat, Vector3d vector, double scale)
    {
       set(quat, vector, scale);
    }
@@ -226,7 +215,7 @@ public class Transform3d extends RigidBodyTransform
     * @param scaley
     * @param scalez
     */
-   public Transform3d(Quat4d quat, Vector3d vector, double scalex, double scaley, double scalez)
+   public Transform3d(Quaterniond quat, Vector3d vector, double scalex, double scaley, double scalez)
    {
       set(quat, vector, scalex, scaley, scalez);
    }
@@ -238,7 +227,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     * @param vector
     */
-   public Transform3d(Quat4f quat, Vector3f vector)
+   public Transform3d(Quaternionf quat, Vector3f vector)
    {
       set(quat, vector);
    }
@@ -250,7 +239,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     * @param vector
     */
-   public Transform3d(Quat4f quat, Vector3f vector, Vector3f scales)
+   public Transform3d(Quaternionf quat, Vector3f vector, Vector3f scales)
    {
       set(quat, vector, scales);
    }
@@ -263,7 +252,7 @@ public class Transform3d extends RigidBodyTransform
     * @param vector
     * @param scale
     */
-   public Transform3d(Quat4f quat, Vector3f vector, double scale)
+   public Transform3d(Quaternionf quat, Vector3f vector, double scale)
    {
       set(quat, vector, scale);
    }
@@ -278,48 +267,48 @@ public class Transform3d extends RigidBodyTransform
     * @param scaley
     * @param scalez
     */
-   public Transform3d(Quat4f quat, Vector3f vector, double scalex, double scaley, double scalez)
+   public Transform3d(Quaternionf quat, Vector3f vector, double scalex, double scaley, double scalez)
    {
       set(quat, vector, scalex, scaley, scalez);
    }
 
    /**
-    * Create Transform3d from AxisAngle4d and Vector3d
+    * Create Transform3d from AxisAngled and Vector3d
     * 
     * @param axisAngle
     * @param vector
     * @param scales
     */
-   public Transform3d(AxisAngle4d axisAngle, Vector3d vector, Vector3d scales)
+   public Transform3d(AxisAngled axisAngle, Vector3d vector, Vector3d scales)
    {
       set(axisAngle, vector, scales);
    }
 
    /**
-    * Create Transform3d from AxisAngle4d and Vector3d
+    * Create Transform3d from AxisAngled and Vector3d
     * 
     * @param axisAngle
     * @param vector
     */
-   public Transform3d(AxisAngle4d axisAngle, Vector3d vector)
+   public Transform3d(AxisAngled axisAngle, Vector3d vector)
    {
       set(axisAngle, vector);
    }
 
    /**
-    * Create Transform3d from AxisAngle4d and Vector3d
+    * Create Transform3d from AxisAngled and Vector3d
     * 
     * @param axisAngle
     * @param vector
     * @param scale
     */
-   public Transform3d(AxisAngle4d axisAngle, Vector3d vector, double scale)
+   public Transform3d(AxisAngled axisAngle, Vector3d vector, double scale)
    {
       set(axisAngle, vector, scale);
    }
 
    /**
-    * Create Transform3d from AxisAngle4d and Vector3d
+    * Create Transform3d from AxisAngled and Vector3d
     * 
     * @param axisAngle
     * @param vector
@@ -327,47 +316,47 @@ public class Transform3d extends RigidBodyTransform
     * @param scaley
     * @param scalez
     */
-   public Transform3d(AxisAngle4d axisAngle, Vector3d vector, double scalex, double scaley, double scalez)
+   public Transform3d(AxisAngled axisAngle, Vector3d vector, double scalex, double scaley, double scalez)
    {
       set(axisAngle, vector, scalex, scaley, scalez);
    }
 
    /**
-    * Create Transform3d from AxisAngle4f and Vector3f
+    * Create Transform3d from AxisAnglef and Vector3f
     * 
     * @param axisAngle
     * @param vector
     */
-   public Transform3d(AxisAngle4f axisAngle, Vector3f vector)
+   public Transform3d(AxisAnglef axisAngle, Vector3f vector)
    {
       set(axisAngle, vector);
    }
 
    /**
-    * Create Transform3d from AxisAngle4f and Vector3f
+    * Create Transform3d from AxisAnglef and Vector3f
     * 
     * @param axisAngle
     * @param vector
     */
-   public Transform3d(AxisAngle4f axisAngle, Vector3f vector, Vector3f scales)
+   public Transform3d(AxisAnglef axisAngle, Vector3f vector, Vector3f scales)
    {
       set(axisAngle, vector, scales);
    }
 
    /**
-    * Create Transform3d from AxisAngle4f and Vector3f
+    * Create Transform3d from AxisAnglef and Vector3f
     * 
     * @param axisAngle
     * @param vector
     * @param scale
     */
-   public Transform3d(AxisAngle4f axisAngle, Vector3f vector, double scale)
+   public Transform3d(AxisAnglef axisAngle, Vector3f vector, double scale)
    {
       set(axisAngle, vector, scale);
    }
 
    /**
-    * Create Transform3d from AxisAngle4f and Vector3f
+    * Create Transform3d from AxisAnglef and Vector3f
     * 
     * @param axisAngle
     * @param vector
@@ -375,9 +364,21 @@ public class Transform3d extends RigidBodyTransform
     * @param scaley
     * @param scalez
     */
-   public Transform3d(AxisAngle4f axisAngle, Vector3f vector, double scalex, double scaley, double scalez)
+   public Transform3d(AxisAnglef axisAngle, Vector3f vector, double scalex, double scaley, double scalez)
    {
       set(axisAngle, vector, scalex, scaley, scalez);
+   }
+   
+   public final void set(Matrix3d matrix, Vector3d vector)
+   {
+	   setRotation(matrix);
+	   setTranslation(vector);
+   }
+   
+   public final void set(Matrix3f matrix, Vector3f vector)
+   {
+	   setRotation(matrix);
+	   setTranslation(vector);
    }
 
    /**
@@ -386,7 +387,7 @@ public class Transform3d extends RigidBodyTransform
     * @param axisAngle
     */
    @Override
-   public void setRotation(AxisAngle4d axisAngle)
+   public void setRotation(AxisAngled axisAngle)
    {
       computeScale();
 
@@ -439,7 +440,7 @@ public class Transform3d extends RigidBodyTransform
     * @param axisAngle
     */
    @Override
-   public void setRotation(AxisAngle4f axisAngle)
+   public void setRotation(AxisAnglef axisAngle)
    {
       computeScale();
 
@@ -492,7 +493,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     */
    @Override
-   public final void setRotation(Quat4d quat)
+   public final void setRotation(Quaterniond quat)
    {
       computeScale();
 
@@ -523,7 +524,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     */
    @Override
-   public void setRotation(Quat4f quat)
+   public void setRotation(Quaternionf quat)
    {
       computeScale();
 
@@ -553,7 +554,6 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param matrix
     */
-   @Override
    public void setRotation(Matrix3d matrix)
    {
       computeScale();
@@ -574,7 +574,6 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param mat3d
     */
-   @Override
    public final void setRotation(Matrix3f matrix)
    {
       computeScale();
@@ -688,11 +687,11 @@ public class Transform3d extends RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4d quat.
+    * equal to the Quaterniond quat.
     * 
     * @param quat
     */
-   public final void set(Quat4d quat, Vector3d vector, double scale)
+   public final void set(Quaterniond quat, Vector3d vector, double scale)
    {
       double yy2 = 2.0 * quat.y * quat.y;
       double zz2 = 2.0 * quat.z * quat.z;
@@ -719,11 +718,11 @@ public class Transform3d extends RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4d quat.
+    * equal to the Quaterniond quat.
     * 
     * @param quat
     */
-   public final void set(Quat4d quat, Vector3d vector, Vector3d scales)
+   public final void set(Quaterniond quat, Vector3d vector, Vector3d scales)
    {
       double yy2 = 2.0 * quat.y * quat.y;
       double zz2 = 2.0 * quat.z * quat.z;
@@ -750,11 +749,11 @@ public class Transform3d extends RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4d quat.
+    * equal to the Quaterniond quat.
     * 
     * @param quat
     */
-   public final void set(Quat4d quat, Vector3d vector, double scalex, double scaley, double scalez)
+   public final void set(Quaterniond quat, Vector3d vector, double scalex, double scaley, double scalez)
    {
       double yy2 = 2.0 * quat.y * quat.y;
       double zz2 = 2.0 * quat.z * quat.z;
@@ -785,7 +784,7 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4d axisAngle, Vector3d vector, double scale)
+   public final void set(AxisAngled axisAngle, Vector3d vector, double scale)
    {
       double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -835,7 +834,7 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4d axisAngle, Vector3d vector, Vector3d scales)
+   public final void set(AxisAngled axisAngle, Vector3d vector, Vector3d scales)
    {
       double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -885,7 +884,7 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4d axisAngle, Vector3d vector, double scalex, double scaley, double scalez)
+   public final void set(AxisAngled axisAngle, Vector3d vector, double scalex, double scaley, double scalez)
    {
       double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -935,7 +934,7 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4f axisAngle, Vector3f vector, double scale)
+   public final void set(AxisAnglef axisAngle, Vector3f vector, double scale)
    {
       double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -985,7 +984,7 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4f axisAngle, Vector3f vector, Vector3f scales)
+   public final void set(AxisAnglef axisAngle, Vector3f vector, Vector3f scales)
    {
       double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -1035,7 +1034,7 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4f axisAngle, Vector3f vector, double scalex, double scaley, double scalez)
+   public final void set(AxisAnglef axisAngle, Vector3f vector, double scalex, double scaley, double scalez)
    {
       double mag = Math.sqrt(axisAngle.x * axisAngle.x + axisAngle.y * axisAngle.y + axisAngle.z * axisAngle.z);
 
@@ -1081,11 +1080,11 @@ public class Transform3d extends RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4f quat.
+    * equal to the Quaternionf quat.
     * 
     * @param quat
     */
-   public final void set(Quat4f quat, Vector3f vector, double scale)
+   public final void set(Quaternionf quat, Vector3f vector, double scale)
    {
       double yy2 = 2.0 * quat.y * quat.y;
       double zz2 = 2.0 * quat.z * quat.z;
@@ -1112,11 +1111,11 @@ public class Transform3d extends RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4f quat.
+    * equal to the Quaternionf quat.
     * 
     * @param quat
     */
-   public final void set(Quat4f quat, Vector3f vector, Vector3f scales)
+   public final void set(Quaternionf quat, Vector3f vector, Vector3f scales)
    {
       double yy2 = 2.0 * quat.y * quat.y;
       double zz2 = 2.0 * quat.z * quat.z;
@@ -1143,11 +1142,11 @@ public class Transform3d extends RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4f quat.
+    * equal to the Quaternionf quat.
     * 
     * @param quat
     */
-   public final void set(Quat4f quat, Vector3f vector, double scalex, double scaley, double scalez)
+   public final void set(Quaternionf quat, Vector3f vector, double scalex, double scaley, double scalez)
    {
       double yy2 = 2.0 * quat.y * quat.y;
       double zz2 = 2.0 * quat.z * quat.z;
@@ -1352,7 +1351,6 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param matrix
     */
-   @Override
    public final void getRotation(Matrix3d matrix)
    {
       computeRotationScale();
@@ -1391,7 +1389,6 @@ public class Transform3d extends RigidBodyTransform
     * 
     * @param matrix
     */
-   @Override
    public final void getRotation(Matrix3f matrix)
    {
       computeRotationScale();
@@ -1431,7 +1428,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     */
    @Override
-   public final void getRotation(Quat4d quat)
+   public final void getRotation(Quaterniond quat)
    {
       computeRotationScale();
 
@@ -1478,7 +1475,7 @@ public class Transform3d extends RigidBodyTransform
     * @param quat
     */
    @Override
-   public final void getRotation(Quat4f quat)
+   public final void getRotation(Quaternionf quat)
    {
       computeRotationScale();
 
@@ -1524,7 +1521,7 @@ public class Transform3d extends RigidBodyTransform
     * @param axisAngle
     */
    @Override
-   public final void getRotation(AxisAngle4d axisAngle)
+   public final void getRotation(AxisAngled axisAngle)
    {
       computeRotationScale();
 
@@ -1561,7 +1558,7 @@ public class Transform3d extends RigidBodyTransform
     * @param axisAngle
     */
    @Override
-   public final void getRotation(AxisAngle4f axisAngle)
+   public final void getRotation(AxisAnglef axisAngle)
    {
       computeRotationScale();
 
@@ -1598,7 +1595,6 @@ public class Transform3d extends RigidBodyTransform
     * @param matrix
     * @param vector
     */
-   @Override
    public final void get(Matrix3d matrix, Vector3d vector)
    {
       getRotation(matrix);
@@ -1631,7 +1627,6 @@ public class Transform3d extends RigidBodyTransform
     * @param matrix
     * @param vector
     */
-   @Override
    public final void get(Matrix3f matrix, Vector3f vector)
    {
       getRotation(matrix);
@@ -1639,52 +1634,52 @@ public class Transform3d extends RigidBodyTransform
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4d and pack
+    * Convert and pack rotation part of transform into Quaterniond and pack
     * translation into Vector3d.
     * 
     * @param quat
     * @param vector
     */
    @Override
-   public final void get(Quat4d quat, Vector3d vector)
+   public final void get(Quaterniond quat, Vector3d vector)
    {
       getRotation(quat);
       getTranslation(vector);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4d.
+    * Convert and pack rotation part of transform into Quaterniond.
     * 
     * @param quat
     * @param vector
     */
    @Override
-   public final void get(Quat4d quat)
+   public final void get(Quaterniond quat)
    {
       getRotation(quat);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4f.
+    * Convert and pack rotation part of transform into Quaternionf.
     * 
     * @param quat
     * @param vector
     */
    @Override
-   public final void get(Quat4f quat)
+   public final void get(Quaternionf quat)
    {
       getRotation(quat);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4f and pack
+    * Convert and pack rotation part of transform into Quaternionf and pack
     * translation into Vector3f.
     * 
     * @param quat
     * @param vector
     */
    @Override
-   public final void get(Quat4f quat, Vector3f vector)
+   public final void get(Quaternionf quat, Vector3f vector)
    {
       getRotation(quat);
       getTranslation(vector);

@@ -87,6 +87,19 @@ public class Matrix4fTest
 				iter++;
 			}
 		}
+		
+		Matrix4f M8 = new Matrix4f();
+		createRandomMatrix4f(M8);
+		Matrix4f M9 = new Matrix4f();
+		M8.get(M9);
+		
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(M8.get(i,j),M9.get(i,j),1e-5f);
+			}
+		}
 	}
 
 	@Test
@@ -509,7 +522,7 @@ public class Matrix4fTest
 
 			matrix2.invert(matrix1);
 			matrix2.multiply(matrix1);
-			assertMatrix4fIsIdentity(matrix2, 1e-6f);
+			assertMatrix4fIsIdentity(matrix2, 1e-4f);
 		}
 	}
 
@@ -526,7 +539,7 @@ public class Matrix4fTest
 			matrix2.set(matrix1);
 			matrix1.invert();
 			matrix3.multiply(matrix1, matrix2);
-			assertMatrix4fIsIdentity(matrix3, 1e-6f);
+			assertMatrix4fIsIdentity(matrix3, 1e-5f);
 		}
 	}
 

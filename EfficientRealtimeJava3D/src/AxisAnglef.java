@@ -11,11 +11,6 @@ public class AxisAnglef implements java.io.Serializable
 	{
 		set(x,y,z,angle);
 	}
-
-	public AxisAnglef(double[] array)
-	{
-		set((float)array[0],(float)array[1],(float)array[2],(float)array[3]);
-	}
 	
 	public AxisAnglef(float[] array)
 	{
@@ -24,12 +19,12 @@ public class AxisAnglef implements java.io.Serializable
 
 	public AxisAnglef(AxisAnglef axisAngle)
 	{
-		set(axisAngle.x,axisAngle.y,axisAngle.z,axisAngle.angle);
+		set(axisAngle);
 	}
 
 	public AxisAnglef(Vector3f axis, float angle)
 	{
-		set(axis.x,axis.y,axis.z,angle);
+		set(axis,angle);
 	}
 	
 	public AxisAnglef(RotationMatrixf matrix)

@@ -11,7 +11,7 @@ public class Matrix3f implements java.io.Serializable
 	double[] tmp9Array2 = new double[9];
 	double tmp3Array2[] = new double[3];
 
-	private static final double EPS = 1E-6;
+	private static final float EPS = 1e-6f;
 
 	public Matrix3f()
 	{
@@ -28,15 +28,7 @@ public class Matrix3f implements java.io.Serializable
 					"Double array must contain exactly 9 elements.");
 		}
 
-		this.m00 = (float)doubleArray[0];
-		this.m01 = (float)doubleArray[1];
-		this.m02 = (float)doubleArray[2];
-		this.m10 = (float)doubleArray[3];
-		this.m11 = (float)doubleArray[4];
-		this.m12 = (float)doubleArray[5];
-		this.m20 = (float)doubleArray[6];
-		this.m21 = (float)doubleArray[7];
-		this.m22 = (float)doubleArray[8];
+		set(doubleArray);
 	}
 	
 	public Matrix3f(float[] floatArray)
@@ -47,15 +39,7 @@ public class Matrix3f implements java.io.Serializable
 					"Float array must contain exactly 9 elements.");
 		}
 
-		this.m00 = floatArray[0];
-		this.m01 = floatArray[1];
-		this.m02 = floatArray[2];
-		this.m10 = floatArray[3];
-		this.m11 = floatArray[4];
-		this.m12 = floatArray[5];
-		this.m20 = floatArray[6];
-		this.m21 = floatArray[7];
-		this.m22 = floatArray[8];
+		set(floatArray);
 	}
 
 	public Matrix3f(Matrix3f matrix)
@@ -149,7 +133,7 @@ public class Matrix3f implements java.io.Serializable
 	public void subtract(Matrix3f matrix, float scalar)
 	{
 		set(matrix);
-		add(-scalar);
+		subtract(scalar);
 	}
 
 	public void scale(float scale)
@@ -222,6 +206,19 @@ public class Matrix3f implements java.io.Serializable
 	}
 	
 	public void get(float[] array)
+	{
+		array[0] = m00;
+		array[1] = m01;
+		array[2] = m02;
+		array[3] = m10;
+		array[4] = m11;
+		array[5] = m12;
+		array[6] = m20;
+		array[7] = m21;
+		array[8] = m22;
+	}
+	
+	public void get(double[] array)
 	{
 		array[0] = m00;
 		array[1] = m01;
@@ -640,11 +637,6 @@ public class Matrix3f implements java.io.Serializable
 
 	public void getRow(int row, float[] vector)
 	{
-		if (row != 1 || row != 2 || row != 3)
-		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
 		switch (row)
 		{
 			case 1:
@@ -907,48 +899,6 @@ public class Matrix3f implements java.io.Serializable
 
 	}
 
-	/**
-	 * Orthonormalize this matrix.
-	 */
-	public void normalize()
-	{
-		float xdoty = m00 * m01 + m10 * m11 + m20 * m21;
-		float xdotx = m00 * m00 + m10 * m10 + m20 * m20;
-
-		float tmp = xdoty / xdotx;
-
-		m01 -= tmp * m00;
-		m11 -= tmp * m10;
-		m21 -= tmp * m20;
-
-		float zdoty = m02 * m01 + m12 * m11 + m22 * m21;
-		float zdotx = m02 * m00 + m12 * m10 + m22 * m20;
-		float ydoty = m01 * m01 + m11 * m11 + m21 * m21;
-
-		tmp = zdotx / xdotx;
-
-		float tmp1 = zdoty / ydoty;
-
-		m02 = m02 - (tmp * m00 + tmp1 * m01);
-		m12 = m12 - (tmp * m10 + tmp1 * m11);
-		m22 = m22 - (tmp * m20 + tmp1 * m21);
-
-		// Compute orthogonalized vector magnitudes and normalize
-		float magX = (float)Math.sqrt(m00 * m00 + m10 * m10 + m20 * m20);
-		float magY = (float)Math.sqrt(m01 * m01 + m11 * m11 + m21 * m21);
-		float magZ = (float)Math.sqrt(m02 * m02 + m12 * m12 + m22 * m22);
-
-		m00 = m00 / magX;
-		m10 = m10 / magX;
-		m20 = m20 / magX;
-		m01 = m01 / magY;
-		m11 = m11 / magY;
-		m21 = m21 / magY;
-		m02 = m02 / magZ;
-		m12 = m12 / magZ;
-		m22 = m22 / magZ;
-	}
-
 	//
 	// Reference: Press, Flannery, Teukolsky, Vetterling,
 	// _Numerical_Recipes_in_C_, Cambridge University Press,
@@ -1139,14 +1089,14 @@ public class Matrix3f implements java.io.Serializable
 		}
 	}
 
-	public boolean equals(Matrix3d matrix)
+	public boolean equals(Matrix3f matrix)
 	{
 		return epsilonEquals(matrix, EPS);
 	}
 
-	public boolean epsilonEquals(Matrix3d matrix, double epsilon)
+	public boolean epsilonEquals(Matrix3f matrix, float epsilon)
 	{
-		double diff;
+		float diff;
 
 		diff = this.m00 - matrix.m00;
 		if ((diff < 0 ? -diff : diff) > epsilon)

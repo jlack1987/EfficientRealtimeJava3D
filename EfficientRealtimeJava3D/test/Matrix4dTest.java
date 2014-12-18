@@ -21,6 +21,103 @@ public class Matrix4dTest
 	}
 	
 	@Test
+	public void testSettersAndGetters()
+	{
+		float[] F = new float[16];
+		randomizeFloatArray(F);
+		
+		Matrix4d M = new Matrix4d(F);
+		M.get(F);
+		
+		int iter = 0;
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(F[iter],M.get(i,j),1e-5f);
+				iter++;
+			}
+		}
+		
+		double[] D = new double[16];
+		randomizeDoubleArray(D);
+		Matrix4d M2 = new Matrix4d(D);
+		Matrix4d M3 = new Matrix4d(M2);
+		M2.get(D);
+		
+		iter = 0;
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(D[iter],M2.get(i,j),1e-5f);
+				assertEquals(M2.get(i,j),M3.get(i,j),1e-5f);
+				iter++;
+			}
+		}
+		
+		Matrix4f M4 = new Matrix4f();
+		createRandomMatrix4f(M4);
+		
+		Matrix4d M5 = new Matrix4d(M4);
+		
+		iter = 0;
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(M4.get(i,j),M5.get(i,j),1e-5f);
+				iter++;
+			}
+		}
+		float[] F2 = new float[16];
+		randomizeFloatArray(F2);
+		Matrix4d M6 = new Matrix4d(F2[0],F2[1],F2[2],F2[3],
+				F2[4],F2[5],F2[6],F2[7],F2[8],F2[9],F2[10],
+				F2[11],F2[12],F2[13],F2[14],F2[15]);
+		Matrix4d M7 = new Matrix4d();
+		M6.get(M7);
+		
+		iter = 0;
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(M6.get(i,j),M7.get(i,j),1e-5f);
+				iter++;
+			}
+		}
+		
+		Matrix4d M8 = new Matrix4d();
+		float[] F3 = new float[16];
+		createRandomMatrix4d(M8);
+		M8.get(F3);
+		
+		iter = 0;
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(F3[iter],M8.get(i,j),1e-5);
+				iter++;
+			}
+		}
+		
+		Matrix4d M9 = new Matrix4d();
+		Matrix4f M10 = new Matrix4f();
+		createRandomMatrix4d(M9);
+		M9.get(M10);
+		
+		for(int i=0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				assertEquals(M9.get(i,j),M10.get(i,j),1e-5f);
+			}
+		}
+	}
+	
+	@Test
 	public void testMatrixSetIdentity()
 	{
 		Matrix4d matrix = new Matrix4d();
@@ -406,6 +503,28 @@ public class Matrix4dTest
 	}
 	
 	@Test
+	public void testMatrixTranspose3()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		
+		for(int i = 0; i<nTests; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			matrix2.transpose(matrix2);
+			
+			for(int j = 0; j<4; j++)
+			{
+				for(int k = 0; k<4; k++)
+				{
+					assertEquals(matrix1.get(j,k),matrix2.get(k,j),1e-16);
+				}
+			}
+		}
+	}
+	
+	@Test
 	public void testMatrixMultiplyAndInverse()
 	{
 		Matrix4d matrix1 = new Matrix4d();
@@ -439,6 +558,78 @@ public class Matrix4dTest
 	}
 	
 	@Test
+	public void testMatrixMultiplyAndInverse3()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+
+		for (int i = 0; i < 1; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			matrix1.invert();
+			matrix3.multiply(matrix1, matrix2);
+			assertMatrix4dIsIdentity(matrix3, 1e-8);
+		}
+	}
+
+	@Test
+	public void testMatrixMultiplyAndInverse4()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+
+		for (int i = 0; i < 1; i++)
+		{
+			createRandomMatrix4d(matrix1);
+			matrix2.set(matrix1);
+			matrix1.invert();
+			matrix2.multiply(matrix1, matrix2);
+			assertMatrix4dIsIdentity(matrix2, 1e-8);
+		}
+	}
+	
+	@Test
+	public void testMatrixMultiply1()
+	{
+		Matrix4d M = new Matrix4d();
+		Matrix4d M2 = new Matrix4d();
+
+		createRandomMatrix4d(M);
+		M2.set(M);
+		double scalar = random.nextDouble();
+
+		M.multiply(scalar);
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				assertEquals(M2.get(i, j) * scalar, M.get(i, j), 1e-8);
+			}
+		}
+	}
+
+	@Test
+	public void testMatrixMultiply2()
+	{
+		Matrix4d M = new Matrix4d();
+		Matrix4d M2 = new Matrix4d();
+
+		createRandomMatrix4d(M2);
+		double scalar = random.nextDouble();
+		M.multiply(M2, scalar);
+
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				assertEquals(M2.get(i, j) * scalar, M.get(i, j), 1e-8);
+			}
+		}
+	}
+	
+	@Test
 	public void testMultiplyTransposeBoth()
 	{
 		Matrix4d matrix1 = new Matrix4d();
@@ -455,6 +646,27 @@ public class Matrix4dTest
 			matrix1.multiplyTransposeBoth(matrix1, matrix2);
 			
 			assertMatrix4dEquals(matrix1, matrix3, 1e-16);
+		}
+	}
+	
+	@Test
+	public void testMultiplyTransposeBoth2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+		Matrix4d matrix4 = new Matrix4d();
+
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix1.setIdentity();
+			createRandomMatrix4d(matrix2);
+			matrix3.set(matrix2);
+			matrix3.transpose();
+
+			matrix4.multiplyTransposeBoth(matrix1, matrix2);
+
+			assertMatrix4dEquals(matrix4, matrix3, 1e-6f);
 		}
 	}
 	
@@ -476,6 +688,24 @@ public class Matrix4dTest
 	}
 	
 	@Test
+	public void testMultiplyTransposeLeft2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix1.setIdentity();
+			createRandomMatrix4d(matrix2);
+
+			matrix3.multiplyTransposeLeft(matrix1, matrix2);
+
+			assertMatrix4dEquals(matrix3, matrix2, 1e-6f);
+		}
+	}
+	
+	@Test
 	public void testMultiplyTransposeRight()
 	{
 		Matrix4d matrix1 = new Matrix4d();
@@ -489,9 +719,30 @@ public class Matrix4dTest
 			matrix3.set(matrix2);
 			matrix3.transpose();
 			
-			matrix1.multiplyTransposeBoth(matrix1, matrix2);
+			matrix1.multiplyTransposeRight(matrix1, matrix2);
 			
 			assertMatrix4dEquals(matrix1, matrix3, 1e-16);
+		}
+	}
+	
+	@Test
+	public void testMultiplyTransposeRight2()
+	{
+		Matrix4d matrix1 = new Matrix4d();
+		Matrix4d matrix2 = new Matrix4d();
+		Matrix4d matrix3 = new Matrix4d();
+		Matrix4d matrix4 = new Matrix4d();
+		matrix4.toString();
+		for (int i = 0; i < nTests; i++)
+		{
+			matrix1.setIdentity();
+			createRandomMatrix4d(matrix2);
+			matrix3.set(matrix2);
+			matrix3.transpose();
+
+			matrix4.multiplyTransposeRight(matrix1, matrix2);
+
+			assertMatrix4dEquals(matrix4, matrix3, 1e-6f);
 		}
 	}
 	
@@ -513,7 +764,7 @@ public class Matrix4dTest
 			boolean tmp = matrix1.equals(matrix2);
 			assertFalse(tmp);
 			
-			assertTrue(matrix1.epsilonEquals(matrix2, 1e-14));
+			assertTrue(matrix1.epsilonEquals(matrix2, 1e-10));
 		}
 	}
 	
@@ -573,6 +824,14 @@ public class Matrix4dTest
 		}
 	}
 	
+	private void randomizeFloatArray(float[] array)
+	{
+		for(int i = 0; i< array.length; i++)
+		{
+			array[i] = random.nextFloat()*100-50;
+		}
+	}
+	
 	private void createRandomMatrix4d(Matrix4d matrix)
 	{
 		for(int i = 0; i<4; i++)
@@ -580,6 +839,17 @@ public class Matrix4dTest
 			for(int j = 0; j<4; j++)
 			{
 				matrix.set(i,j,random.nextDouble()*100-50);
+			}
+		}
+	}
+	
+	private void createRandomMatrix4f(Matrix4f matrix)
+	{
+		for(int i = 0; i<4; i++)
+		{
+			for(int j = 0; j<4; j++)
+			{
+				matrix.set(i,j,random.nextFloat()*100-50);
 			}
 		}
 	}

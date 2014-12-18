@@ -1,19 +1,4 @@
 
-import javax.vecmath.AxisAngle4d;
-import javax.vecmath.AxisAngle4f;
-import javax.vecmath.Matrix3d;
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Matrix4d;
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Point3d;
-import javax.vecmath.Point3f;
-import javax.vecmath.Quat4d;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
-import javax.vecmath.Vector4d;
-import javax.vecmath.Vector4f;
-
 /**
  * 
  * This class creates a 4x4 affine, rigid body transformation matrix. The top
@@ -104,7 +89,7 @@ public class RigidBodyTransform
     * @param matrix
     * @param vector
     */
-   public RigidBodyTransform(Matrix3d matrix, Vector3d vector)
+   public RigidBodyTransform(RotationMatrixd matrix, Vector3d vector)
    {
       set(matrix, vector);
    }
@@ -115,7 +100,7 @@ public class RigidBodyTransform
     * @param matrix
     * @param vector
     */
-   public RigidBodyTransform(Matrix3f matrix, Vector3f vector)
+   public RigidBodyTransform(RotationMatrixf matrix, Vector3f vector)
    {
       set(matrix, vector);
    }
@@ -127,7 +112,7 @@ public class RigidBodyTransform
     * @param quat
     * @param vector
     */
-   public RigidBodyTransform(Quat4d quat, Vector3d vector)
+   public RigidBodyTransform(Quaterniond quat, Vector3d vector)
    {
       set(quat, vector);
    }
@@ -139,29 +124,29 @@ public class RigidBodyTransform
     * @param quat
     * @param vector
     */
-   public RigidBodyTransform(Quat4f quat, Vector3f vector)
+   public RigidBodyTransform(Quaternionf quat, Vector3f vector)
    {
       set(quat, vector);
    }
 
    /**
-    * Create RigidBodyTransform from AxisAngle4d and Vector3d
+    * Create RigidBodyTransform from AxisAngled and Vector3d
     * 
     * @param axisAngle
     * @param vector
     */
-   public RigidBodyTransform(AxisAngle4d axisAngle, Vector3d vector)
+   public RigidBodyTransform(AxisAngled axisAngle, Vector3d vector)
    {
       set(axisAngle, vector);
    }
 
    /**
-    * Create RigidBodyTransform from AxisAngle4d and Vector3d
+    * Create RigidBodyTransform from AxisAngled and Vector3d
     * 
     * @param axisAngle
     * @param vector
     */
-   public RigidBodyTransform(AxisAngle4f axisAngle, Vector3f vector)
+   public RigidBodyTransform(AxisAnglef axisAngle, Vector3f vector)
    {
       set(axisAngle, vector);
    }
@@ -172,7 +157,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public void setRotation(AxisAngle4d axisAngle)
+   public void setRotation(AxisAngled axisAngle)
    {
       setRotationWithAxisAngle(axisAngle.x, axisAngle.y, axisAngle.z, axisAngle.angle);
    }
@@ -183,7 +168,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public void setRotation(AxisAngle4f axisAngle)
+   public void setRotation(AxisAnglef axisAngle)
    {
       setRotationWithAxisAngle(axisAngle.x, axisAngle.y, axisAngle.z, axisAngle.angle);
    }
@@ -231,7 +216,7 @@ public class RigidBodyTransform
     * 
     * @param quat
     */
-   public void setRotation(Quat4d quat)
+   public void setRotation(Quaterniond quat)
    {
       setRotationWithQuaternion(quat.x, quat.y, quat.z, quat.w);
    }
@@ -242,7 +227,7 @@ public class RigidBodyTransform
     * 
     * @param quat
     */
-   public void setRotation(Quat4f quat)
+   public void setRotation(Quaternionf quat)
    {
       setRotationWithQuaternion(quat.x, quat.y, quat.z, quat.w);
    }
@@ -275,7 +260,7 @@ public class RigidBodyTransform
     * 
     * @param matrix
     */
-   public void setRotation(Matrix3d matrix)
+   public void setRotation(RotationMatrixd matrix)
    {
       mat00 = matrix.m00;
       mat01 = matrix.m01;
@@ -293,7 +278,7 @@ public class RigidBodyTransform
     * 
     * @param mat3d
     */
-   public void setRotation(Matrix3f matrix)
+   public void setRotation(RotationMatrixf matrix)
    {
       mat00 = matrix.m00;
       mat01 = matrix.m01;
@@ -356,11 +341,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have zero translation and a rotation equal to the
-    * Matrix3d matrix.
+    * RotationMatrixd matrix.
     * 
     * @param matrix
     */
-   public final void setRotationAndZeroTranslation(Matrix3d matrix)
+   public final void setRotationAndZeroTranslation(RotationMatrixd matrix)
    {
       setRotation(matrix);
       setTranslation(0, 0, 0);
@@ -368,11 +353,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector 
-    * and a rotation equal to the Matrix3d matrix.
+    * and a rotation equal to the RotationMatrixd matrix.
     * 
     * @param matrix
     */
-   public final void set(Matrix3d matrix, Vector3d vector)
+   public final void set(RotationMatrixd matrix, Vector3d vector)
    {
       setRotation(matrix);
       setTranslation(vector.x, vector.y, vector.z);
@@ -380,11 +365,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have zero translation and a rotation equal to the
-    * Quat4d quat.
+    * Quaterniond quat.
     * 
     * @param quat
     */
-   public final void setRotationAndZeroTranslation(Quat4d quat)
+   public final void setRotationAndZeroTranslation(Quaterniond quat)
    {
       setRotation(quat);
       setTranslation(0, 0, 0);
@@ -392,11 +377,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4d quat.
+    * equal to the Quaterniond quat.
     * 
     * @param quat
     */
-   public final void set(Quat4d quat, Vector3d vector)
+   public final void set(Quaterniond quat, Vector3d vector)
    {
       setRotation(quat);
       setTranslation(vector);
@@ -408,7 +393,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void setRotationAndZeroTranslation(AxisAngle4d axisAngle)
+   public final void setRotationAndZeroTranslation(AxisAngled axisAngle)
    {
       setRotation(axisAngle);
       setTranslation(0, 0, 0);
@@ -420,7 +405,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4d axisAngle, Vector3d vector)
+   public final void set(AxisAngled axisAngle, Vector3d vector)
    {
       setRotation(axisAngle);
       setTranslation(vector.x, vector.y, vector.z);
@@ -432,7 +417,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void setRotationAndZeroTranslation(AxisAngle4f axisAngle)
+   public final void setRotationAndZeroTranslation(AxisAnglef axisAngle)
    {
       setRotation(axisAngle);
       setTranslation(0, 0, 0);
@@ -444,7 +429,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public final void set(AxisAngle4f axisAngle, Vector3f vector)
+   public final void set(AxisAnglef axisAngle, Vector3f vector)
    {
       setRotation(axisAngle);
       setTranslation(vector.x, vector.y, vector.z);
@@ -452,11 +437,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have zero translation and a rotation equal to the
-    * Quat4f quat.
+    * Quaternionf quat.
     * 
     * @param quat
     */
-   public final void setRotationAndZeroTranslation(Quat4f quat)
+   public final void setRotationAndZeroTranslation(Quaternionf quat)
    {
       setRotation(quat);
       setTranslation(0, 0, 0);
@@ -464,11 +449,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have translation described in vector and a rotation
-    * equal to the Quat4f quat.
+    * equal to the Quaternionf quat.
     * 
     * @param quat
     */
-   public final void set(Quat4f quat, Vector3f vector)
+   public final void set(Quaternionf quat, Vector3f vector)
    {
       setRotation(quat);
       setTranslation(vector);
@@ -476,11 +461,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have zero translation and a rotation equal to the
-    * Matrix3f matrix.
+    * RotationMatrixf matrix.
     * 
     * @param matrix
     */
-   public final void setRotationAndZeroTranslation(Matrix3f matrix)
+   public final void setRotationAndZeroTranslation(RotationMatrixf matrix)
    {
       setRotation(matrix);
       setTranslation(0, 0, 0);
@@ -488,11 +473,11 @@ public class RigidBodyTransform
 
    /**
     * Set this transform to have zero translation and a rotation equal to the
-    * Matrix3f matrix.
+    * RotationMatrixf matrix.
     * 
     * @param matrix
     */
-   public final void set(Matrix3f matrix, Vector3f vector)
+   public final void set(RotationMatrixf matrix, Vector3f vector)
    {
       setRotation(matrix);
       setTranslation(vector);
@@ -800,11 +785,11 @@ public class RigidBodyTransform
    }
 
    /**
-    * Return rotation matrix of type Matrix3d
+    * Return rotation matrix of type RotationMatrixd
     * 
     * @param matrix
     */
-   public void getRotation(Matrix3d matrix)
+   public void getRotation(RotationMatrixd matrix)
    {
       matrix.m00 = mat00;
       matrix.m01 = mat01;
@@ -818,11 +803,11 @@ public class RigidBodyTransform
    }
 
    /**
-    * Return rotation matrix of type Matrix3f
+    * Return rotation matrix of type RotationMatrixf
     * 
     * @param matrix
     */
-   public void getRotation(Matrix3f matrix)
+   public void getRotation(RotationMatrixf matrix)
    {
       matrix.m00 = (float) mat00;
       matrix.m01 = (float) mat01;
@@ -840,7 +825,7 @@ public class RigidBodyTransform
     * 
     * @param quat
     */
-   public void getRotation(Quat4d quat)
+   public void getRotation(Quaterniond quat)
    {
       double trace = mat00 + mat11 + mat22;
       double val;
@@ -884,7 +869,7 @@ public class RigidBodyTransform
     * 
     * @param quat
     */
-   public void getRotation(Quat4f quat)
+   public void getRotation(Quaternionf quat)
    {
       double trace = mat00 + mat11 + mat22;
       double val;
@@ -927,7 +912,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public void getRotation(AxisAngle4d axisAngle)
+   public void getRotation(AxisAngled axisAngle)
    {
       axisAngle.x = mat21 - mat12;
       axisAngle.y = mat02 - mat20;
@@ -961,7 +946,7 @@ public class RigidBodyTransform
     * 
     * @param axisAngle
     */
-   public void getRotation(AxisAngle4f axisAngle)
+   public void getRotation(AxisAnglef axisAngle)
    {
       axisAngle.x = (float) (mat21 - mat12);
       axisAngle.y = (float) (mat02 - mat20);
@@ -1115,12 +1100,12 @@ public class RigidBodyTransform
    }
 
    /**
-    * Pack rotation part into Matrix3d and translation part into Vector3d
+    * Pack rotation part into RotationMatrixd and translation part into Vector3d
     * 
     * @param matrix
     * @param vector
     */
-   public void get(Matrix3d matrix, Vector3d vector)
+   public void get(RotationMatrixd matrix, Vector3d vector)
    {
       getRotation(matrix);
       getTranslation(vector);
@@ -1131,7 +1116,7 @@ public class RigidBodyTransform
     * 
     * @param matrix
     */
-   public void get(Matrix3d matrix)
+   public void get(RotationMatrixd matrix)
    {
       getRotation(matrix);
    }
@@ -1141,7 +1126,7 @@ public class RigidBodyTransform
     * 
     * @param matrix
     */
-   public void get(Matrix3f matrix)
+   public void get(RotationMatrixf matrix)
    {
       getRotation(matrix);
    }
@@ -1167,60 +1152,60 @@ public class RigidBodyTransform
    }
 
    /**
-    * Pack rotation part into Matrix3f and translation part into Vector3f
+    * Pack rotation part into RotationMatrixf and translation part into Vector3f
     * 
     * @param matrix
     * @param vector
     */
-   public void get(Matrix3f matrix, Vector3f vector)
+   public void get(RotationMatrixf matrix, Vector3f vector)
    {
       getRotation(matrix);
       getTranslation(vector);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4d and pack
+    * Convert and pack rotation part of transform into Quaterniond and pack
     * translation into Vector3d.
     * 
     * @param quat
     * @param vector
     */
-   public void get(Quat4d quat, Vector3d vector)
+   public void get(Quaterniond quat, Vector3d vector)
    {
       getRotation(quat);
       getTranslation(vector);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4d.
+    * Convert and pack rotation part of transform into Quaterniond.
     * 
     * @param quat
     * @param vector
     */
-   public void get(Quat4d quat)
+   public void get(Quaterniond quat)
    {
       getRotation(quat);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4f.
+    * Convert and pack rotation part of transform into Quaternionf.
     * 
     * @param quat
     * @param vector
     */
-   public void get(Quat4f quat)
+   public void get(Quaternionf quat)
    {
       getRotation(quat);
    }
 
    /**
-    * Convert and pack rotation part of transform into Quat4f and pack
+    * Convert and pack rotation part of transform into Quaternionf and pack
     * translation into Vector3f.
     * 
     * @param quat
     * @param vector
     */
-   public void get(Quat4f quat, Vector3f vector)
+   public void get(Quaternionf quat, Vector3f vector)
    {
       getRotation(quat);
       getTranslation(vector);

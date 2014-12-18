@@ -183,4 +183,46 @@ public class RotationMatrixf extends Matrix3f implements java.io.Serializable
 		super.set(matrix);
 		super.transpose();
 	}
+	
+	/**
+	 * Orthonormalize this matrix.
+	 */
+	public void normalize()
+	{
+		float xdoty = m00 * m01 + m10 * m11 + m20 * m21;
+		float xdotx = m00 * m00 + m10 * m10 + m20 * m20;
+
+		float tmp = xdoty / xdotx;
+
+		m01 -= tmp * m00;
+		m11 -= tmp * m10;
+		m21 -= tmp * m20;
+
+		float zdoty = m02 * m01 + m12 * m11 + m22 * m21;
+		float zdotx = m02 * m00 + m12 * m10 + m22 * m20;
+		float ydoty = m01 * m01 + m11 * m11 + m21 * m21;
+
+		tmp = zdotx / xdotx;
+
+		float tmp1 = zdoty / ydoty;
+
+		m02 = m02 - (tmp * m00 + tmp1 * m01);
+		m12 = m12 - (tmp * m10 + tmp1 * m11);
+		m22 = m22 - (tmp * m20 + tmp1 * m21);
+
+		// Compute orthogonalized vector magnitudes and normalize
+		float magX = (float)Math.sqrt(m00 * m00 + m10 * m10 + m20 * m20);
+		float magY = (float)Math.sqrt(m01 * m01 + m11 * m11 + m21 * m21);
+		float magZ = (float)Math.sqrt(m02 * m02 + m12 * m12 + m22 * m22);
+
+		m00 = m00 / magX;
+		m10 = m10 / magX;
+		m20 = m20 / magX;
+		m01 = m01 / magY;
+		m11 = m11 / magY;
+		m21 = m21 / magY;
+		m02 = m02 / magZ;
+		m12 = m12 / magZ;
+		m22 = m22 / magZ;
+	}
 }

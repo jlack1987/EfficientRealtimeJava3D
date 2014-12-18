@@ -46,7 +46,7 @@ public class Quaternionf implements java.io.Serializable
 		set(A);
 	}
 
-	private void set(float x, float y, float z, float w)
+	public void set(float x, float y, float z, float w)
 	{
 		this.x = x;
 		this.y = y;

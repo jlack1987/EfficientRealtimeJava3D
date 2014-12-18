@@ -44,7 +44,7 @@ public class Quaterniond implements java.io.Serializable
 		set(R);
 	}
 
-	private void set(double x, double y, double z, double w)
+	public void set(double x, double y, double z, double w)
 	{
 		this.x = x;
 		this.y = y;

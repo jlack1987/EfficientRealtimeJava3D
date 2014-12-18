@@ -13,17 +13,17 @@ public class AxisAngled implements java.io.Serializable
 
 	public AxisAngled(double[] array)
 	{
-		set(array[0],array[1],array[2],array[3]);
+		set(array);
 	}
 
 	public AxisAngled(AxisAngled axisAngle)
 	{
-		set(axisAngle.x,axisAngle.y,axisAngle.z,axisAngle.angle);
+		set(axisAngle);
 	}
 
 	public AxisAngled(Vector3d axis, double angle)
 	{
-		set(axis.x,axis.y,axis.z,angle);
+		set(axis,angle);
 	}
 	
 	public AxisAngled(RotationMatrixd matrix)
@@ -49,7 +49,7 @@ public class AxisAngled implements java.io.Serializable
 		this.angle = angle;
 	}
 
-	public final void set(double[] array)
+	public void set(double[] array)
 	{
 		set(array[0],array[1],array[2],array[3]);
 	}

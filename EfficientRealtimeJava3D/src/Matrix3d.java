@@ -38,36 +38,28 @@ public class Matrix3d implements java.io.Serializable
 		this.m22 = doubleArray[8];
 	}
 	
-	public Matrix3d(float[] doubleArray)
+	public Matrix3d(float[] floatArray)
 	{
-		if (doubleArray.length != 9)
+		if (floatArray.length != 9)
 		{
 			throw new RuntimeException(
 					"Float array must contain exactly 9 elements.");
 		}
 
-		this.m00 = doubleArray[0];
-		this.m01 = doubleArray[1];
-		this.m02 = doubleArray[2];
-		this.m10 = doubleArray[3];
-		this.m11 = doubleArray[4];
-		this.m12 = doubleArray[5];
-		this.m20 = doubleArray[6];
-		this.m21 = doubleArray[7];
-		this.m22 = doubleArray[8];
+		this.m00 = floatArray[0];
+		this.m01 = floatArray[1];
+		this.m02 = floatArray[2];
+		this.m10 = floatArray[3];
+		this.m11 = floatArray[4];
+		this.m12 = floatArray[5];
+		this.m20 = floatArray[6];
+		this.m21 = floatArray[7];
+		this.m22 = floatArray[8];
 	}
 
 	public Matrix3d(Matrix3d matrix)
 	{
-		this.m00 = matrix.m00;
-		this.m01 = matrix.m01;
-		this.m02 = matrix.m02;
-		this.m10 = matrix.m10;
-		this.m11 = matrix.m11;
-		this.m12 = matrix.m12;
-		this.m20 = matrix.m20;
-		this.m21 = matrix.m21;
-		this.m22 = matrix.m22;
+		set(matrix);
 	}
 
 	public void setToZero()
@@ -148,7 +140,7 @@ public class Matrix3d implements java.io.Serializable
 	public void subtract(Matrix3d matrix, double scalar)
 	{
 		set(matrix);
-		add(-scalar);
+		subtract(scalar);
 	}
 
 	public void scale(double scale)
@@ -620,11 +612,6 @@ public class Matrix3d implements java.io.Serializable
 
 	public void getRow(int row, double[] vector)
 	{
-		if (row != 1 || row != 2 || row != 3)
-		{
-			throw new RuntimeException("The column must either be 1, 2, or 3.");
-		}
-
 		switch (row)
 		{
 			case 1:
@@ -887,48 +874,6 @@ public class Matrix3d implements java.io.Serializable
 		this.m21 = tmp9Array[7];
 		this.m22 = tmp9Array[8];
 
-	}
-
-	/**
-	 * Orthonormalize this matrix.
-	 */
-	public void normalize()
-	{
-		double xdoty = m00 * m01 + m10 * m11 + m20 * m21;
-		double xdotx = m00 * m00 + m10 * m10 + m20 * m20;
-
-		double tmp = xdoty / xdotx;
-
-		m01 -= tmp * m00;
-		m11 -= tmp * m10;
-		m21 -= tmp * m20;
-
-		double zdoty = m02 * m01 + m12 * m11 + m22 * m21;
-		double zdotx = m02 * m00 + m12 * m10 + m22 * m20;
-		double ydoty = m01 * m01 + m11 * m11 + m21 * m21;
-
-		tmp = zdotx / xdotx;
-
-		double tmp1 = zdoty / ydoty;
-
-		m02 = m02 - (tmp * m00 + tmp1 * m01);
-		m12 = m12 - (tmp * m10 + tmp1 * m11);
-		m22 = m22 - (tmp * m20 + tmp1 * m21);
-
-		// Compute orthogonalized vector magnitudes and normalize
-		double magX = Math.sqrt(m00 * m00 + m10 * m10 + m20 * m20);
-		double magY = Math.sqrt(m01 * m01 + m11 * m11 + m21 * m21);
-		double magZ = Math.sqrt(m02 * m02 + m12 * m12 + m22 * m22);
-
-		m00 = m00 / magX;
-		m10 = m10 / magX;
-		m20 = m20 / magX;
-		m01 = m01 / magY;
-		m11 = m11 / magY;
-		m21 = m21 / magY;
-		m02 = m02 / magZ;
-		m12 = m12 / magZ;
-		m22 = m22 / magZ;
 	}
 
 	//

@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
@@ -24,14 +26,13 @@ public class AxisAnglefTest
 	{
 		RotationMatrixf matrix = new RotationMatrixf();
 		AxisAnglef axisAngle = new AxisAnglef();
-		RotationMatrixf matrix2 = new RotationMatrixf();
 		
 		for(int i = 0; i<nTests; i++)
 		{
 			createRandomRotationMatrix(matrix, random);
 			axisAngle.set(matrix);
-			matrix2.set(axisAngle);
-			assertMatrixEquals(matrix, matrix2, 1e-4);
+			RotationMatrixf matrix2 = new RotationMatrixf(axisAngle);
+			assertMatrixEquals(matrix, matrix2, 1e-5f);
 		}
 	}
 	
@@ -40,6 +41,7 @@ public class AxisAnglefTest
 	{
 		AxisAnglef axisAngle1 = new AxisAnglef();
 		AxisAnglef axisAngle2 = new AxisAnglef();
+		axisAngle2.toString();
 		RotationMatrixf matrix = new RotationMatrixf();
 		
 		for(int i = 0; i<nTests; i++)
@@ -47,12 +49,45 @@ public class AxisAnglefTest
 			createRandomAxisAngle(random, axisAngle1);
 			matrix.set(axisAngle1);
 			axisAngle2.set(matrix);
-			assertAxisAnglefEquals(axisAngle1, axisAngle2, 1e-4);
+			assertAxisAnglefEquals(axisAngle1, axisAngle2, 1e-5f);
 		}
 	}
 	
 	@Test
-	public void tesSetFromQuaternion1()
+	public void testConstructors()
+	{
+		AxisAnglef A = new AxisAnglef();
+		float angle = (float)Math.PI/4;
+		A.x = (float)Math.cos(angle);
+		A.y = (float)Math.sin(angle);
+		A.z = 0;
+		A.angle = angle;
+		AxisAnglef A2 = new AxisAnglef(A);
+		A2.get(A);
+		assertEquals(A.x,A2.x,1e-12);
+		assertEquals(A.y,A2.y,1e-12);
+		assertEquals(A.z,A2.z,1e-12);
+		assertEquals(A.angle,A2.angle,1e-12);
+	}
+	
+	@Test
+	public void testGetAndSetFromAxisAndAngle()
+	{
+		Vector3f V = new Vector3f();
+		V.set(random.nextFloat(),random.nextFloat(),random.nextFloat());
+		float angle = random.nextFloat();
+		
+		AxisAnglef A = new AxisAnglef(V,angle);
+		float[] D = new float[4];
+		A.get(D);
+		assertEquals(D[0],A.x,1e-12);
+		assertEquals(D[1],A.y,1e-12);
+		assertEquals(D[2],A.z,1e-12);
+		assertEquals(D[3],A.angle,1e-12);
+	}
+	
+	@Test
+	public void testSetFromQuaternion1()
 	{
 		Quaternionf quaternion = new Quaternionf();
 		AxisAnglef axisAngle1 = new AxisAnglef();
@@ -64,8 +99,59 @@ public class AxisAnglefTest
 			quaternion.set(axisAngle1);
 			axisAngle2.set(quaternion);
 			
-			assertAxisAnglefEquals(axisAngle1, axisAngle2, 1e-4);
+			assertAxisAnglefEquals(axisAngle1, axisAngle2, 1e-5f);
 		}
+	}
+	
+	@Test
+	public void testSetFromZeroQuaternion()
+	{
+		Quaternionf Q = new Quaternionf();
+		Q.set(0,0,0,0);
+		
+		AxisAnglef A = new AxisAnglef(Q);
+		A.toString();
+		assertEquals(A.x,0,1e-12);
+		assertEquals(A.y,1,1e-12);
+		assertEquals(A.z,0,1e-12);
+		assertEquals(A.angle,0,1e-12);
+	}
+	
+	@Test
+	public void testEquals()
+	{
+		float[] D = new float[4];
+		D[0] = 0;
+		D[1] = 0;
+		D[2] = 0;
+		D[3] = 0;
+		
+		AxisAnglef A = new AxisAnglef(D);
+		AxisAnglef A2 = new AxisAnglef(D);
+		assertTrue(A.equals(A2));
+		
+		D[1] = 1e-7f;
+		
+		A.set(D);
+		assertFalse(A.equals(A2));
+		assertTrue(A.epsilonEquals(A2, 1e-5));
+	}
+	
+	@Test
+	public void testSetFromIdentityRotation()
+	{
+		RotationMatrixf R = new RotationMatrixf();
+		R.setToIdentity();
+		
+		AxisAnglef A = new AxisAnglef(R);
+		
+		Vector3f V = new Vector3f();
+		A.getAxis(V);
+		double angle = A.getAngle();
+		assertEquals(V.x,0,1e-12);
+		assertEquals(V.y,1,1e-12);
+		assertEquals(V.z,0,1e-12);
+		assertEquals(angle,0,1e-12);
 	}
 	
 	@SuppressWarnings("unused")
@@ -100,9 +186,9 @@ public class AxisAnglefTest
 	
 	private void createRandomRotationMatrix(Matrix3f matrix, Random random)
 	{
-		Matrix3f rotX = new Matrix3f();
-		Matrix3f rotY = new Matrix3f();
-		Matrix3f rotZ = new Matrix3f();
+		Matrix3d rotX = new Matrix3d();
+		Matrix3d rotY = new Matrix3d();
+		Matrix3d rotZ = new Matrix3d();
 
 		createRandomRotationMatrixX(random, rotX);
 		createRandomRotationMatrixY(random, rotY);
@@ -111,22 +197,22 @@ public class AxisAnglefTest
 		rotX.multiply(rotY);
 		rotX.multiply(rotZ);
 
-		matrix.m00 = rotX.m00;
-		matrix.m01 = rotX.m01;
-		matrix.m02 = rotX.m02;
-		matrix.m10 = rotX.m10;
-		matrix.m11 = rotX.m11;
-		matrix.m12 = rotX.m12;
-		matrix.m20 = rotX.m20;
-		matrix.m21 = rotX.m21;
-		matrix.m22 = rotX.m22;
+		matrix.m00 = (float)rotX.m00;
+		matrix.m01 = (float)rotX.m01;
+		matrix.m02 = (float)rotX.m02;
+		matrix.m10 = (float)rotX.m10;
+		matrix.m11 = (float)rotX.m11;
+		matrix.m12 = (float)rotX.m12;
+		matrix.m20 = (float)rotX.m20;
+		matrix.m21 = (float)rotX.m21;
+		matrix.m22 = (float)rotX.m22;
 	}
 
-	private void createRandomRotationMatrixX(Random random, Matrix3f matrix)
+	private void createRandomRotationMatrixX(Random random, Matrix3d matrix)
 	{
-		float theta = random.nextFloat();
-		float cTheta = (float)Math.cos(theta);
-		float sTheta = (float)Math.sin(theta);
+		double theta = random.nextFloat();
+		double cTheta = Math.cos(theta);
+		double sTheta = Math.sin(theta);
 		matrix.m00 = 1;
 		matrix.m01 = 0;
 		matrix.m02 = 0;
@@ -138,11 +224,11 @@ public class AxisAnglefTest
 		matrix.m22 = cTheta;
 	}
 
-	private void createRandomRotationMatrixY(Random random, Matrix3f matrix)
+	private void createRandomRotationMatrixY(Random random, Matrix3d matrix)
 	{
-		float theta = random.nextFloat();
-		float cTheta = (float)Math.cos(theta);
-		float sTheta = (float)Math.sin(theta);
+		double theta = random.nextFloat();
+		double cTheta = Math.cos(theta);
+		double sTheta = Math.sin(theta);
 		matrix.m00 = cTheta;
 		matrix.m01 = 0;
 		matrix.m02 = sTheta;
@@ -159,7 +245,7 @@ public class AxisAnglefTest
 		axisAngle.x = random.nextFloat();
 		axisAngle.y = random.nextFloat();
 		axisAngle.z = random.nextFloat();
-		float mag = (float)(Math.sqrt(axisAngle.x*axisAngle.x + axisAngle.y*axisAngle.y + axisAngle.z*axisAngle.z));
+		double mag = Math.sqrt(axisAngle.x*axisAngle.x + axisAngle.y*axisAngle.y + axisAngle.z*axisAngle.z);
 		
 		axisAngle.x *= 1/mag;
 		axisAngle.y *= 1/mag;
@@ -177,7 +263,7 @@ public class AxisAnglefTest
 		q.z = random.nextFloat();
 		q.w = random.nextFloat();
 		
-		float val = (float)(1/(Math.sqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w)));
+		double val = 1/(Math.sqrt(q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w));
 		
 		q.x *= val;
 		q.y *= val;
@@ -185,11 +271,11 @@ public class AxisAnglefTest
 		q.w *= val;
 	}
 	
-  private void createRandomRotationMatrixZ(Random random, Matrix3f matrix)
+  private void createRandomRotationMatrixZ(Random random, Matrix3d matrix)
   {
-     float theta = random.nextFloat();
-     float cTheta = (float)Math.cos(theta);
-     float sTheta = (float)Math.sin(theta);
+     double theta = random.nextFloat();
+     double cTheta = Math.cos(theta);
+     double sTheta = Math.sin(theta);
      matrix.m00 = cTheta;
      matrix.m01 = -sTheta;
      matrix.m02 = 0;

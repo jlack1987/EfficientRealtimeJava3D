@@ -227,20 +227,20 @@ public class RotationMatrixfTest
 			matrix.normalize();
 
 			matrix.getColumn(1, vector);
-			assertEquals(vector.length(), 1.0f, 1e-5f);
+			assertEquals(vector.length(), 1.0f, 1e-4f);
 
 			matrix.getColumn(2, vector);
-			assertEquals(vector.length(), 1.0f, 1e-5f);
+			assertEquals(vector.length(), 1.0f, 1e-4f);
 
 			matrix.getColumn(3, vector);
-			assertEquals(vector.length(), 1.0f, 1e-5f);
+			assertEquals(vector.length(), 1.0f, 1e-4f);
 
 			matrix.getColumn(1, vector);
 			matrix.getColumn(2, vector2);
-			assertEquals(vector.dot(vector2), 0.0f, 1e-5f);
+			assertEquals(vector.dot(vector2), 0.0f, 1e-4f);
 
 			matrix.getColumn(3, vector2);
-			assertEquals(vector.dot(vector2), 0.0f, 1e-5f);
+			assertEquals(vector.dot(vector2), 0.0f, 1e-4f);
 
 		}
 	}
