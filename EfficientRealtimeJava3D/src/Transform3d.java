@@ -119,6 +119,11 @@ public class Transform3d extends RigidBodyTransform
    {
       set(matrix, vector, scale);
    }
+   
+   public Transform3d(Matrix3d matrix, Vector3d vector, Vector3d scales)
+   {
+	   set(matrix,vector,scales);
+   }
 
    /**
     * Create transformation matrix from rotation matrix and vector translation
@@ -152,6 +157,11 @@ public class Transform3d extends RigidBodyTransform
    public Transform3d(Matrix3f matrix, Vector3f vector, double scale)
    {
       set(matrix, vector, scale);
+   }
+   
+   public Transform3d(Matrix3f matrix, Vector3f vector, Vector3f scales)
+   {
+      set(matrix, vector, scales);
    }
 
    /**

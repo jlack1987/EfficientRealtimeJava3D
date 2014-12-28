@@ -171,6 +171,28 @@ public class RotationMatrixf extends Matrix3f implements java.io.Serializable
 			rotate(vectorIn);
 		}
 	}
+	
+	public void rotate(Point3d point)
+	{
+		double x,y;
+		
+		x = point.x*m00 + point.y*m01 + point.z*m02;
+		y = point.x*m10 + point.y*m11 + point.z*m12;
+		point.z = point.x*m20 + point.y*m21 + point.z*m22;
+		point.x = x;
+		point.y = y;
+	}
+	
+	public void rotate(Point3f point)
+	{
+		float x,y;
+		
+		x = (float)(point.x*m00 + point.y*m01 + point.z*m02);
+		y = (float)(point.x*m10 + point.y*m11 + point.z*m12);
+		point.z = (float)(point.x*m20 + point.y*m21 + point.z*m22);
+		point.x = x;
+		point.y = y;
+	}
 
 	@Override
 	public void invert()
