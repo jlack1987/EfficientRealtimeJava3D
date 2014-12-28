@@ -288,27 +288,27 @@ public class Quaterniond implements java.io.Serializable
 		this.z *= -1;
 	}
 
-	public void normalize()
+	public final void normalize()
 	{
-		double mag = (x * x + y * y + z * z + w * w);
+		double mag = (this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w);
 		if (mag > 0.0)
 		{
 			mag = 1 / Math.sqrt(mag);
-			x *= 1 / mag;
-			y *= 1 / mag;
-			z *= 1 / mag;
-			w *= 1 / mag;
+			this.x *= mag;
+			this.y *= mag;
+			this.z *= mag;
+			this.w *= mag;
 		}
 		else
 		{
-			x = 0;
-			y = 0;
-			z = 0;
-			w = 0;
+			this.x = 0;
+			this.y = 0;
+			this.z = 0;
+			this.w = 0;
 		}
 	}
 
-	public void normalize(Quaterniond quaternion)
+	public final void normalize(Quaterniond quaternion)
 	{
 		set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		normalize();

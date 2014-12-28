@@ -300,10 +300,10 @@ public class Quaternionf implements java.io.Serializable
 		if (mag > 0.0)
 		{
 			mag = 1 / (float)Math.sqrt(mag);
-			x *= 1 / mag;
-			y *= 1 / mag;
-			z *= 1 / mag;
-			w *= 1 / mag;
+			x *= mag;
+			y *= mag;
+			z *= mag;
+			w *= mag;
 		}
 		else
 		{

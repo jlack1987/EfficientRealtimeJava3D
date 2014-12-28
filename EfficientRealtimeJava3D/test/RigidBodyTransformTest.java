@@ -587,22 +587,23 @@ public class RigidBodyTransformTest
          quat1.y = random.nextDouble();
          quat1.z = random.nextDouble();
          quat1.w = random.nextDouble();
-         quat1.normalize();
 
+         quat1.normalize();
+         
          randomizeVector(random, vector);
 
          transform.set(quat1, vector);
 
          transform.get(quatCheck);
          transform.getTranslation(trans);
-
-         assertEquals(quat1.x, quatCheck.x, 1e-10);
-         assertEquals(quat1.y, quatCheck.y, 1e-10);
-         assertEquals(quat1.z, quatCheck.z, 1e-10);
-         assertEquals(quat1.w, quatCheck.w, 1e-10);
-         assertEquals(vector.x, trans.x, 1e-10);
-         assertEquals(vector.y, trans.y, 1e-10);
-         assertEquals(vector.z, trans.z, 1e-10);
+         
+    	 assertEquals(quat1.x, quatCheck.x, 1e-12);
+         assertEquals(quat1.y, quatCheck.y, 1e-12);
+         assertEquals(quat1.z, quatCheck.z, 1e-12);
+         assertEquals(quat1.w, quatCheck.w, 1e-12);
+         assertEquals(vector.x, trans.x, 1e-12);
+         assertEquals(vector.y, trans.y, 1e-12);
+         assertEquals(vector.z, trans.z, 1e-12);
       }
    }
 
@@ -1352,7 +1353,8 @@ public class RigidBodyTransformTest
       {
          createRandomTransformationMatrix(matrix, random);
 
-         double[] matrixAsFloatArray = matrix.getData();
+         double[] matrixAsFloatArray = new double[16];
+         matrix.get(matrixAsFloatArray);
          float[] floatArrayCheck = putDoublesInFloatArray(matrixAsFloatArray);
 
          RigidBodyTransform transform = new RigidBodyTransform(floatArrayCheck);
@@ -1489,7 +1491,7 @@ public class RigidBodyTransformTest
 
          RotationMatrixd mat = new RotationMatrixd();
          transform.getRotation(mat);
-         RotationFunctions.isRotationProper(mat);
+         assertTrue(mat.isRotationProper());
          assertTrue(checkOrthogonality(transform));
       }
    }
@@ -1561,7 +1563,7 @@ public class RigidBodyTransformTest
          }
          transform3d.get(checkMatrix);
          transform3d.getRotation(mat);
-         RotationFunctions.isRotationProper(mat);
+         assertTrue(mat.isRotationProper());
 
          assertMatrix4dEquals("", matrix, checkMatrix, 1e-10);
       }
@@ -1830,10 +1832,10 @@ public class RigidBodyTransformTest
          createRandomTransform4Vector(vector, random);
          vector2.set(vector);
 
-         MatrixTools.multiplyt(matrix, vector);
+         Vector4d V = multiplyMatrix4dByVector4d(matrix, vector);
          transform.transform(vector2);
 
-         assertVector4dEquals("", vector, vector2, 1e-12);
+         assertVector4dEquals("", V, vector2, 1e-12);
       }
    }
 
@@ -1854,9 +1856,9 @@ public class RigidBodyTransformTest
          createRandomTransform4Vector(vector, random);
 
          transform.transform(vector, vector2);
-         MatrixTools.multiplyt(matrix, vector);
+         Vector4d V = multiplyMatrix4dByVector4d(matrix, vector);
 
-         assertVector4dEquals("", vector, vector2, 1e-12);
+         assertVector4dEquals("", V, vector2, 1e-12);
       }
    }
 
@@ -1877,10 +1879,10 @@ public class RigidBodyTransformTest
          createRandomTransform4Vector(vector, random);
          vector2.set(vector);
 
-         MatrixTools.multiplyt(matrix, vector);
+         Vector4f V = multiplyMatrix4dByVector4d(matrix, vector);
          transform.transform(vector2);
 
-         assertVector4fEquals("", vector, vector2, 1e-6);
+         assertVector4fEquals("", V, vector2, 1e-6);
       }
    }
 
@@ -1901,9 +1903,9 @@ public class RigidBodyTransformTest
          createRandomTransform4Vector(vector, random);
 
          transform.transform(vector, vector2);
-         MatrixTools.multiplyt(matrix, vector);
+         Vector4f V = multiplyMatrix4dByVector4d(matrix, vector);
 
-         assertVector4fEquals("", vector, vector2, 1e-6);
+         assertVector4fEquals("", V, vector2, 1e-6);
       }
    }
 
@@ -2541,5 +2543,41 @@ public class RigidBodyTransformTest
 			   assertEquals(m1.get(i,j),m2.get(i,j),epsilon);
 		   }
 	   }
+   }
+   
+   private Vector4d multiplyMatrix4dByVector4d(Matrix4d M, Vector4d V)
+   {
+	   Vector4d ret = new Vector4d();
+	   
+	   ret.x = V.x*M.m00 + V.y*M.m01 + V.z*M.m02 + V.w*M.m03;
+	   ret.y = V.x*M.m10 + V.y*M.m11 + V.z*M.m12 + V.w*M.m13;
+	   ret.z = V.x*M.m20 + V.y*M.m21 + V.z*M.m22 + V.w*M.m23;
+	   ret.w = V.x*M.m30 + V.y*M.m31 + V.z*M.m32 + V.w*M.m33;
+	   
+	   return ret;
+   }
+   
+   private Vector4f multiplyMatrix4dByVector4d(Matrix4d M, Vector4f V)
+   {
+	   Vector4f ret = new Vector4f();
+	   
+	   ret.x = (float)(V.x*M.m00 + V.y*M.m01 + V.z*M.m02 + V.w*M.m03);
+	   ret.y = (float)(V.x*M.m10 + V.y*M.m11 + V.z*M.m12 + V.w*M.m13);
+	   ret.z = (float)(V.x*M.m20 + V.y*M.m21 + V.z*M.m22 + V.w*M.m23);
+	   ret.w = (float)(V.x*M.m30 + V.y*M.m31 + V.z*M.m32 + V.w*M.m33);
+	   
+	   return ret;
+   }
+   
+   private Vector4f multiplyMatrix4dByVector4d(Matrix4f M, Vector4f V)
+   {
+	   Vector4f ret = new Vector4f();
+	   
+	   ret.x = (float)(V.x*M.m00 + V.y*M.m01 + V.z*M.m02 + V.w*M.m03);
+	   ret.y = (float)(V.x*M.m10 + V.y*M.m11 + V.z*M.m12 + V.w*M.m13);
+	   ret.z = (float)(V.x*M.m20 + V.y*M.m21 + V.z*M.m22 + V.w*M.m23);
+	   ret.w = (float)(V.x*M.m30 + V.y*M.m31 + V.z*M.m32 + V.w*M.m33);
+	   
+	   return ret;
    }
 }
