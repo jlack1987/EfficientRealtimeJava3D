@@ -18,14 +18,32 @@ public class TestingTools
 				&& (tmpVecZ.lengthSquared() - 1 < 1e-8);
 	}
 
-	public static void randomizeVector(Random random, Vector3d vector)
+	public static void randomizeVector3d(Random random, Vector3d vector)
 	{
 		vector.x = random.nextDouble();
 		vector.y = random.nextDouble();
 		vector.z = random.nextDouble();
 	}
+	
+	public static Vector3d createRandomVector3d(Random random)
+	{
+		Vector3d v = new Vector3d();
+		v.x = random.nextDouble();
+		v.y = random.nextDouble();
+		v.z = random.nextDouble();
+		return v;
+	}
+	
+	public static Vector3f createRandomVector3f(Random random)
+	{
+		Vector3f v = new Vector3f();
+		v.x = random.nextFloat();
+		v.y = random.nextFloat();
+		v.z = random.nextFloat();
+		return v;
+	}
 
-	public static void randomizeVector(Random random, Vector3f vector)
+	public static void randomizeVector3f(Random random, Vector3f vector)
 	{
 		vector.x = random.nextFloat();
 		vector.y = random.nextFloat();
@@ -53,7 +71,7 @@ public class TestingTools
 		RotationMatrixd rotZ = new RotationMatrixd();
 		Vector3d trans = new Vector3d();
 
-		randomizeVector(random, trans);
+		randomizeVector3d(random, trans);
 		createRandomRotationMatrixX(random, rotX);
 		createRandomRotationMatrixY(random, rotY);
 		createRandomRotationMatrixZ(random, rotZ);
@@ -86,7 +104,7 @@ public class TestingTools
 		RotationMatrixd rotZ = new RotationMatrixd();
 		Vector3d trans = new Vector3d();
 
-		randomizeVector(random, trans);
+		randomizeVector3d(random, trans);
 		createRandomRotationMatrixX(random, rotX);
 		createRandomRotationMatrixY(random, rotY);
 		createRandomRotationMatrixZ(random, rotZ);
@@ -112,7 +130,7 @@ public class TestingTools
 		RotationMatrixf rotZ = new RotationMatrixf();
 		Vector3f trans = new Vector3f();
 
-		randomizeVector(random, trans);
+		randomizeVector3f(random, trans);
 		createRandomRotationMatrixX(random, rotX);
 		createRandomRotationMatrixY(random, rotY);
 		createRandomRotationMatrixZ(random, rotZ);
@@ -138,7 +156,7 @@ public class TestingTools
 		RotationMatrixd rotZ = new RotationMatrixd();
 		Vector3d trans = new Vector3d();
 
-		randomizeVector(random, trans);
+		randomizeVector3d(random, trans);
 		createRandomRotationMatrixX(random, rotX);
 		createRandomRotationMatrixY(random, rotY);
 		createRandomRotationMatrixZ(random, rotZ);
@@ -292,6 +310,48 @@ public class TestingTools
 
 		return ret;
 	}
+	
+	public static double[] createRandomDoubleArray(Random random,int size)
+	{
+		double[] d = new double[size];
+		
+		for(int i = 0; i<size; i++)
+		{
+			d[i] = random.nextDouble();
+		}
+		
+		return d;
+	}
+	
+	public static float[] createRandomFloatArray(Random random,int size)
+	{
+		float[] f = new float[size];
+		
+		for(int i = 0; i<size; i++)
+		{
+			f[i] = random.nextFloat();
+		}
+		
+		return f;
+	}
+	
+	public static Point3d createRandomPoint3d(Random random)
+	{
+		Point3d p = new Point3d();
+		p.x = random.nextDouble();
+		p.y = random.nextDouble();
+		p.z = random.nextDouble();
+		return p;
+	}
+	
+	public static Point3f createRandomPoint3f(Random random)
+	{
+		Point3f p = new Point3f();
+		p.x = random.nextFloat();
+		p.y = random.nextFloat();
+		p.z = random.nextFloat();
+		return p;
+	}
 
 	public static void createFloatArrayFromMatrix4d(float[] floatArray, Matrix4f matrix)
 	{
@@ -357,20 +417,20 @@ public class TestingTools
 		assertEquals(vector1.z, vector2.z, epsilon);
 	}
 
-	public static void assertPoint3dEquals(String string, Point3d vector1,
-			Point3d vector2, double epsilon)
+	public static void assertPoint3dEquals(String string, Point3d p1,
+			Point3d p2, double epsilon)
 	{
-		assertEquals(vector1.x, vector2.x, epsilon);
-		assertEquals(vector1.y, vector2.y, epsilon);
-		assertEquals(vector1.z, vector2.z, epsilon);
+		assertEquals(p1.x, p2.x, epsilon);
+		assertEquals(p1.y, p2.y, epsilon);
+		assertEquals(p1.z, p2.z, epsilon);
 	}
 
-	public static void assertPoint3fEquals(String string, Point3f vector1,
-			Point3f vector2, double epsilon)
+	public static void assertPoint3fEquals(String string, Point3f p1,
+			Point3f p2, double epsilon)
 	{
-		assertEquals(vector1.x, vector2.x, epsilon);
-		assertEquals(vector1.y, vector2.y, epsilon);
-		assertEquals(vector1.z, vector2.z, epsilon);
+		assertEquals(p1.x, p2.x, epsilon);
+		assertEquals(p1.y, p2.y, epsilon);
+		assertEquals(p1.z, p2.z, epsilon);
 	}
 
 	public static void assertVector4dEquals(String string, Vector4d vector1,

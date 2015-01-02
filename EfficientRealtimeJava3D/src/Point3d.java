@@ -8,6 +8,16 @@ public class Point3d implements java.io.Serializable
 	{
 		set(0, 0, 0);
 	}
+	
+	public Point3d(double x, double y, double z)
+	{
+		set(x,y,z);
+	}
+	
+	public Point3d(Point3d p)
+	{
+		set(p);
+	}
 
 	public void set(Point3d point)
 	{
@@ -23,12 +33,32 @@ public class Point3d implements java.io.Serializable
 	{
 		set(array);
 	}
+	
+	public Point3d(Vector3d v)
+	{
+		set(v);
+	}
+	
+	public Point3d(Vector3f v)
+	{
+		set(v);
+	}
 
 	public void set(double x, double y, double z)
 	{
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	
+	public void set(Vector3d v)
+	{
+		set(v.x,v.y,v.z);
+	}
+	
+	public void set(Vector3f v)
+	{
+		set(v.x,v.y,v.z);
 	}
 
 	public void set(double[] array)
@@ -55,6 +85,13 @@ public class Point3d implements java.io.Serializable
 		this.z += vector.z;
 	}
 	
+	public void add(double[] d)
+	{
+		this.x += d[0];
+		this.y += d[1];
+		this.z += d[2];
+	}
+	
 	public void add(Vector3f vector)
 	{
 		this.x += vector.x;
@@ -74,6 +111,20 @@ public class Point3d implements java.io.Serializable
 		this.x -= point.x;
 		this.y -= point.y;
 		this.z -= point.z;
+	}
+	
+	public void subtract(double[] d)
+	{
+		this.x -= d[0];
+		this.y -= d[1];
+		this.z -= d[2];
+	}
+	
+	public void subtract(float[] d)
+	{
+		this.x -= d[0];
+		this.y -= d[1];
+		this.z -= d[2];
 	}
 	
 	public void subtract(Vector3d vector)
@@ -141,12 +192,12 @@ public class Point3d implements java.io.Serializable
 				.abs(this.z - point.z));
 	}
 
-	public boolean equals(Point3d point)
+	public final boolean equals(Point3d point)
 	{
 		return (this.x == point.x && this.y == point.y && this.z == point.z);
 	}
 
-	public boolean epsilonEquals(Point3d point, double epsilon)
+	public final boolean epsilonEquals(Point3d point, double epsilon)
 	{
 		return (Math.abs(point.x - this.x) < epsilon
 				&& Math.abs(point.y - this.y) < epsilon && Math.abs(point.z
