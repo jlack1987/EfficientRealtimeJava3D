@@ -1,30 +1,35 @@
-public class Vector2d implements java.io.Serializable
+
+public class Vector2f implements java.io.Serializable
 {
-	private static final long serialVersionUID = 1376445751990551719L;
 
-	double x, y;
-
-	public Vector2d()
-	{
-		set(0,0);
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6960394875343338569L;
 	
-	public Vector2d(double x, double y)
+	float x,y;
+
+	public Vector2f(float x, float y)
 	{
 		set(x, y);
 	}
+	
+	public Vector2f()
+	{
+		set(0,0);
+	}
 
-	public Vector2d(Vector2d v)
+	public Vector2f(Vector2f v)
 	{
 		set(v);
 	}
 
-	public Vector2d(double[] d)
+	public Vector2f(double[] d)
 	{
 		set(d);
 	}
 
-	public Vector2d(float[] f)
+	public Vector2f(float[] f)
 	{
 		set(f);
 	}
@@ -36,7 +41,7 @@ public class Vector2d implements java.io.Serializable
 			throw new RuntimeException("Array must contain exactly 2 elements.");
 		}
 
-		set(d[0], d[1]);
+		set((float)d[0], (float)d[1]);
 	}
 
 	public void set(float[] f)
@@ -49,65 +54,47 @@ public class Vector2d implements java.io.Serializable
 		set(f[0], f[1]);
 	}
 
-	public void set(Vector2d v)
+	public void set(Vector2f v)
 	{
 		set(v.x, v.y);
 	}
 
-	public void set(double x, double y)
+	public void set(float x, float y)
 	{
 		this.x = x;
 		this.y = y;
 	}
-	
-	public void get(Vector2d v)
-	{
-		v.x = x;
-		v.y = y;
-	}
-	
-	public void get(double[] d)
-	{
-		d[0] = x;
-		d[1] = y;
-	}
-	
-	public void get(float[] f)
-	{
-		f[0] = (float)x;
-		f[1] = (float)y;
-	}
 
-	public void add(Vector2d vector)
+	public void add(Vector3f vector)
 	{
 		this.x = this.x + vector.x;
 		this.y = this.y + vector.y;
 	}
 
-	public void subtract(Vector2d vector)
+	public void subtract(Vector3f vector)
 	{
 		this.x = this.x - vector.x;
 		this.y = this.y - vector.y;
 	}
 
-	public double dot(Vector2d vector)
+	public float dot(Vector3f vector)
 	{
 		return this.x * vector.x + this.y * vector.y;
 	}
 
-	public double length()
+	public float length()
 	{
-		return Math.sqrt(x * x + y * y);
+		return (float)Math.sqrt(x * x + y * y);
 	}
 
 	public void normalize()
 	{
-		double length = length();
+		float length = length();
 		x /= length;
 		y /= length;
 	}
 
-	public void normalize(Vector2d vector)
+	public void normalize(Vector2f vector)
 	{
 		if (this != vector)
 		{
@@ -120,14 +107,14 @@ public class Vector2d implements java.io.Serializable
 		}
 	}
 
-	public double lengthSquared()
+	public float lengthSquared()
 	{
 		return (x * x + y * y);
 	}
 
-	public double angle(Vector2d vector1)
+	public double angle(Vector3f vector1)
 	{
-		double vDot = this.dot(vector1) / (this.length() * vector1.length());
+		double vDot = dot(vector1) / (this.length() * vector1.length());
 		if (vDot < -1.0)
 			vDot = -1.0;
 		if (vDot > 1.0)

@@ -34,6 +34,14 @@ public class TestingTools
 		return v;
 	}
 	
+	public static Vector2d createRandomVector2d(Random random)
+	{
+		Vector2d v = new Vector2d();
+		v.x = random.nextDouble();
+		v.y = random.nextDouble();
+		return v;
+	}
+	
 	public static Vector3f createRandomVector3f(Random random)
 	{
 		Vector3f v = new Vector3f();
