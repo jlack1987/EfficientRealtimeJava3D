@@ -9,6 +9,11 @@ public class Point3f implements java.io.Serializable
 	{
 		set(0, 0, 0);
 	}
+	
+	public Point3f(float x, float y, float z)
+	{
+		set(x,y,z);
+	}
 
 	public void set(Point3f point)
 	{
@@ -24,6 +29,21 @@ public class Point3f implements java.io.Serializable
 	{
 		set(array);
 	}
+	
+	public Point3f(Vector3f v)
+	{
+		set(v);
+	}
+	
+	public Point3f(Vector3d v)
+	{
+		set(v);
+	}
+	
+	public Point3f(Point3f p)
+	{
+		set(p);
+	}
 
 	public void set(float x, float y, float z)
 	{
@@ -31,18 +51,57 @@ public class Point3f implements java.io.Serializable
 		this.y = y;
 		this.z = z;
 	}
+	
+	public void set(Vector3f v)
+	{
+		set(v.x,v.y,v.z);
+	}
+	
+	public void set(Vector3d v)
+	{
+		set((float)v.x,(float)v.y,(float)v.z);
+	}
 
 	public void set(double[] array)
 	{
 		set((float)array[0], (float)array[1], (float)array[2]);
 	}
 
-	public void set(float[] array)
+	public void set(float[] f)
 	{
-		set(array[0], array[1], array[2]);
+		if(f.length != 3)
+		{
+			throw new RuntimeException("Float array must contain exactly 3 elements.");
+		}
+		
+		set(f[0], f[1], f[2]);
 	}
-
-	public void add(Point3d point)
+	
+	public void add(float[] f)
+	{
+		if(f.length != 3)
+		{
+			throw new RuntimeException("Float array must contain exactly 3 elements.");
+		}
+		
+		this.x += f[0];
+		this.y += f[1];
+		this.z += f[2];
+	}
+	
+	public void add(double[] d)
+	{
+		if(d.length != 3)
+		{
+			throw new RuntimeException("Float array must contain exactly 3 elements.");
+		}
+		
+		this.x += d[0];
+		this.y += d[1];
+		this.z += d[2];
+	}
+	
+	public void add(Point3f point)
 	{
 		this.x += point.x;
 		this.y += point.y;
@@ -89,6 +148,20 @@ public class Point3f implements java.io.Serializable
 		this.x -= vector.x;
 		this.y -= vector.y;
 		this.z -= vector.z;
+	}
+	
+	public void subtract(float[] f)
+	{
+		this.x -= f[0];
+		this.y -= f[1];
+		this.z -= f[2];
+	}
+	
+	public void subtract(double[] f)
+	{
+		this.x -= f[0];
+		this.y -= f[1];
+		this.z -= f[2];
 	}
 
 	public void subtract(Point3f p1, Point3f p2)
@@ -154,7 +227,7 @@ public class Point3f implements java.io.Serializable
 				- this.z) < epsilon);
 	}
 
-	public void clampMinMax(float min, float max, Point3f point)
+	public void clipMinMax(float min, float max, Point3f point)
 	{
 		if (point.x > max)
 		{

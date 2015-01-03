@@ -204,7 +204,7 @@ public class Point3d implements java.io.Serializable
 				- this.z) < epsilon);
 	}
 
-	public void clampMinMax(double min, double max, Point3d point)
+	public void clipMinMax(double min, double max, Point3d point)
 	{
 		if (point.x > max)
 		{

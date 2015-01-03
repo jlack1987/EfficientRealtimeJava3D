@@ -2681,7 +2681,7 @@ public class Transform3dTest
 			transform3d.invert();
 			transform3d.get(checkMatrix);
 
-			assertMatrix4dEquals("",denseMatrix, checkMatrix, 1e-4);
+			assertMatrix4dEquals("",denseMatrix, checkMatrix, 1e-3);
 		}
 	}
 

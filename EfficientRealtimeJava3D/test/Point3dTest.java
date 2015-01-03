@@ -166,9 +166,9 @@ public class Point3dTest
 		Point3d p2 = new Point3d(-1,-2,-3);
 		Point3d p3 = new Point3d(1,2,3);
 		
-		p1.clampMinMax(0, 0, p1);
-		p2.clampMinMax(0, 0, p2);
-		p3.clampMinMax(-100, 100, p3);
+		p1.clipMinMax(0, 0, p1);
+		p2.clipMinMax(0, 0, p2);
+		p3.clipMinMax(-100, 100, p3);
 		
 		assertEquals(p1.x,0,1e-12);
 		assertEquals(p1.z,0,1e-12);
@@ -181,5 +181,34 @@ public class Point3dTest
 		assertEquals(p3.x,1,1e-12);
 		assertEquals(p3.y,2,1e-12);
 		assertEquals(p3.z,3,1e-12);
+	}
+	
+	@Test
+	public void testInfinityNorm()
+	{
+		Point3d p1 = TestingTools.createRandomPoint3d(random);
+		Point3d p2 = TestingTools.createRandomPoint3d(random);
+		
+		double dx = p1.x - p2.x;
+		double dy = p1.y - p2.y;
+		double dz = p1.z - p2.z;
+		
+		double tmp = Math.max(Math.abs(dx),Math.abs(dy));
+		
+		double infNorm = p1.infinityNorm(p2);
+		assertEquals(Math.max(tmp,Math.abs(dz)),infNorm,1e-10);
+	}
+	
+	@Test
+	public void testL1Norm()
+	{
+		Point3d p1 = TestingTools.createRandomPoint3d(random);
+		Point3d p2 = TestingTools.createRandomPoint3d(random);
+		
+		double dx = Math.abs(p1.x - p2.x);
+		double dy = Math.abs(p1.y - p2.y);
+		double dz = Math.abs(p1.z - p2.z);
+		
+		assertEquals(p1.L1Norm(p2),dx+dy+dz,1e-10);
 	}
 }
