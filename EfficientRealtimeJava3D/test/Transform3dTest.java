@@ -278,7 +278,106 @@ public class Transform3dTest
 			assertVector3fEquals("", scales, scalesCheck, 1e-5);
 		}
 	}
+	
+	@Test
+	public void TestSetWithMatrix3dAndVector3d()
+	{
+		Random random = new Random();
+		Matrix3d m = TestingTools.createRandomRotationMatrixd(random);
+		Vector3d v = TestingTools.createRandomVector3d(random);
+		Transform3d T = new Transform3d(m,v);
+		
+		Matrix3d m2 = new Matrix3d();
+		Vector3d v2 = new Vector3d();
+		
+		T.get(m2);
+		T.get(v2);
+		
+		TestingTools.assertMatrix3dEquals("", m, m2, 1e-10);
+		TestingTools.assertVector3dEquals("", v, v2, 1e-10);
+	}
+	
+	@Test
+	public void TestSetWithMatrix3dAndVector3f()
+	{
+		Random random = new Random();
+		Matrix3f m = TestingTools.createRandomRotationMatrixf(random);
+		Vector3f v = TestingTools.createRandomVector3f(random);
+		Transform3d T = new Transform3d(m,v);
+		
+		Matrix3f m2 = new Matrix3f();
+		Vector3f v2 = new Vector3f();
+		
+		T.get(m2);
+		T.get(v2);
+		
+		TestingTools.assertMatrix3fEquals("", m, m2, 1e-6f);
+		TestingTools.assertVector3fEquals("", v, v2, 1e-6f);
+	}
+	
+	@Test
+	public void TestSetWithMatrix3dAndVector3fAndScale()
+	{
+		Random random = new Random();
+		Matrix3f m = TestingTools.createRandomRotationMatrixf(random);
+		Vector3f v = TestingTools.createRandomVector3f(random);
+		Vector3f scales = new Vector3f();
+		scales.x = 2;
+		scales.y = 2;
+		scales.z = 2;
+		Transform3d T = new Transform3d(m,v,scales);
+		
+		Matrix3f m2 = new Matrix3f();
+		Vector3f v2 = new Vector3f();
+		Vector3f scalesCheck = new Vector3f();
+		
+		T.getRotation(m2);
+		T.get(v2);
+		T.getScale(scalesCheck);
+		
+		TestingTools.assertMatrix3fEquals("", m, m2, 1e-6f);
+		TestingTools.assertVector3fEquals("", v, v2, 1e-6f);
+		TestingTools.assertVector3fEquals("",scalesCheck,scales,1e-6f);
+	}
 
+	@Test
+	public void TestSetWithQuaterniondAndVector3d()
+	{
+		Random random = new Random();
+		Quaterniond Q = TestingTools.createRandomQuaterniond(random);
+		Vector3d v = TestingTools.createRandomVector3d(random);
+		
+		Transform3d T = new Transform3d(Q,v);
+		
+		Quaterniond Q2 = new Quaterniond();
+		Vector3d v2 = new Vector3d();
+		
+		T.get(Q2);
+		T.get(v2);
+		
+		TestingTools.assertQuaterniondEquals(Q, Q2, 1e-8);
+		TestingTools.assertVector3dEquals("", v, v2, 1e-8);
+	}
+	
+	@Test
+	public void TestSetWithQuaternionfAndVector3f()
+	{
+		Random random = new Random();
+		Quaternionf Q = TestingTools.createRandomQuaternionf(random);
+		Vector3f v = TestingTools.createRandomVector3f(random);
+		
+		Transform3d T = new Transform3d(Q,v);
+		
+		Quaternionf Q2 = new Quaternionf();
+		Vector3f v2 = new Vector3f();
+		
+		T.get(Q2);
+		T.get(v2);
+		
+		TestingTools.assertQuaternionfEquals(Q, Q2, 1e-6);
+		TestingTools.assertVector3fEquals("", v, v2, 1e-6);
+	}
+	
 	@Test
 	public void TestMultipleDoubleScales5()
 	{
@@ -464,7 +563,7 @@ public class Transform3dTest
 
 			randomizeVector(random, vector);
 
-			Transform3d transform = new Transform3d(axisAngle, vector, 1.0);
+			Transform3d transform = new Transform3d(axisAngle, vector);
 			transform.getRotation(axisAngleToCheck);
 
 			assertEquals(axisAngle.x, axisAngleToCheck.x, 1e-8);
@@ -800,7 +899,7 @@ public class Transform3dTest
 
 			randomizeVector(random, vector);
 
-			Transform3d transform = new Transform3d(axisAngle, vector, 1.0);
+			Transform3d transform = new Transform3d(axisAngle, vector);
 			transform.normalize();
 			transform.getRotation(axisAngleToCheck);
 
@@ -992,7 +1091,18 @@ public class Transform3dTest
 			assertEquals(axisAngle.z, axisAngleToCheck.z, 1e-3);
 			assertEquals(axisAngle.angle, axisAngleToCheck.angle, 1e-3);
 		}
-
+	}
+	
+	@Test
+	public void TestSetRotationWithZeroAxisAngle()
+	{
+		AxisAngled A = new AxisAngled(0,0,0,Math.PI/4);
+		Transform3d T = new Transform3d(A,new Vector3d(),2.0);
+		
+		Matrix3d R = new Matrix3d();
+		
+		T.getRotation(R);
+		assertTrue(TestingTools.isIdentity(R,1e-8));
 	}
 
 	@Test
@@ -2920,6 +3030,33 @@ public class Transform3dTest
 			transform2.invert(transform3d);
 
 			transform2.invert();
+
+			matrix.invert();
+			transform2.get(denseMatrix);
+			transform3d.get(checkMatrix);
+
+			assertMatrix4dEquals("",denseMatrix, checkMatrix, 1e-15);
+		}
+	}
+	
+	@Test
+	public void TestMatrixInverse8()
+	{
+		Matrix4d denseMatrix = new Matrix4d();
+		Matrix4d checkMatrix = new Matrix4d();
+		Matrix4d matrix = new Matrix4d();
+		Random random = new Random();
+		Transform3d transform2 = new Transform3d();
+
+		for (int i = 0; i < nTests; i++)
+		{
+			createRandomTransformationMatrix(denseMatrix, random);
+			createRandomTransformationMatrix(matrix, random);
+
+			Transform3d transform3d = new Transform3d(matrix);
+			transform2.invert(transform3d);
+
+			transform3d.invert(transform3d);
 
 			matrix.invert();
 			transform2.get(denseMatrix);

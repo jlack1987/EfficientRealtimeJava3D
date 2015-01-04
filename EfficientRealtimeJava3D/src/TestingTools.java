@@ -24,7 +24,7 @@ public class TestingTools
 		vector.y = random.nextDouble();
 		vector.z = random.nextDouble();
 	}
-	
+
 	public static Vector3d createRandomVector3d(Random random)
 	{
 		Vector3d v = new Vector3d();
@@ -33,7 +33,7 @@ public class TestingTools
 		v.z = random.nextDouble();
 		return v;
 	}
-	
+
 	public static Vector2d createRandomVector2d(Random random)
 	{
 		Vector2d v = new Vector2d();
@@ -41,7 +41,15 @@ public class TestingTools
 		v.y = random.nextDouble();
 		return v;
 	}
-	
+
+	public static Vector2f createRandomVector2f(Random random)
+	{
+		Vector2f v = new Vector2f();
+		v.x = random.nextFloat();
+		v.y = random.nextFloat();
+		return v;
+	}
+
 	public static Vector3f createRandomVector3f(Random random)
 	{
 		Vector3f v = new Vector3f();
@@ -72,7 +80,8 @@ public class TestingTools
 		point.z = random.nextFloat();
 	}
 
-	public static void createRandomTransformationMatrix(Matrix4d matrix, Random random)
+	public static void createRandomTransformationMatrix(Matrix4d matrix,
+			Random random)
 	{
 		RotationMatrixd rotX = new RotationMatrixd();
 		RotationMatrixd rotY = new RotationMatrixd();
@@ -105,7 +114,8 @@ public class TestingTools
 		matrix.set(3, 3, 1);
 	}
 
-	public static void createRandomRotationMatrix(RotationMatrixd matrix, Random random)
+	public static void createRandomRotationMatrix(RotationMatrixd matrix,
+			Random random)
 	{
 		RotationMatrixd rotX = new RotationMatrixd();
 		RotationMatrixd rotY = new RotationMatrixd();
@@ -130,8 +140,38 @@ public class TestingTools
 		matrix.m21 = rotX.m21;
 		matrix.m22 = rotX.m22;
 	}
+	
+	public static RotationMatrixd createRandomRotationMatrixd(Random random)
+	{
+		RotationMatrixd matrix = new RotationMatrixd();
+		RotationMatrixd rotX = new RotationMatrixd();
+		RotationMatrixd rotY = new RotationMatrixd();
+		RotationMatrixd rotZ = new RotationMatrixd();
+		Vector3d trans = new Vector3d();
 
-	public static void createRandomRotationMatrix(RotationMatrixf matrix, Random random)
+		randomizeVector3d(random, trans);
+		createRandomRotationMatrixX(random, rotX);
+		createRandomRotationMatrixY(random, rotY);
+		createRandomRotationMatrixZ(random, rotZ);
+
+		rotX.multiply(rotY);
+		rotX.multiply(rotZ);
+
+		matrix.m00 = rotX.m00;
+		matrix.m01 = rotX.m01;
+		matrix.m02 = rotX.m02;
+		matrix.m10 = rotX.m10;
+		matrix.m11 = rotX.m11;
+		matrix.m12 = rotX.m12;
+		matrix.m20 = rotX.m20;
+		matrix.m21 = rotX.m21;
+		matrix.m22 = rotX.m22;
+		
+		return matrix;
+	}
+
+	public static void createRandomRotationMatrix(RotationMatrixf matrix,
+			Random random)
 	{
 		RotationMatrixf rotX = new RotationMatrixf();
 		RotationMatrixf rotY = new RotationMatrixf();
@@ -156,8 +196,38 @@ public class TestingTools
 		matrix.m21 = rotX.m21;
 		matrix.m22 = rotX.m22;
 	}
+	
+	public static RotationMatrixf createRandomRotationMatrixf(Random random)
+	{
+		RotationMatrixf matrix = new RotationMatrixf();
+		RotationMatrixf rotX = new RotationMatrixf();
+		RotationMatrixf rotY = new RotationMatrixf();
+		RotationMatrixf rotZ = new RotationMatrixf();
+		Vector3f trans = new Vector3f();
 
-	public static void createRandomTransformationMatrix(Matrix4f matrix, Random random)
+		randomizeVector3f(random, trans);
+		createRandomRotationMatrixX(random, rotX);
+		createRandomRotationMatrixY(random, rotY);
+		createRandomRotationMatrixZ(random, rotZ);
+
+		rotX.multiply(rotY);
+		rotX.multiply(rotZ);
+
+		matrix.m00 = rotX.m00;
+		matrix.m01 = rotX.m01;
+		matrix.m02 = rotX.m02;
+		matrix.m10 = rotX.m10;
+		matrix.m11 = rotX.m11;
+		matrix.m12 = rotX.m12;
+		matrix.m20 = rotX.m20;
+		matrix.m21 = rotX.m21;
+		matrix.m22 = rotX.m22;
+		
+		return matrix;
+	}
+
+	public static void createRandomTransformationMatrix(Matrix4f matrix,
+			Random random)
 	{
 		RotationMatrixd rotX = new RotationMatrixd();
 		RotationMatrixd rotY = new RotationMatrixd();
@@ -222,6 +292,46 @@ public class TestingTools
 		matrix.m20 = 0;
 		matrix.m21 = (float) sTheta;
 		matrix.m22 = (float) cTheta;
+	}
+	
+	public static Quaterniond createRandomQuaterniond(Random random)
+	{
+		Quaterniond q = new Quaterniond();
+		
+		q.x = random.nextDouble();
+		q.y = random.nextDouble();
+		q.z = random.nextDouble();
+		q.w = random.nextDouble();
+
+		double val = 1 / (Math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w
+				* q.w));
+
+		q.x *= val;
+		q.y *= val;
+		q.z *= val;
+		q.w *= val;
+		
+		return q;
+	}
+	
+	public static Quaternionf createRandomQuaternionf(Random random)
+	{
+		Quaternionf q = new Quaternionf();
+		
+		q.x = random.nextFloat();
+		q.y = random.nextFloat();
+		q.z = random.nextFloat();
+		q.w = random.nextFloat();
+
+		float val = 1 / (float)((Math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w
+				* q.w)));
+
+		q.x *= val;
+		q.y *= val;
+		q.z *= val;
+		q.w *= val;
+		
+		return q;
 	}
 
 	public static void createRandomRotationMatrixY(Random random,
@@ -292,7 +402,8 @@ public class TestingTools
 		matrix.m22 = 1;
 	}
 
-	public static void createRandomTransform4Vector(Vector4d vector, Random random)
+	public static void createRandomTransform4Vector(Vector4d vector,
+			Random random)
 	{
 		vector.x = random.nextDouble();
 		vector.y = random.nextDouble();
@@ -300,7 +411,8 @@ public class TestingTools
 		vector.w = 1;
 	}
 
-	public static void createRandomTransform4Vector(Vector4f vector, Random random)
+	public static void createRandomTransform4Vector(Vector4f vector,
+			Random random)
 	{
 		vector.x = random.nextFloat();
 		vector.y = random.nextFloat();
@@ -318,31 +430,31 @@ public class TestingTools
 
 		return ret;
 	}
-	
-	public static double[] createRandomDoubleArray(Random random,int size)
+
+	public static double[] createRandomDoubleArray(Random random, int size)
 	{
 		double[] d = new double[size];
-		
-		for(int i = 0; i<size; i++)
+
+		for (int i = 0; i < size; i++)
 		{
 			d[i] = random.nextDouble();
 		}
-		
+
 		return d;
 	}
-	
-	public static float[] createRandomFloatArray(Random random,int size)
+
+	public static float[] createRandomFloatArray(Random random, int size)
 	{
 		float[] f = new float[size];
-		
-		for(int i = 0; i<size; i++)
+
+		for (int i = 0; i < size; i++)
 		{
 			f[i] = random.nextFloat();
 		}
-		
+
 		return f;
 	}
-	
+
 	public static Point3d createRandomPoint3d(Random random)
 	{
 		Point3d p = new Point3d();
@@ -352,6 +464,14 @@ public class TestingTools
 		return p;
 	}
 	
+	public static Point2d createRandomPoint2d(Random random)
+	{
+		Point2d p = new Point2d();
+		p.x = random.nextDouble();
+		p.y = random.nextDouble();
+		return p;
+	}
+
 	public static Point3f createRandomPoint3f(Random random)
 	{
 		Point3f p = new Point3f();
@@ -360,8 +480,17 @@ public class TestingTools
 		p.z = random.nextFloat();
 		return p;
 	}
+	
+	public static Point2f createRandomPoint2f(Random random)
+	{
+		Point2f p = new Point2f();
+		p.x = random.nextFloat();
+		p.y = random.nextFloat();
+		return p;
+	}
 
-	public static void createFloatArrayFromMatrix4d(float[] floatArray, Matrix4f matrix)
+	public static void createFloatArrayFromMatrix4d(float[] floatArray,
+			Matrix4f matrix)
 	{
 		floatArray[0] = matrix.m00;
 		floatArray[1] = matrix.m01;
@@ -408,6 +537,35 @@ public class TestingTools
 		assertEquals(matrix1.m21, matrix2.m21, epsilon);
 		assertEquals(matrix1.m22, matrix2.m22, epsilon);
 	}
+	
+	public static void assertQuaterniondEquals(Quaterniond q1, Quaterniond q2, double epsilon)
+	{
+		assertEquals(q1.x,q2.x,epsilon);
+		assertEquals(q1.y,q2.y,epsilon);
+		assertEquals(q1.z,q2.z,epsilon);
+		assertEquals(q1.w,q2.w,epsilon);
+	}
+	
+	public static boolean isIdentity(Matrix3d matrix, double epsilon)
+	{
+		return Math.abs(matrix.m00 - 1) < epsilon
+				&& Math.abs(matrix.m11 - 1) < epsilon
+				&& Math.abs(matrix.m22 - 1) < epsilon
+				&& Math.abs(matrix.m10) < epsilon
+				&& Math.abs(matrix.m20) < epsilon
+				&& Math.abs(matrix.m01) < epsilon
+				&& Math.abs(matrix.m02) < epsilon
+				&& Math.abs(matrix.m12) < epsilon
+				&& Math.abs(matrix.m21) < epsilon;
+	}
+	
+	public static void assertQuaternionfEquals(Quaternionf q1, Quaternionf q2, double epsilon)
+	{
+		assertEquals(q1.x,q2.x,epsilon);
+		assertEquals(q1.y,q2.y,epsilon);
+		assertEquals(q1.z,q2.z,epsilon);
+		assertEquals(q1.w,q2.w,epsilon);
+	}
 
 	public static void assertVector3dEquals(String string, Vector3d vector1,
 			Vector3d vector2, double epsilon)
@@ -433,12 +591,26 @@ public class TestingTools
 		assertEquals(p1.z, p2.z, epsilon);
 	}
 
+	public static void assertPoint2dEquals(Point2d p1, Point2d p2,
+			double epsilon)
+	{
+		assertEquals(p1.x, p2.x, epsilon);
+		assertEquals(p1.y, p2.y, epsilon);
+	}
+
 	public static void assertPoint3fEquals(String string, Point3f p1,
 			Point3f p2, double epsilon)
 	{
 		assertEquals(p1.x, p2.x, epsilon);
 		assertEquals(p1.y, p2.y, epsilon);
 		assertEquals(p1.z, p2.z, epsilon);
+	}
+	
+	public static void assertPoint2fEquals(Point2f p1,
+			Point2f p2, double epsilon)
+	{
+		assertEquals(p1.x, p2.x, epsilon);
+		assertEquals(p1.y, p2.y, epsilon);
 	}
 
 	public static void assertVector4dEquals(String string, Vector4d vector1,
@@ -459,8 +631,8 @@ public class TestingTools
 		assertEquals(vector1.w, vector2.w, epsilon);
 	}
 
-	public static void assertMatrix4dEquals(String string, Matrix4d m1, Matrix4d m2,
-			double epsilon)
+	public static void assertMatrix4dEquals(String string, Matrix4d m1,
+			Matrix4d m2, double epsilon)
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -471,8 +643,8 @@ public class TestingTools
 		}
 	}
 
-	public static void assertMatrix4fEquals(String string, Matrix4f m1, Matrix4f m2,
-			double epsilon)
+	public static void assertMatrix4fEquals(String string, Matrix4f m1,
+			Matrix4f m2, double epsilon)
 	{
 		for (int i = 0; i < 4; i++)
 		{
@@ -483,8 +655,8 @@ public class TestingTools
 		}
 	}
 
-	public static void assertMatrix3dEquals(String string, Matrix3d m1, Matrix3d m2,
-			double epsilon)
+	public static void assertMatrix3dEquals(String string, Matrix3d m1,
+			Matrix3d m2, double epsilon)
 	{
 		for (int i = 0; i < 3; i++)
 		{
@@ -495,8 +667,8 @@ public class TestingTools
 		}
 	}
 
-	public static void assertMatrix3fEquals(String string, Matrix3f m1, Matrix3f m2,
-			double epsilon)
+	public static void assertMatrix3fEquals(String string, Matrix3f m1,
+			Matrix3f m2, double epsilon)
 	{
 		for (int i = 0; i < 3; i++)
 		{

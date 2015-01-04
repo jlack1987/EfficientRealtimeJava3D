@@ -53,6 +53,24 @@ public class Vector2f implements java.io.Serializable
 
 		set(f[0], f[1]);
 	}
+	
+	public void get(float[] f)
+	{
+		f[0] = x;
+		f[1] = y;
+	}
+	
+	public void get(double[] d)
+	{
+		d[0] = x;
+		d[1] = y;
+	}
+	
+	public void get(Vector2f v)
+	{
+		v.x = x;
+		v.y = y;
+	}
 
 	public void set(Vector2f v)
 	{
@@ -65,19 +83,19 @@ public class Vector2f implements java.io.Serializable
 		this.y = y;
 	}
 
-	public void add(Vector3f vector)
+	public void add(Vector2f vector)
 	{
 		this.x = this.x + vector.x;
 		this.y = this.y + vector.y;
 	}
 
-	public void subtract(Vector3f vector)
+	public void subtract(Vector2f vector)
 	{
 		this.x = this.x - vector.x;
 		this.y = this.y - vector.y;
 	}
 
-	public float dot(Vector3f vector)
+	public float dot(Vector2f vector)
 	{
 		return this.x * vector.x + this.y * vector.y;
 	}
@@ -112,7 +130,7 @@ public class Vector2f implements java.io.Serializable
 		return (x * x + y * y);
 	}
 
-	public double angle(Vector3f vector1)
+	public double angle(Vector2f vector1)
 	{
 		double vDot = dot(vector1) / (this.length() * vector1.length());
 		if (vDot < -1.0)
