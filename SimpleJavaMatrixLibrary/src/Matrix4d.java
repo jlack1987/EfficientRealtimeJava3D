@@ -1565,6 +1565,11 @@ public class Matrix4d implements java.io.Serializable
 
 	}
 
+	//
+    // Reference: Press, Flannery, Teukolsky, Vetterling, 
+    //	      _Numerical_Recipes_in_C_, Cambridge University Press, 
+    //	      1988, pp 40-45.
+    //
 	private boolean luDecomposition(double[] matrix0, int[] row_perm)
 	{
 		int i, j;
@@ -1690,6 +1695,11 @@ public class Matrix4d implements java.io.Serializable
 		return true;
 	}
 
+	//
+    // Reference: Press, Flannery, Teukolsky, Vetterling, 
+    //	      _Numerical_Recipes_in_C_, Cambridge University Press, 
+    //	      1988, pp 44-45.
+    //
 	private void luBacksubstitution(double[] matrix1, int[] row_perm,
 			double[] matrix2)
 	{
