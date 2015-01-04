@@ -1513,7 +1513,6 @@ public class Matrix4f implements java.io.Serializable
 
 		if (!luDecomposition(tmp, row_perm))
 		{
-			// Matrix has no inverse
 			throw new RuntimeException("Matrix is singular.");
 		}
 
@@ -1580,14 +1579,12 @@ public class Matrix4f implements java.io.Serializable
 
 		mtx = 0;
 
-		// For all columns, execute Crout's method
 		for (j = 0; j < 4; j++)
 		{
 			int imax, k;
 			int target, p1, p2;
 			double sum;
 
-			// Determine elements of upper diagonal matrix U
 			for (i = 0; i < j; i++)
 			{
 				target = mtx + (4 * i) + j;
@@ -1604,8 +1601,6 @@ public class Matrix4f implements java.io.Serializable
 				matrix0[target] = sum;
 			}
 
-			// Search for largest pivot element and calculate
-			// intermediate elements of lower diagonal matrix L.
 			big = 0.0;
 			imax = -1;
 			for (i = j; i < 4; i++)
@@ -1623,7 +1618,6 @@ public class Matrix4f implements java.io.Serializable
 				}
 				matrix0[target] = sum;
 
-				// Is this the best pivot so far?
 				if ((temp = row_scale[i] * Math.abs(sum)) >= big)
 				{
 					big = temp;
@@ -1639,7 +1633,6 @@ public class Matrix4f implements java.io.Serializable
 
 			if (j != imax)
 			{
-				// Yes: exchange rows
 				k = 4;
 				p1 = mtx + (4 * imax);
 				p2 = mtx + (4 * j);
@@ -1650,20 +1643,16 @@ public class Matrix4f implements java.io.Serializable
 					matrix0[p2++] = temp;
 				}
 
-				// Record change in scale factor
 				row_scale[imax] = row_scale[j];
 			}
 
-			// Record row permutation
 			row_perm[j] = imax;
 
-			// Is the matrix singular
 			if (matrix0[(mtx + (4 * j) + j)] == 0.0)
 			{
 				return false;
 			}
 
-			// Divide elements of lower diagonal matrix L by pivot
 			if (j != (4 - 1))
 			{
 				temp = 1.0 / (matrix0[(mtx + (4 * j) + j)]);
@@ -1694,7 +1683,6 @@ public class Matrix4f implements java.io.Serializable
 			cv = k;
 			ii = -1;
 
-			// Forward substitution
 			for (i = 0; i < 4; i++)
 			{
 				double sum;
@@ -1704,7 +1692,6 @@ public class Matrix4f implements java.io.Serializable
 				matrix2[cv + 4 * ip] = matrix2[cv + 4 * i];
 				if (ii >= 0)
 				{
-					// rv = &(matrix1[i][0]);
 					rv = i * 4;
 					for (j = ii; j <= i - 1; j++)
 					{

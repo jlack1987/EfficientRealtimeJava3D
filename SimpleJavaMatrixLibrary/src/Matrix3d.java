@@ -851,7 +851,6 @@ public class Matrix3d implements java.io.Serializable
 			throw new RuntimeException("Matrix is singular.");
 		}
 
-		// Perform back substitution on the identity matrix
 		for (int i = 0; i < 9; i++)
 		{
 			tmp9Array[i] = 0.0;
@@ -890,7 +889,6 @@ public class Matrix3d implements java.io.Serializable
 		ptr = 0;
 		rs = 0;
 
-		// For each row ...
 		i = 3;
 		while (i-- != 0)
 		{

@@ -1534,7 +1534,6 @@ public class Matrix4d implements java.io.Serializable
 
 		if (!luDecomposition(tmp, row_perm))
 		{
-			// Matrix has no inverse
 			throw new RuntimeException("Matrix is singular.");
 		}
 
