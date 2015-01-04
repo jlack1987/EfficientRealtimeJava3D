@@ -57,7 +57,69 @@ public class RotationMatrixdTest
 		R.rotX(Math.PI);
 		R.rotate(v2,v2);
 		assertEquals(v2.x,-1,1e-12);
+	}
+	
+	@Test
+	public void testRotateVector3()
+	{
+		Vector3f v = new Vector3f(1,0,0);
+		Vector3f v2 = new Vector3f();
+		RotationMatrixd R = new RotationMatrixd();
+		R.rotZ(Math.PI);
+		R.rotate(v,v2);
 		
+		assertEquals(v2.x,-1,1e-12);
+		assertEquals(v2.y,0,1e-12);
+		assertEquals(v2.z,0,1e-12);
+		
+		R.rotX(Math.PI);
+		R.rotate(v2,v2);
+		assertEquals(v2.x,-1,1e-12);
+	}
+	
+	@Test
+	public void testRotatePoint1()
+	{
+		Point3d v = new Point3d(1,0,0);
+		Point3d v2 = new Point3d();
+		RotationMatrixd R = new RotationMatrixd();
+		R.rotZ(Math.PI);
+		R.rotate(v,v2);
+		
+		assertEquals(v2.x,-1,1e-12);
+		assertEquals(v2.y,0,1e-12);
+		assertEquals(v2.z,0,1e-12);
+		
+		R.rotX(Math.PI);
+		R.rotate(v2,v2);
+		assertEquals(v2.x,-1,1e-12);
+	}
+	
+	@Test
+	public void testRotatePoint2()
+	{
+		Point3f v = new Point3f(1,0,0);
+		Point3f v2 = new Point3f();
+		RotationMatrixd R = new RotationMatrixd();
+		R.rotZ(Math.PI);
+		R.rotate(v,v2);
+		
+		assertEquals(v2.x,-1,1e-12);
+		assertEquals(v2.y,0,1e-12);
+		assertEquals(v2.z,0,1e-12);
+		
+		R.rotX(Math.PI);
+		R.rotate(v2,v2);
+		assertEquals(v2.x,-1,1e-12);
+	}
+	
+	@Test
+	public void testIsRotationProper()
+	{
+		RotationMatrixd R = TestingTools.createRandomRotationMatrixd(random);
+		assertTrue(R.isRotationProper());
+		R.m11 = 100;
+		assertFalse(R.isRotationProper());
 	}
 	
 	@Test
